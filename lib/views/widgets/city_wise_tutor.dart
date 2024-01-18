@@ -1,7 +1,7 @@
 // ignore_for_file: non_constant_identifier_names
 
 import 'package:flutter/material.dart';
-import 'package:home_tutor/widget/tutor_hire.dart';
+import 'package:home_tutor/views/widgets/tutor_hire.dart';
 
 
 class CityWiseTutor extends StatefulWidget {

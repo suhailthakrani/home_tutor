@@ -1,10 +1,10 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:home_tutor/firebaseAuth/Login.dart';
-import 'package:home_tutor/firebaseAuth/student.dart';
-import 'package:home_tutor/firebaseAuth/teacher.dart';
+import 'package:home_tutor/views/auth/login_screen.dart';
 
+import '../views/student.dart';
+import '../views/teacher.dart';
 import '../utils.dart';
 
 class SplashServices {
@@ -24,7 +24,7 @@ class SplashServices {
       }
     } else {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (context) => const LoginPage()));
+          context, MaterialPageRoute(builder: (context) => const LoginScreen()));
     }
   }
 }

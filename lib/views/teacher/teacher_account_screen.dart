@@ -5,9 +5,10 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:home_tutor/firebaseAuth/Login.dart';
-import 'package:home_tutor/firebaseAuth/student.dart';
+import 'package:home_tutor/views/auth/login_screen.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../student.dart';
 
 class TeacherProfileScreen extends StatefulWidget {
   const TeacherProfileScreen({super.key});
@@ -430,7 +431,7 @@ Future<void> logout(BuildContext context) async {
   Navigator.pushReplacement(
     context,
     MaterialPageRoute(
-      builder: (context) => const LoginPage(),
+      builder: (context) => const LoginScreen(),
     ),
   );
 }

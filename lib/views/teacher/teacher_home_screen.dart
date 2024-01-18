@@ -2,8 +2,8 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:home_tutor/firebaseAuth/Login.dart';
-import 'package:home_tutor/widget/teacherwidget/Request_student.dart';
+import 'package:home_tutor/views/auth/login_screen.dart';
+import 'package:home_tutor/views/widgets/Request_student.dart';
 
 class TeacherHomeScreen extends StatefulWidget {
   const TeacherHomeScreen({super.key});
@@ -96,7 +96,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const LoginPage(),
+        builder: (context) => const LoginScreen(),
       ),
     );
   }

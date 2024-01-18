@@ -2,11 +2,10 @@
 
 import 'package:flutter/material.dart';
 
-import '../ui/bootomnavig/chat.dart';
-import '../ui/bootomnavig/fav.dart';
-import '../ui/student/bootomnavg/Home.dart';
-import '../ui/student/bootomnavg/tutor.dart';
-import '../ui/student/profile_edit/profile.dart';
+import 'student/fav_tutors_screen.dart';
+import 'student/student_account_screen.dart';
+import 'student/student_home_screen.dart';
+import 'student/tutor_list_screen.dart';
 
 
 class Student extends StatefulWidget {
@@ -22,7 +21,6 @@ class _StudentState extends State<Student> {
     const TutorScreen(),
     const FavoriteScreen(),
      ProfileScreen(),
-    const ChatCScreen(),
   ];
   int _currentIndex = 0;
 
@@ -60,10 +58,6 @@ class _StudentState extends State<Student> {
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
             label: "Profile",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.message),
-            label: "Message",
           ),
         ],
       ),

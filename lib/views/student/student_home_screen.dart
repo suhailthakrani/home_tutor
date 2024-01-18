@@ -3,12 +3,11 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:home_tutor/firebaseAuth/Login.dart';
 import 'package:home_tutor/models/teacher_model.dart';
-import 'package:home_tutor/ui/student/bootomnavg/tutor.dart';
-import 'package:home_tutor/widget/studentwidget/city_wise_tutor.dart';
-
-import '../../../services/firebase_service.dart';
+import 'package:home_tutor/views/auth/login_screen.dart';
+import 'package:home_tutor/views/student/tutor_list_screen.dart';
+import '../../services/firebase_service.dart';
+import '../widgets/city_wise_tutor.dart';
 
 
 class StudentHomeScreen extends StatefulWidget {
@@ -325,7 +324,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
     Navigator.pushReplacement(
       context,
       MaterialPageRoute(
-        builder: (context) => const LoginPage(),
+        builder: (context) => const LoginScreen(),
       ),
     );
   }

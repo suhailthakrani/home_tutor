@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:home_tutor/firebaseAuth/student.dart';
+
+import '../student.dart';
 
 class TutorHire extends StatefulWidget {
   const TutorHire({super.key});

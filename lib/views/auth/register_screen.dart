@@ -4,17 +4,17 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'login.dart';
+import 'package:home_tutor/views/auth/login_screen.dart';
 
-class Register extends StatefulWidget {
-  const Register({super.key});
+class RegisterScreen extends StatefulWidget {
+  const RegisterScreen({super.key});
 
   @override
-  _RegisterState createState() => _RegisterState();
+  _RegisterScreenState createState() => _RegisterScreenState();
 }
 
-class _RegisterState extends State<Register> {
-  _RegisterState();
+class _RegisterScreenState extends State<RegisterScreen> {
+  _RegisterScreenState();
 
   bool showProgress = false;
   bool visible = false;
@@ -60,7 +60,7 @@ class _RegisterState extends State<Register> {
                           height: 50,
                         ),
                         const Text(
-                          "Register Now",
+                          "RegisterScreen Now",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -338,7 +338,7 @@ class _RegisterState extends State<Register> {
                                           context,
                                           MaterialPageRoute(
                                               builder: (context) =>
-                                                  const LoginPage()));
+                                                  const LoginScreen()));
                                     },
                                     child: const Text(
                                       "Login",
@@ -402,6 +402,6 @@ class _RegisterState extends State<Register> {
     }
 
     Navigator.pushReplacement(
-        context, MaterialPageRoute(builder: (context) => const LoginPage()));
+        context, MaterialPageRoute(builder: (context) => const LoginScreen()));
   }
 }

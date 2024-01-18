@@ -1,12 +1,10 @@
-// ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 
-import '../ui/bootomnavig/chat.dart';
-import '../ui/bootomnavig/fav.dart';
-import '../ui/bootomnavig/home.dart';
-import '../ui/bootomnavig/profile/teacher_profile.dart';
-import '../ui/bootomnavig/student.dart';
+import '../views/student/fav_tutors_screen.dart';
+import '../views/teacher/teacher_account_screen.dart';
+import '../views/teacher/teacher_home_screen.dart';
+
 
 
 class Teacher extends StatefulWidget {
@@ -19,10 +17,8 @@ class Teacher extends StatefulWidget {
 class _TeacherState extends State<Teacher> {
   final Screen = [
     const TeacherHomeScreen(),
-    const StudentScreen(),
     const FavoriteScreen(),
     const TeacherProfileScreen(),
-    const ChatCScreen(),
   ];
   int _currentIndex = 0;
 

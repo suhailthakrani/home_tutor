@@ -3,19 +3,20 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:home_tutor/firebaseAuth/Forgot_password.dart';
-import 'register.dart';
-import 'student.dart';
-import 'teacher.dart';
+import 'package:home_tutor/views/auth/register_screen.dart';
+import 'package:home_tutor/views/student/student_home_screen.dart';
+import 'package:home_tutor/views/teacher/teacher_home_screen.dart';
 
-class LoginPage extends StatefulWidget {
-  const LoginPage({super.key});
+import 'forgot_pass_screen.dart';
+
+class LoginScreen extends StatefulWidget {
+  const LoginScreen({super.key});
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _LoginScreenState createState() => _LoginScreenState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _LoginScreenState extends State<LoginScreen> {
   bool _isObscure3 = true;
   bool visible = false;
   final _formkey = GlobalKey<FormState>();
@@ -159,7 +160,7 @@ class _LoginPageState extends State<LoginPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const Forgotpass()));
+                                              const ForgotpassScreen()));
                                 },
                                 child: const Text(
                                   "Forgot Password",
@@ -220,7 +221,7 @@ class _LoginPageState extends State<LoginPage> {
                                       context,
                                       MaterialPageRoute(
                                           builder: (context) =>
-                                              const Register()));
+                                              const RegisterScreen()));
                                 },
                                 child: const Text(
                                   "SignUp",
@@ -255,7 +256,7 @@ class _LoginPageState extends State<LoginPage> {
         Navigator.pushReplacement(
           context,
           MaterialPageRoute(
-            builder: (context) => const Teacher(),
+            builder: (context) => const TeacherHomeScreen(),
           ),
         );
       }
@@ -270,7 +271,7 @@ class _LoginPageState extends State<LoginPage> {
       if (documentSnapshot.exists) {
         if (documentSnapshot.get('role') == "Student") {
           Navigator.push(context,
-              MaterialPageRoute(builder: (context) => const Student()));
+              MaterialPageRoute(builder: (context) => const StudentHomeScreen()));
         }
       } else {
         print('Document does not exist on the database');

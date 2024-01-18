@@ -2,17 +2,17 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:home_tutor/views/auth/login_screen.dart';
 
-import 'login.dart';
 
-class Forgotpass extends StatefulWidget {
-  const Forgotpass({Key? key}) : super(key: key);
+class ForgotpassScreen extends StatefulWidget {
+  const ForgotpassScreen({Key? key}) : super(key: key);
 
   @override
-  _ForgotpassState createState() => _ForgotpassState();
+  _ForgotpassScreenState createState() => _ForgotpassScreenState();
 }
 
-class _ForgotpassState extends State<Forgotpass> {
+class _ForgotpassScreenState extends State<ForgotpassScreen> {
   bool showProgress = false;
   bool visible = false;
   final _auth = FirebaseAuth.instance;
@@ -27,7 +27,7 @@ class _ForgotpassState extends State<Forgotpass> {
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
               Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => LoginPage()));
+                  context, MaterialPageRoute(builder: (context) => LoginScreen()));
             },
           ),
         elevation: 0,
@@ -119,7 +119,7 @@ class _ForgotpassState extends State<Forgotpass> {
                                     minHeight: 50, minWidth: 300),
                                 child: ElevatedButton(
                                     onPressed: () {
-                                      Forgotpassss(emailController.text);
+                                      ForgotpassScreenss(emailController.text);
                                       setState(() {
                                         visible = true;
                                       });
@@ -159,13 +159,13 @@ class _ForgotpassState extends State<Forgotpass> {
     );
   }
 
-  void Forgotpassss(String email) async {
+  void ForgotpassScreenss(String email) async {
     if (_formkey.currentState!.validate()) {
       await _auth
           .sendPasswordResetEmail(email: email)
           .then((uid) => {
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context) => LoginPage()))
+                    MaterialPageRoute(builder: (context) => LoginScreen()))
               })
           .catchError((e) {});
     }
