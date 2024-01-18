@@ -1,7 +1,13 @@
 // ignore_for_file: non_constant_identifier_names, annotate_overrides
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:home_tutor/services/useralready_login.dart';
+
+import '../ui/teacher.dart';
+import '../utils.dart';
+import 'auth/login_screen.dart';
+import 'student.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -11,13 +17,35 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  SplashServices SplashScreen = SplashServices();
 
   @override
   void initState() {
+    Future.delayed(Duration(seconds: 12), (){
+      Navigator.pushReplacement(context, MaterialPageRoute(builder:(context) => LoginScreen(),),);
+    });
     super.initState();
-    SplashScreen.signIn(context);
+    // signIn(context);
   }
+
+  // void signIn(BuildContext context) async {
+  //   final auth = FirebaseAuth.instance;
+  //   final user = auth.currentUser;
+
+  //   if (user != null) {
+  //     bool isUserAStudent = await isStudent(user.uid);
+
+  //     if (isUserAStudent) {
+  //       Navigator.pushReplacement(
+  //           context, MaterialPageRoute(builder: (context) => const Student()));
+  //     } else {
+  //       Navigator.pushReplacement(
+  //           context, MaterialPageRoute(builder: (context) => const Teacher()));
+  //     }
+  //   } else {
+  //     Navigator.pushReplacement(
+  //         context, MaterialPageRoute(builder: (context) => const LoginScreen()));
+  //   }
+  // }
 
   Widget build(BuildContext context) {
     return const Scaffold(

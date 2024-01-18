@@ -5,7 +5,8 @@ import '../views/student/fav_tutors_screen.dart';
 import '../views/teacher/teacher_account_screen.dart';
 import '../views/teacher/teacher_home_screen.dart';
 
-
+// deewanmalhi846@gmail.com
+//lalbhai123
 
 class Teacher extends StatefulWidget {
   const Teacher({super.key});

@@ -14,8 +14,6 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
-  _RegisterScreenState();
-
   bool showProgress = false;
   bool visible = false;
 
@@ -42,6 +40,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
     return Scaffold(
       backgroundColor: Colors.white,
       body: SingleChildScrollView(
+        padding: const EdgeInsets.symmetric(vertical: 30),
         child: Column(
           children: <Widget>[
             SizedBox(
@@ -60,7 +59,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           height: 50,
                         ),
                         const Text(
-                          "RegisterScreen Now",
+                          "Register Now",
                           style: TextStyle(
                             fontWeight: FontWeight.bold,
                             color: Colors.black,
@@ -291,7 +290,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           children: [
                             ConstrainedBox(
                               constraints: const BoxConstraints(
-                                  minHeight: 50, minWidth: 500),
+                                  minHeight: 45, minWidth: 500),
                               child: ElevatedButton(
                                   onPressed: () {
                                     setState(() {
@@ -301,9 +300,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                         passwordController.text, role);
                                   },
                                   style: ElevatedButton.styleFrom(
-                                      backgroundColor: const Color(0xff58ee4a)),
+                                      backgroundColor: const Color(0xff58fe4a)),
                                   child: const Text(
-                                    "SignUp",
+                                    "Sign Up",
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontSize: 20,
@@ -326,27 +325,32 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
                                 const Text(
-                                  "already have an account?",
+                                  "Already have an account?",
                                   style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.bold),
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.bold,
+                                  ),
                                 ),
                                 TextButton(
-                                    onPressed: () {
-                                      Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                              builder: (context) =>
-                                                  const LoginScreen()));
-                                    },
-                                    child: const Text(
-                                      "Login",
-                                      style: TextStyle(
-                                          color: Colors.green,
-                                          fontSize: 19,
-                                          fontWeight: FontWeight.bold),
-                                    )),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const LoginScreen(),
+                                      ),
+                                    );
+                                  },
+                                  child: const Text(
+                                    "Log In",
+                                    style: TextStyle(
+                                      color: Colors.green,
+                                      fontSize: 19,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  ),
+                                ),
                               ],
                             )
                           ],
