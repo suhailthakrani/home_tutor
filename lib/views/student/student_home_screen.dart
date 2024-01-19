@@ -46,7 +46,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
           actions: [
             IconButton(
               onPressed: () {
-                logout(context);
+                // logout(context);
               },
               icon: const Icon(
                 Icons.logout,
@@ -318,16 +318,16 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
         ));
   }
 
-  Future<void> logout(BuildContext context) async {
-    const CircularProgressIndicator();
-    await FirebaseAuth.instance.signOut();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
-      ),
-    );
-  }
+  // Future<void> logout(BuildContext context) async {
+  //   const CircularProgressIndicator();
+  //   await FirebaseAuth.instance.signOut();
+  //   Navigator.pushReplacement(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => const LoginScreen(),
+  //     ),
+  //   );
+  // }
 
   void selectChip(String chipLabel) {
     // Update the selected chip label

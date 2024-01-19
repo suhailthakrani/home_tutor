@@ -27,7 +27,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
         actions: [
           IconButton(
             onPressed: () {
-              logout(context);
+              // logout(context);
             },
             icon: const Icon(
               Icons.logout,
@@ -90,14 +90,14 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
     );
   }
 
-  Future<void> logout(BuildContext context) async {
-    const CircularProgressIndicator();
-    await FirebaseAuth.instance.signOut();
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (context) => const LoginScreen(),
-      ),
-    );
-  }
+  // Future<void> logout(BuildContext context) async {
+  //   const CircularProgressIndicator();
+  //   await FirebaseAuth.instance.signOut();
+  //   Navigator.pushReplacement(
+  //     context,
+  //     MaterialPageRoute(
+  //       builder: (context) => const LoginScreen(),
+  //     ),
+  //   );
+  // }
 }

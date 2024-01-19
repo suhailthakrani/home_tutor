@@ -207,7 +207,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   const SizedBox(width: 20),
                   TextButton(
                       onPressed: () {
-                        logout(context);
+                        // logout(context);
                       },
                       style: ButtonStyle(
                         backgroundColor:
@@ -426,13 +426,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
   }
 }
 
-Future<void> logout(BuildContext context) async {
-  const CircularProgressIndicator();
-  await FirebaseAuth.instance.signOut();
-  Navigator.pushReplacement(
-    context,
-    MaterialPageRoute(
-      builder: (context) => const LoginScreen(),
-    ),
-  );
-}
+// Future<void> logout(BuildContext context) async {
+//   const CircularProgressIndicator();
+//   await FirebaseAuth.instance.signOut();
+//   Navigator.pushReplacement(
+//     context,
+//     MaterialPageRoute(
+//       builder: (context) => const LoginScreen(),
+//     ),
+//   );
+// }

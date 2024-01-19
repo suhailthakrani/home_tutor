@@ -1,8 +1,12 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:home_tutor/views/auth/login_screen.dart';
 import 'package:home_tutor/views/auth/register_screen.dart';
-import 'package:home_tutor/views/spalsh_screen.dart';
+
+import 'utils/constants.dart';
+import 'utils/route_management.dart';
+import 'utils/screen_bindings.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -15,14 +19,16 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Flutter Demo',
+       initialRoute: kSplashScreenRoute,
+      initialBinding: ScreensBindings(),
+      getPages: RouteManagement.getPages(),
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: const RegisterScreen(),
     );
   }
 }

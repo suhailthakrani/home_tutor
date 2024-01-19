@@ -43,6 +43,18 @@ dependencies:
   chips_choice: ^3.0.1
   firebase_storage: ^11.6.0
   get: ^4.6.6
+  shared_preferences: ^2.2.0
+  permission_handler: ^10.4.3
+  awesome_dialog: ^3.1.0
+  connectivity_plus: ^4.0.2
+  package_info_plus: ^4.0.2
+  animated_bottom_navigation_bar: ^1.2.0
+  intl: ^0.18.1
+  path_provider: ^2.1.1
+  mask_input_formatter: ^0.0.3
+  dotted_border: ^2.1.0
+  google_fonts: ^6.1.0
+  photo_view: ^0.14.0
 
 
 
