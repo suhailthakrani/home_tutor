@@ -5,10 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:home_tutor/views/auth/login_screen.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../student.dart';
 
 class ProfileScreen extends StatefulWidget {
   @override
@@ -142,8 +140,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
-              Navigator.pushReplacement(
-                  context, MaterialPageRoute(builder: (context) => Student()));
+              // Navigator.pushReplacement(
+              //     context, MaterialPageRoute(builder: (context) => Student()));
             },
           ),
           elevation: 1,

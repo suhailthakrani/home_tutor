@@ -9,23 +9,8 @@ import '../utils/user_session.dart';
 class SplashScreenController extends GetxController{
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  late Timer _timer;
-
-  @override
-  void onInit() {
-    _timer = Timer(const Duration(seconds: 5), () {
-      _screenNavigation();
-    });
-    super.onInit();
-  }
-
-  @override
-  void dispose() {
-    _timer.cancel();
-    super.dispose();
-  }
-
-  void _screenNavigation() async {
+  void screenNavigation() async {
+    print("object");
     bool isRemember = await UserSession().getRememberMe();
     //UserModel user = await UserSession().getUserModel();
     /*if (user.email.isNotEmpty) {
@@ -41,17 +26,17 @@ class SplashScreenController extends GetxController{
     // } else{
     //   Get.offAllNamed(kLoginScreen);
     // }
-    if(isRemember){
-      UserSession().getUserData();
-      Get.offAllNamed(kDashboardScreenRoute);
-    }else{
-      Get.offAllNamed(kSignInScreenRoute);
+    if(UserSession.userModel.value.email.isNotEmpty && UserSession.userModel.value.role == 'Student'){
+      Get.offAllNamed(kStudentHomeScreenRoute);
+    }else if(UserSession.userModel.value.email.isNotEmpty  && UserSession.userModel.value.role == 'Teacher'){
+      Get.offAllNamed(kTeacherHomeScreenRoute);
+    } else {
+      Get.offAllNamed(kWelcomeScreenRoute);
     }
 
   }
 
   void onScreenTap() {
-    _timer.cancel();
-    _screenNavigation();
+    screenNavigation();
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../student.dart';
 
 class TutorHire extends StatefulWidget {
   const TutorHire({super.key});
@@ -43,10 +42,10 @@ class _TutorHireState extends State<TutorHire> {
                           children: [
                             InkWell(
                               onTap: () {
-                                Navigator.pushReplacement(
-                                    context,
-                                    MaterialPageRoute(
-                                        builder: (context) => Student()));
+                                // Navigator.pushReplacement(
+                                //     context,
+                                //     MaterialPageRoute(
+                                //         builder: (context) => Student()));
                               },
                               child: Container(
                                 margin: const EdgeInsets.all(8),

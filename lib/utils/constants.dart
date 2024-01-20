@@ -1,12 +1,21 @@
 import 'package:google_fonts/google_fonts.dart';
 
-const String kAppName = "Solid Waste Management";
 
-///*********************  Route Names   *********************///
-const String kSplashScreenRoute = "/SPLASH_SCREEN";
+///*********************  Routes   *********************///
+
+const String kSplashScreenRoute = "/";
+const String kWelcomeScreenRoute = "/WELCOME_SCREEN";
 const String kSignInScreenRoute = "/SIGN_IN_SCREEN";
-const String kSignUpScreenRoute = "/SIGN_UP_SCREEN";
-const String kDashboardScreenRoute = "/DASHBOARD_SCREEN";
+
+///*********************  Teacher Routes   *********************///
+
+const String kTeacherSignUpScreenRoute = "/TEACHER_SIGN_UP_SCREEN";
+const String kTeacherHomeScreenRoute = "/TEACHER_HOME_SCREEN";
+///*********************  Student Routes   *********************///
+
+const String kStudentSignUpScreenRoute = "/STUDENT_SIGN_UP_SCREEN";
+
+const String kStudentHomeScreenRoute = "/STUDENT_HOME_SCREEN";
 const String kForgotPasswordScreenRoute = "/FORGOT_PASSWORD_SCREEN";
 const String kSubmitComplaintScreenRout = "/SUBMIT_COMPLAINT_SCREEN";
 const String kPostArticleScreenRoute = "/POST_ARTICLE_SCREEN";

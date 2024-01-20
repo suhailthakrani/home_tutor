@@ -1,8 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_tutor/views/auth/login_screen.dart';
-import 'package:home_tutor/views/auth/register_screen.dart';
 
 import 'utils/constants.dart';
 import 'utils/route_management.dart';
@@ -21,8 +19,8 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Demo',
-       initialRoute: kSplashScreenRoute,
+      title: 'Home Tutor',
+       initialRoute: kStudentSignUpScreenRoute,
       initialBinding: ScreensBindings(),
       getPages: RouteManagement.getPages(),
       theme: ThemeData(

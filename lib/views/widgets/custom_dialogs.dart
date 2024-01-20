@@ -311,7 +311,7 @@ class CustomDialogs {
       desc: description,
       customHeader: Container(
           margin: const EdgeInsets.all(12.0),
-          child: Image.asset("assets/icons/logo.png", color: kPrimaryColor ),),
+          child: Image.asset("assets/images/reading.png", color: kPrimaryColor ),),
       btnOkOnPress: () {
         if(onOkBtnPressed != null ){onOkBtnPressed();}
       },

@@ -1,71 +1,74 @@
-
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:home_tutor/models/login_model.dart';
+import 'package:home_tutor/models/student_model.dart';
+import 'package:home_tutor/models/teacher_model.dart';
+import 'package:home_tutor/utils/user_session.dart';
 
-import '../models/login_model.dart';
-import '../models/response_model.dart';
-import '../models/user_model.dart';
-import '../utils/constants.dart';
-import '../utils/firebase_client.dart';
+class UserService {
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-class UserServices{
-  Future<String> authenticateUser({required LoginModel loginModel})async{
-    ResponseModel responseModel = await FirebaseClient().firebaseAuthUserRegisterRequest(model: loginModel);
-    return responseModel.statusDescription;
-  }
-
-  Future<String> registerUser(UserModel userModel) async {
-    ResponseModel responseModel = await FirebaseClient().firebaseInsertRequest(model: userModel, collectionName: kUserCollection, id: userModel.email);
-    return responseModel.statusDescription;
-  }
-
-  Future<String> loginUser(LoginModel loginModel)async{
-    ResponseModel responseModel = await FirebaseClient().firebaseAuthUserSignInRequest(model: loginModel);
-    return responseModel.statusDescription;
-  }
-
-  Future<dynamic> getUser(String email) async {
-    dynamic response = await FirebaseClient().firebaseGetSingleRequest(collectionName: kUserCollection, id: email);
-    return response;
-  }
-
-  
-  Future<ResponseModel> sendEmail({required String email}) async {
-    String errorMsg = '';
+  Future<String> registerTeacher(TeacherModel teacherModel) async {
     try {
-      await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-      errorMsg = 'OK';
-      return ResponseModel.named(statusDescription: errorMsg);
-    } on FirebaseAuthException catch (e) {
-      if (e.code == 'user-not-found') {
-        errorMsg = "user-not-found";
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: teacherModel.email,
+        password: teacherModel.password,
+      );
+
+
+      User? user = userCredential.user;
+
+      await _firestore.collection('teachers').doc(user!.uid).set(teacherModel.toJson());
+
+      if(userCredential.user != null){
+        return "Sucess";
+      } else {
+        return 'OTHER';
       }
-      return ResponseModel.named(statusDescription: errorMsg);
+
+    } catch (e) {
+      print('Error during registration: $e');
+      return '${e.toString()}';
+    }
+  }  
+
+  Future<String> registerStudent(StudentModel studentModel) async {
+    try {
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: studentModel.email,
+        password: studentModel.password,
+      );
+      User? user = userCredential.user;
+      await _firestore.collection('students').doc(user!.uid).set(studentModel.toJson());
+      if(userCredential.user != null){
+        return "Sucess";
+      }  else {
+        return 'OTHER';
+      }
+
+    } catch (e) {
+      print('Error during registration: $e');
+      return '${e.toString()}';
     }
   }
 
-  Future<ResponseModel> changePassword({required String password, required String newPassword}) async {
-    String errorMsg = '';
-    final currentUser =  FirebaseAuth.instance.currentUser;
+  Future<String> loginUser(LoginModel loginModel) async {
     try {
-      print('---------------------------------1');
-      if(currentUser != null){
-        AuthCredential credential = EmailAuthProvider.credential(
-          email: currentUser.email ?? '',
-          password: newPassword,
-        );
-        await currentUser.reauthenticateWithCredential(credential);
-        await currentUser.updatePassword(newPassword);
-        print('---------------------------------2');
-        errorMsg = 'OK';
+      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+        email: loginModel.email,
+        password: loginModel.password,
+      );
+
+      if(userCredential.user != null){
+        return "Sucess";
+      } else {
+        return 'OTHER';
       }
 
-      return ResponseModel.named(statusDescription: errorMsg);
-    } on FirebaseAuthException catch (e) {
-      errorMsg = e.code;
-      print('---------------------------------3: $errorMsg');
-      return ResponseModel.named(statusDescription: errorMsg);
+    } catch (e) {
+      print('Error during registration: $e');
+      return '${e.toString()}';
     }
   }
-
-
 }

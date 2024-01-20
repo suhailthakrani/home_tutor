@@ -1,13 +1,13 @@
 import 'dart:convert';
 import 'package:get/get.dart';
+import 'package:home_tutor/models/login_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-import '../models/user_model.dart';
 
 
 class UserSession {
   static final RxBool isDataChanged = RxBool(false);
-  static final Rx<UserModel> userModel = UserModel.empty().obs;
+  static final Rx<LoginModel> userModel = LoginModel.empty().obs;
 
   static final UserSession _instance = UserSession._internal();
   UserSession._internal();
@@ -15,16 +15,16 @@ class UserSession {
     return _instance;
   }
 
-  Future<bool> createSession({required UserModel user}) async {
+  Future<bool> createSession({required LoginModel user}) async {
     final preference = await SharedPreferences.getInstance();
     userModel.value = user;
-    preference.setString('USER_DATA', jsonEncode(userModel.value.toJson()));
+    preference.setString('USER_DATA', jsonEncode(user.toJson()));
     return true;
   }
 
   Future<void> getUserData() async {
     final preference = await SharedPreferences.getInstance();
-    userModel.value = UserModel.fromJson(jsonDecode(preference.getString('USER_DATA') ?? "{}"));
+    userModel.value = LoginModel.fromJson(jsonDecode(preference.getString('USER_DATA') ?? "{}"));
   }
 
   Future<void> setRememberMe({required bool isRemember}) async {

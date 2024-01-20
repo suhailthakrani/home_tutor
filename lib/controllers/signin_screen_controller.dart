@@ -4,7 +4,6 @@ import 'package:get/get.dart';
 
 
 import '../models/login_model.dart';
-import '../models/user_model.dart';
 import '../services/users_services.dart';
 import '../utils/app_colors.dart';
 import '../utils/common_code.dart';
@@ -19,7 +18,6 @@ class SignInScreenController extends GetxController {
 
   TextFieldManager emailManager = TextFieldManager('User Email', length: 50,filter: TextFilter.email);
   TextFieldManager passwordManager = TextFieldManager('Password', length: 50,filter: TextFilter.none, hint: "Password");
-  UserModel userModel = UserModel.empty();
   RxBool obscureText = true.obs;
   RxBool rememberMe = false.obs;
   LoginModel loginModel = LoginModel.empty();
@@ -48,26 +46,27 @@ class SignInScreenController extends GetxController {
     loginModel.password = passwordManager.controller.text;
     bool checkInternet = await CommonCode().checkInternetConnection();
     if(checkInternet){
-      String response = await UserServices().loginUser(loginModel);
+      String response = await UserService().loginUser(loginModel);
       print('--------------------:::::::::::::::::::::2: $response');
-      if(response == "OK"){
-        dynamic user = await UserServices().getUser(emailManager.controller.text);
-        userModel = UserModel.fromJson(user);
-        print('--------------------:::::::::::::::::::::2: $user');
+      if(response == "Success"){
         isLoading.value = false;
         UserSession().setRememberMe(isRemember: rememberMe.value);
-        UserSession().createSession(user: userModel);
-        Get.offAllNamed(kDashboardScreenRoute);
+        UserSession().createSession(user: loginModel);
+        if(UserSession.userModel.value.role == "Student"){
+          Get.offAllNamed(kStudentHomeScreenRoute);
+        } else {
+          Get.offAllNamed(kTeacherHomeScreenRoute);
+        }
       }
-      else if(response == "user-not-found"){
+      else if(response.contains("user-not-found")){
         isLoading.value = false;
         CustomDialogs().showErrorDialog("Alert", "User Not Found!", DialogType.error, kRequiredRedColor);
       }
-      else if(response == "wrong-password"){
+      else if(response.contains("wrong-password")){
         isLoading.value = false;
         CustomDialogs().showErrorDialog("Alert", "Password is incorrect!", DialogType.error, kRequiredRedColor);
       }
-      else if(response == "invalid-login-credentials"){
+      else if(response.contains("invalid-login-credentials")){
         isLoading.value = false;
         CustomDialogs().showErrorDialog("Alert", "Invalid Email/Password!", DialogType.error, kRequiredRedColor);
       }
@@ -84,10 +83,7 @@ class SignInScreenController extends GetxController {
 
   }
 
-  void onLoginClick(){
-    print('-----');
-    Get.offNamed(kDashboardScreenRoute);
-  }
+
 
   void onRememberMeChecked(){
     rememberMe.value = !rememberMe.value;

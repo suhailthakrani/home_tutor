@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:home_tutor/models/teacher_model.dart';
-import 'package:home_tutor/views/auth/login_screen.dart';
 import 'package:home_tutor/views/student/tutor_list_screen.dart';
 import '../../services/firebase_service.dart';
 import '../widgets/city_wise_tutor.dart';
@@ -187,7 +186,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                                 //     builder: (context) => const TutorHire(),
                                 //   ),
                                 // );
-                                log("${teachers.lastWhere((element) => element.profile.isNotEmpty)}");
+                                log("${teachers.lastWhere((element) => element.profileUrl.isNotEmpty)}");
                               },
                               child: Container(
                                 width: MediaQuery.of(context).size.width * 0.68,
@@ -219,7 +218,7 @@ class _StudentHomeScreenState extends State<StudentHomeScreen> {
                                           topRight: Radius.circular(15),
                                         ),
                                         child: Image.network(
-                                          teachers[index].profile,
+                                          teachers[index].profileUrl,
                                           fit: BoxFit.fitWidth,
                                           errorBuilder:
                                               (context, error, stackTrace) =>

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get/get_utils/src/platform/platform_io.dart';
 
 import '../../utils/app_colors.dart';
 import '../../utils/constants.dart';
@@ -20,48 +21,49 @@ class CustomScaffold extends StatelessWidget {
   final GlobalKey<ScaffoldState> scaffoldKey;
 
   const CustomScaffold(
-      {super.key, required this.body,
-        this.floatingActionButton,
-        this.bottomSheet,
-        required this.scaffoldKey,
-        required this.className,
-        required this.screenName,
-        this.onWillPop,
-        this.gestureDetectorOnPanDown,
-        this.gestureDetectorOnTap,
-        this.onDrawerBtnPressed,
-        this.onNotificationListener});
+      {super.key,
+      required this.body,
+      this.floatingActionButton,
+      this.bottomSheet,
+      required this.scaffoldKey,
+      required this.className,
+      required this.screenName,
+      this.onWillPop,
+      this.gestureDetectorOnPanDown,
+      this.gestureDetectorOnTap,
+      this.onDrawerBtnPressed,
+      this.onNotificationListener});
 
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-        onWillPop: (){
+        onWillPop: () {
           if (scaffoldKey.currentState!.isEndDrawerOpen) {
             Get.back();
-          }else if (screenName == 'Dashboard Screen' || screenName == 'Log In to SWM') {
+          } else if (screenName == 'Home Screen' || screenName == 'Log In') {
             CustomDialogs().appCloseConfirmationDialog();
-          } else if(onWillPop != null){
+          } else if (onWillPop != null) {
             onWillPop!();
           }
           return Future.value(false);
         },
         child: GestureDetector(
-          onTap: (){
-            if(gestureDetectorOnTap != null){
+          onTap: () {
+            if (gestureDetectorOnTap != null) {
               gestureDetectorOnTap!();
             }
           },
-          onPanDown: (panDetails){
-            if(gestureDetectorOnPanDown!= null){
+          onPanDown: (panDetails) {
+            if (gestureDetectorOnPanDown != null) {
               gestureDetectorOnPanDown!(panDetails);
             }
           },
           child: NotificationListener(
-            onNotification: (notificationInfo){
-              if(onNotificationListener != null){
+            onNotification: (notificationInfo) {
+              if (onNotificationListener != null) {
                 return onNotificationListener!(notificationInfo);
-              }else{
-                if(notificationInfo is UserScrollNotification){
+              } else {
+                if (notificationInfo is UserScrollNotification) {
                   FocusScopeNode currentFocus = FocusScope.of(context);
                   if (!currentFocus.hasPrimaryFocus) {
                     currentFocus.unfocus();
@@ -70,25 +72,26 @@ class CustomScaffold extends StatelessWidget {
                 return true;
               }
             },
-            child:Scaffold(
+            child: Scaffold(
               bottomSheet: bottomSheet,
-              backgroundColor: kPrimaryColor,
+              backgroundColor: kWhiteColor,
               key: scaffoldKey,
               resizeToAvoidBottomInset: false,
               floatingActionButton: floatingActionButton,
               extendBody: true,
-              appBar: PreferredSize(
-                preferredSize: const Size.fromHeight(70),
-                child: Container(
-                  color: kPrimaryColor,
-                  child: SafeArea(
-                    child: PreferredSize(
-                      preferredSize: const Size.fromHeight(100.0),
-                      child: CustomAppbar(
-                        scaffoldKey: scaffoldKey,
-                        screenName: screenName,
-                        height: Get.height * 0.1,
-                      ),
+              appBar: AppBar(
+                elevation: 0,
+                backgroundColor: kWhiteColor,
+                automaticallyImplyLeading: GeneralPlatform.isWeb,
+                centerTitle: true,
+                actions: <Widget>[Container()],
+                title: RichText(
+                  text: TextSpan(
+                    text: screenName,
+                    style: const TextStyle(
+                      fontSize: 20,
+                      color: kPrimaryColor,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                 ),
@@ -98,25 +101,17 @@ class CustomScaffold extends StatelessWidget {
               //     child: const CustomBottomNavigation()),
 
               body: Container(
-                width: Get.width,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(50),
-                    topRight: Radius.circular(50),
+                  width: Get.width,
+                  decoration: const BoxDecoration(
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(50),
+                      topRight: Radius.circular(50),
+                    ),
+                    color: kWhiteColor,
                   ),
-                  color: kWhiteColor,
-                ),
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10,),
-                    Text(screenName == "Dashboard Screen" ? "" : screenName, style: TextStyle(color: kPrimaryColor, fontSize: 18, fontFamily: kLogoFontFamily),),
-                    SingleChildScrollView(child: body)
-                  ],
-                )
-              ),
+                  child: SingleChildScrollView(child: body)),
             ),
           ),
         ));
   }
-
 }
