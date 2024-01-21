@@ -10,23 +10,22 @@ const String kSignInScreenRoute = "/SIGN_IN_SCREEN";
 ///*********************  Teacher Routes   *********************///
 
 const String kTeacherSignUpScreenRoute = "/TEACHER_SIGN_UP_SCREEN";
+const String kTMainScreenRoute = "/TMainScreenRoute";
 const String kTeacherHomeScreenRoute = "/TEACHER_HOME_SCREEN";
+const String kTStudentsHomeScreenRoute = "/kTStudentsHomeScreenRoute";
+const String kTAccountScreenRoute = '/TAccountScreenRoute';
+const String kTHomeScreenRoute = '/THomeScreenRoute';
+const String kTProfileScreenRoute = '/TProfileScreenRoute';
+const String kTTutorsListScreenRoute = '/TTutorsListScreenRoute';
 ///*********************  Student Routes   *********************///
 
 const String kStudentSignUpScreenRoute = "/STUDENT_SIGN_UP_SCREEN";
-
-const String kStudentHomeScreenRoute = "/STUDENT_HOME_SCREEN";
-const String kForgotPasswordScreenRoute = "/FORGOT_PASSWORD_SCREEN";
-const String kSubmitComplaintScreenRout = "/SUBMIT_COMPLAINT_SCREEN";
-const String kPostArticleScreenRoute = "/POST_ARTICLE_SCREEN";
-const String kReadArticleScreenRoute = "/READ_ARTICLE_SCREEN";
-const String kViewAllArticlesScreenRoute = "/VIEW_ALL_ARTICLES_SCREEN";
-const String kViewAllSweeperScreenRoute = "/VIEW_ALL_SWEEPER_SCREEN";
-const String kSweeperDetailScreenRoute = "/SWEEPER_DETAIL_SCREEN";
-const String kViewAllEquipmentScreenRoute = "/VIEW_ALL_EQUIPMENT_SCREEN";
-const String kEquipmentDetailScreenRoute = "/EQUIPMENT_DETAIL_SCREEN";
-const String kViewHistoryScreenRoute = "/VIEW_HISTORY_SCREEN";
-const String kChangePasswordScreenRoute = "/CHANGE_PASSWORD_SCREEN";
+const String kSMainScreenRoute = "/SMainScreenRoute";
+const String kStudentHomeScreenRoute = "/StudentHomeScreenRoute";
+const String kSAccountScreenRoute = '/SAccountScreenRoute';
+const String kSHomeScreenRoute = '/SHomeScreenRoute';
+const String kSProfileScreenRoute = '/SProfileScreenRoute';
+const String kSTutorsListScreenRoute = '/STutorsListScreenRoute';
 
 
 ///*********************  Messages   *********************///

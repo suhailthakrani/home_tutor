@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
     return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Home Tutor',
-       initialRoute: kStudentSignUpScreenRoute,
+      initialRoute: kSplashScreenRoute,
       initialBinding: ScreensBindings(),
       getPages: RouteManagement.getPages(),
       theme: ThemeData(

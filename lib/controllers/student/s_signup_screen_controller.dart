@@ -4,15 +4,15 @@ import 'package:get/get.dart';
 import 'package:home_tutor/models/student_model.dart';
 
 
-import '../models/login_model.dart';
-import '../services/users_services.dart';
-import '../utils/app_colors.dart';
-import '../utils/common_code.dart';
-import '../utils/constants.dart';
-import '../utils/dropdown_controller.dart';
-import '../utils/text_field_manager.dart';
-import '../utils/text_filter.dart';
-import '../views/widgets/custom_dialogs.dart';
+import '../../models/login_model.dart';
+import '../../services/users_services.dart';
+import '../../utils/app_colors.dart';
+import '../../utils/common_code.dart';
+import '../../utils/constants.dart';
+import '../../utils/dropdown_controller.dart';
+import '../../utils/text_field_manager.dart';
+import '../../utils/text_filter.dart';
+import '../../views/widgets/custom_dialogs.dart';
 
 class StudentSignUpScreenController extends GetxController {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
@@ -27,7 +27,7 @@ class StudentSignUpScreenController extends GetxController {
   DropdownController genderDropdown = DropdownController(items: RxList(["Male", "Female"]), title: "Gender");
   DropdownController cityDD = DropdownController(items: RxList(["Karachi", "Lahore", "Hyderabad", "Peshawar", "Quetta"]), title: "City");
   RxBool isLoading = false.obs;
-  StudentModel userModel = StudentModel.empty();
+  StudentModel studentModel = StudentModel.empty();
   LoginModel loginModel = LoginModel.empty();
 
 
@@ -37,20 +37,20 @@ class StudentSignUpScreenController extends GetxController {
     loginModel.email = userEmailManager.controller.text;
     loginModel.password = passwordManager.controller.text;
 
-    userModel.name = usernameManager.controller.text;
-    userModel.address = userAddressManager.controller.text;
-    userModel.phone = userPhoneManager.controller.text;
-    userModel.email = userEmailManager.controller.text;
-    userModel.city = cityDD.selectedItem.string;
-    userModel.gender = genderDropdown.selectedItem.string;
-    userModel.password = passwordManager.controller.text.trim();
+    studentModel.name = usernameManager.controller.text;
+    studentModel.address = userAddressManager.controller.text;
+    studentModel.phone = userPhoneManager.controller.text;
+    studentModel.email = userEmailManager.controller.text;
+    studentModel.city = cityDD.selectedItem.string;
+    studentModel.gender = genderDropdown.selectedItem.string;
+    studentModel.password = passwordManager.controller.text.trim();
 
     if(passwordManager.controller.text.trim() != confirmPasswordManager.controller.text.trim()){
         isLoading.value = false;
           CustomDialogs().showErrorDialog("Alert", "Passwords donnot match!", DialogType.error, kRequiredRedColor);
     }
     if(checkInternet){
-      String response = await UserService().registerStudent(userModel);
+      String response = await UserService().registerStudent(studentModel);
         if(response == "Sucess"){
           isLoading.value = false;
           CustomDialogs().showErrorDialog("Success", "You have Registered Successfully.", DialogType.success, kGreenColor, onOkBtnPressed: (){Get.toNamed(kSignInScreenRoute);});
@@ -68,6 +68,7 @@ class StudentSignUpScreenController extends GetxController {
     }else{
       CustomDialogs().showErrorDialog("Alert", "No Internet is available!", DialogType.error, kRequiredRedColor);
     }
+    isLoading.value = false;
 
   }
 

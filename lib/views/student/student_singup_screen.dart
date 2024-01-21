@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_tutor/utils/user_session.dart';
 
-import '../../controllers/student_signup_screen_controller.dart';
+import '../../controllers/student/s_signup_screen_controller.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/constants.dart';
 import '../widgets/custom_circular_progress_indicator.dart';
@@ -56,7 +56,7 @@ class StudentSignUpScreen extends GetView<StudentSignUpScreenController> {
                       controller: controller.genderDropdown,
                       paddingVertical: 5),
                   GeneralTextField(
-                      tfManager: controller.confirmPasswordManager,
+                      tfManager: controller.userAddressManager,
                       isObscure: RxBool(false),
                       icon: Icons.home,
                       paddingVertical: 5),
@@ -78,11 +78,7 @@ class StudentSignUpScreen extends GetView<StudentSignUpScreenController> {
                     },
                     text: "Sign Up",
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: Container(
+                 Container(
                       padding: EdgeInsets.only(
                           top: Get.height * 0.02, bottom: Get.height * 0.05),
                       alignment: Alignment.bottomCenter,
@@ -108,7 +104,6 @@ class StudentSignUpScreen extends GetView<StudentSignUpScreenController> {
                         ],
                       ),
                     ),
-                  ),
                 ],
               ),
             ),

@@ -27,14 +27,14 @@ class UserSession {
     userModel.value = LoginModel.fromJson(jsonDecode(preference.getString('USER_DATA') ?? "{}"));
   }
 
-  Future<void> setRememberMe({required bool isRemember}) async {
+  Future<void> setRole({required String role}) async {
     final preference = await SharedPreferences.getInstance();
-    preference.setBool("remember_me", isRemember);
+    preference.setString("role", role);
   }
 
-  Future<bool> getRememberMe() async {
+  Future<String> getRole() async {
     final preference = await SharedPreferences.getInstance();
-    return preference.getBool("remember_me") ?? false;
+    return preference.getString("role") ?? 'Student';
   }
 
   Future<bool> logout() async {

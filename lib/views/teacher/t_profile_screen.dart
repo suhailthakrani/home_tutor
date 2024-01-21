@@ -1,129 +1,12 @@
-// ignore_for_file: unused_field
-
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_storage/firebase_storage.dart';
-import 'package:image_picker/image_picker.dart';
+import 'package:get/get.dart';
 
+import '../../controllers/teacher/t_profile_screen_controller.dart';
 
-class ProfileScreen extends StatefulWidget {
-  @override
-  _ProfileScreenState createState() => _ProfileScreenState();
-}
+class TProfileScreen extends GetView<TProfileScreenController> {
+  const TProfileScreen({super.key});
 
-class _ProfileScreenState extends State<ProfileScreen> {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  final FirebaseStorage _storage = FirebaseStorage.instance;
-
-  final TextEditingController _nameController = TextEditingController();
-  final TextEditingController _emailController = TextEditingController();
-  final TextEditingController _phoneController = TextEditingController();
-  final TextEditingController _addressController = TextEditingController();
-
-  final String _selectedSubject = '';
-  String _selectedCity = '';
-  String _selectedQualification = '';
-  String _role = '';
-
-  File? _image;
-  String? _imageUrl;
-  final picker = ImagePicker();
-
-  @override
-  void initState() {
-    loadProfile();
-    super.initState();
-  }
-
-  Future getImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
-    if (pickedFile != null) {
-      setState(() {
-        _image = File(pickedFile.path);
-      });
-    }
-  }
-
-  Future<String?> uploadImage() async {
-    if (_image != null) {
-      try {
-        var snapshot = await _storage
-            .ref()
-            .child('profile_images/${_auth.currentUser!.uid}')
-            .putFile(_image!);
-
-        String downloadUrl = await snapshot.ref.getDownloadURL();
-        return downloadUrl;
-      } catch (e) {
-        print("Error uploading image: $e");
-        return null;
-      }
-    } else {
-      return null;
-    }
-  }
-
-  Future<void> saveProfileData(String imageUrl) async {
-    User? user = _auth.currentUser;
-    if (user != null) {
-      String uid = user.uid;
-      await _firestore.collection('profiles').doc(uid).set({
-        'subjects': selectedSubjects,
-        'name': _nameController.text,
-        'email': _emailController.text,
-        'phone': _phoneController.text,
-        'address': _addressController.text,
-        'selectedCity': _selectedCity,
-        'selectedQualification': _selectedQualification,
-        'role': _role,
-        'imageUrl': imageUrl,
-      }).then((value) {
-        print("Profile data added successfully!");
-        // Optionally, you can show a success message or navigate to another screen
-      }).catchError((error) {
-        print("Failed to add profile data: $error");
-        // Handle error accordingly
-      });
-    }
-  }
-
-  Future<void> loadProfile() async {
-    User? user = _auth.currentUser;
-    String uid = user!.uid;
-    final userData =
-        (await _firestore.collection('profiles').doc(uid).get()).data()!;
-    if (userData.isEmpty) {
-      return;
-    }
-    _imageUrl = userData["imageUrl"];
-    _nameController.text = userData["name"];
-    _emailController.text = userData["email"];
-    _phoneController.text = userData["phone"];
-    _addressController.text = userData["address"];
-    selectedSubjects = List<String>.from(userData["subjects"]);
-    _selectedCity = userData["selectedCity"];
-    _selectedQualification = userData["selectedQualification"];
-    _role = userData["role"];
-
-    setState(() {});
-  }
-
-  List<String> selectedSubjects = [];
-  List<String> subjectsList = [
-    'Maths',
-    'Science',
-    'English',
-    'History'
-        "Physics",
-    "chemistry",
-    "Art",
-    "sindhi",
-    "Urdu"
-  ]; // Add more subjects as needed
+  // Add more subjects as needed
 
   @override
   Widget build(BuildContext context) {
@@ -152,13 +35,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               GestureDetector(
-                onTap: getImage,
-                child: (_image != null || _imageUrl != null)
+                onTap: controller.getImage,
+                child: (controller.image != null || controller.imageUrl != null)
                     ? CircleAvatar(
                         radius: 70,
-                        backgroundImage: (_imageUrl != null)
-                            ? NetworkImage(_imageUrl!) as ImageProvider
-                            : FileImage(_image!),
+                        backgroundImage: (controller.imageUrl != null)
+                            ? NetworkImage(controller.imageUrl!)
+                                as ImageProvider
+                            : FileImage(controller.image!),
                       )
                     : Container(
                         height: 140,
@@ -233,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               const SizedBox(height: 20.0),
               TextFormField(
-                controller: _nameController,
+                controller: controller.nameController,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.person),
                   contentPadding: const EdgeInsets.all(10),
@@ -244,7 +128,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               const SizedBox(height: 10),
               TextField(
-                controller: _emailController,
+                controller: controller.emailController,
                 decoration: InputDecoration(
                   prefixIcon: const Icon(Icons.email),
                   contentPadding: const EdgeInsets.all(10),
@@ -255,7 +139,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               const SizedBox(height: 10),
               TextField(
-                controller: _phoneController,
+                controller: controller.phoneController,
                 decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.phone),
                     contentPadding: const EdgeInsets.all(10),
@@ -264,7 +148,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
               ),
               const SizedBox(height: 10),
               TextField(
-                controller: _addressController,
+                controller: controller.addressController,
                 decoration: InputDecoration(
                     prefixIcon: const Icon(Icons.location_city_outlined),
                     contentPadding: const EdgeInsets.all(10),
@@ -277,7 +161,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     contentPadding: const EdgeInsets.all(10),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10))),
-                items: subjectsList.map((String subject) {
+                items: controller.subjectsList.map((String subject) {
                   return DropdownMenuItem<String>(
                     value: subject,
                     child: Text(subject),
@@ -285,15 +169,14 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 }).toList(),
                 onChanged: (String? value) {
                   if (value != null) {
-                    setState(() {
-                      selectedSubjects.add(value);
-                    });
+                    controller.selectedSubjects.add(value);
                   }
                 },
                 hint: const Text('Select Subjects'),
                 isExpanded: true,
-                value:
-                    selectedSubjects.isNotEmpty ? selectedSubjects.last : null,
+                value: controller.selectedSubjects.isNotEmpty
+                    ? controller.selectedSubjects.last
+                    : null,
               ),
               const SizedBox(height: 20.0),
               const Text(
@@ -301,13 +184,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 style: TextStyle(fontSize: 18.0),
               ),
               Wrap(
-                children: selectedSubjects
+                children: controller.selectedSubjects
                     .map((subject) => Chip(
                           label: Text(subject),
                           onDeleted: () {
-                            setState(() {
-                              selectedSubjects.remove(subject);
-                            });
+                            controller.selectedSubjects.remove(subject);
                           },
                         ))
                     .toList(),
@@ -318,12 +199,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     contentPadding: const EdgeInsets.all(10),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10))),
-                value: _selectedCity.isNotEmpty ? _selectedCity : null,
+                value: controller.selectedCity.isNotEmpty
+                    ? controller.selectedCity
+                    : null,
                 hint: const Text('Select City'),
                 onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedCity = newValue!;
-                  });
+                  controller.selectedCity = newValue!;
                 },
                 items: <String>[
                   ' Hyderabad',
@@ -344,14 +225,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     contentPadding: const EdgeInsets.all(10),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10))),
-                value: _selectedQualification.isNotEmpty
-                    ? _selectedQualification
+                value: controller.selectedQualification.isNotEmpty
+                    ? controller.selectedQualification
                     : null,
                 hint: const Text('Select Qualification'),
                 onChanged: (String? newValue) {
-                  setState(() {
-                    _selectedQualification = newValue!;
-                  });
+                  controller.selectedQualification = newValue!;
                 },
                 items: <String>[
                   'Bachelor\'s Degree',
@@ -368,18 +247,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   );
                 }).toList(),
               ),
-              SizedBox(height: 10),
+              const SizedBox(height: 20.0),
               DropdownButtonFormField<String>(
                 decoration: InputDecoration(
                     contentPadding: const EdgeInsets.all(10),
                     border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(10))),
-                value: _role.isNotEmpty ? _role : null,
+                value: controller.role.isNotEmpty ? controller.role : null,
                 hint: const Text('Select Role'),
                 onChanged: (String? newValue) {
-                  setState(() {
-                    _role = newValue!;
-                  });
+                  controller.role = newValue!;
                 },
                 items: <String>[
                   "Teacher",
@@ -392,13 +269,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   );
                 }).toList(),
               ),
-         
               const SizedBox(height: 20.0),
               ElevatedButton(
                 onPressed: () async {
-                  String? imageUrl = await uploadImage();
-                  if (imageUrl != null) {
-                    saveProfileData(imageUrl);
+                  String imageUrl = await controller.uploadImage() ?? '';
+                  if (imageUrl != '') {
+                    controller.saveProfileData(controller.imageUrl!);
                   } else {
                     // Handle image upload error
                     print("Error uploading image");

@@ -47,16 +47,22 @@ class SignInScreenController extends GetxController {
     bool checkInternet = await CommonCode().checkInternetConnection();
     if(checkInternet){
       String response = await UserService().loginUser(loginModel);
-      print('--------------------:::::::::::::::::::::2: $response');
-      if(response == "Success"){
+      
+      if(response == "Sucess"){
         isLoading.value = false;
-        UserSession().setRememberMe(isRemember: rememberMe.value);
+        String role = await UserSession().getRole();
+        loginModel.role = role;
+        print('--------------------:::::::::::::::::::::2: $response');
         UserSession().createSession(user: loginModel);
         if(UserSession.userModel.value.role == "Student"){
           Get.offAllNamed(kStudentHomeScreenRoute);
         } else {
           Get.offAllNamed(kTeacherHomeScreenRoute);
         }
+      }
+      else if(response.contains("email")){
+        isLoading.value = false;
+        CustomDialogs().showErrorDialog("Alert", "$response!", DialogType.error, kRequiredRedColor);
       }
       else if(response.contains("user-not-found")){
         isLoading.value = false;

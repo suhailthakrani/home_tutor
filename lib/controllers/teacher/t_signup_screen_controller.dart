@@ -6,14 +6,14 @@ import 'package:home_tutor/models/teacher_model.dart';
 import 'package:home_tutor/utils/constants.dart';
 
 
-import '../models/login_model.dart';
-import '../services/users_services.dart';
-import '../utils/app_colors.dart';
-import '../utils/common_code.dart';
-import '../utils/dropdown_controller.dart';
-import '../utils/text_field_manager.dart';
-import '../utils/text_filter.dart';
-import '../views/widgets/custom_dialogs.dart';
+import '../../models/login_model.dart';
+import '../../services/users_services.dart';
+import '../../utils/app_colors.dart';
+import '../../utils/common_code.dart';
+import '../../utils/dropdown_controller.dart';
+import '../../utils/text_field_manager.dart';
+import '../../utils/text_filter.dart';
+import '../../views/widgets/custom_dialogs.dart';
 
 class TeacherSignUpScreenController extends GetxController {
   GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();

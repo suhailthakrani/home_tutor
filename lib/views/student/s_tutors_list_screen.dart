@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:home_tutor/controllers/student/s_tutors_list_screen_controller.dart';
 
-class FavoriteScreen extends StatefulWidget {
-  const FavoriteScreen({super.key});
+class STutorsListScreen extends GetView<STutorsListScreenController> {
+  const STutorsListScreen({super.key});
 
-  @override
-  State<FavoriteScreen> createState() => _FavoriteScreenState();
-}
-
-class _FavoriteScreenState extends State<FavoriteScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -15,7 +12,7 @@ class _FavoriteScreenState extends State<FavoriteScreen> {
         backgroundColor: Colors.green,
         centerTitle: true,
         title: const Text(
-          "Favorite Tutor",
+          "Tutor",
           style: TextStyle(
               fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
         ),

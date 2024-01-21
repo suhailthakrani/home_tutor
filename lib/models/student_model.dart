@@ -1,6 +1,7 @@
 class StudentModel {
   String name = '';
   String email = '';
+  String profile = '';
   String password = '';
   String phone = '';
   String address = '';
@@ -22,6 +23,7 @@ class StudentModel {
   StudentModel.fromJson(Map<String, dynamic> json):
       name = json['name']??'',
       email = json['email']??'',
+      profile = json['profile']??'',
       phone = json['phone']??'',
       password = json['password']??'',
       address = json['address']??'',
@@ -33,8 +35,12 @@ class StudentModel {
       'name': name,
       'email': email,
       'password': password,
+      'profile': profile,
       'phone': phone,
       'address': address,
+      'city':city,
+      'gender':gender,
+      'enrolled_courses':[],
     };
   }
 }

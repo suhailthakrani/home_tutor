@@ -2,16 +2,12 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:home_tutor/controllers/teacher/t_home_screen_controller.dart';
 import 'package:home_tutor/views/widgets/Request_student.dart';
 
-class TeacherHomeScreen extends StatefulWidget {
+class TeacherHomeScreen extends GetView<THomeScreenController> {
   const TeacherHomeScreen({super.key});
-
-  @override
-  State<TeacherHomeScreen> createState() => _TeacherHomeScreenState();
-}
-
-class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -75,7 +71,7 @@ class _TeacherHomeScreenState extends State<TeacherHomeScreen> {
                 fontWeight: FontWeight.bold,
               ),
             ),
-            RequestStudent(),
+            // RequestStudent(),
             Text(
               "Enroll Student",
               style: TextStyle(

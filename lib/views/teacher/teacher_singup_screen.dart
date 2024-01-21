@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-import '../../controllers/teacher_signup_screen_controller.dart';
+import '../../controllers/teacher/t_signup_screen_controller.dart';
 import '../../utils/app_colors.dart';
 import '../../utils/constants.dart';
 import '../widgets/custom_circular_progress_indicator.dart';
@@ -19,7 +19,7 @@ class TeacherSignUpScreen extends GetView<TeacherSignUpScreenController> {
       body: getBody(),
       scaffoldKey: controller.scaffoldKey,
       className: runtimeType.toString(),
-      screenName: "Create Account for SWM",
+      screenName: "Create Account",
       onWillPop: () {
         Get.back();
       },
@@ -29,12 +29,12 @@ class TeacherSignUpScreen extends GetView<TeacherSignUpScreenController> {
   Widget getBody() {
     return Obx(() => !controller.isLoading.value
         ? SizedBox(
-            height: Get.height * 0.7,
+            height: Get.height * 0.85,
             child: SingleChildScrollView(
               child: Column(
                 children: [
                   SizedBox(
-                    height: Get.height * 0.05,
+                    height: Get.height * 0.008,
                   ),
                   GeneralTextField(
                       tfManager: controller.usernameManager,

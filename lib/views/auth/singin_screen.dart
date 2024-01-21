@@ -60,7 +60,7 @@ class SignInScreen extends GetView<SignInScreenController> {
                   ),
                   GestureDetector(
                     onTap: () {
-                      Get.toNamed(kForgotPasswordScreenRoute);
+                      // Get.toNamed(kForgotPasswordScreenRoute);
                     },
                     child: Container(
                       padding: EdgeInsets.only(

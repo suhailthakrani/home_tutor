@@ -136,7 +136,7 @@ class WelcomeScreen extends GetView<WelcomeScreenController> {
               Obx(
                 () => InkWell(
                   onTap: () {
-                    controller.onIndexChanged(0);
+                    controller.onIndexChanged(1);
                   },
                   child: Material(
                     borderRadius: BorderRadius.circular(20),

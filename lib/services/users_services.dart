@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:home_tutor/models/login_model.dart';
@@ -39,6 +41,7 @@ class UserService {
         email: studentModel.email,
         password: studentModel.password,
       );
+      log("================${studentModel.toJson()}");
       User? user = userCredential.user;
       await _firestore.collection('students').doc(user!.uid).set(studentModel.toJson());
       if(userCredential.user != null){
@@ -55,7 +58,7 @@ class UserService {
 
   Future<String> loginUser(LoginModel loginModel) async {
     try {
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      UserCredential userCredential = await _auth.signInWithEmailAndPassword(
         email: loginModel.email,
         password: loginModel.password,
       );

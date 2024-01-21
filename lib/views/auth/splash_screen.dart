@@ -13,11 +13,10 @@ class SplashScreen extends GetView<SplashScreenController> {
 
    @override
      Widget build(BuildContext context) {
-      Future.delayed(const Duration(seconds: 15)).then((value) => controller.screenNavigation());
       return  Scaffold(
         backgroundColor: Colors.white,
         body: GestureDetector(
-          onDoubleTap: () {
+          onTap: () {
             controller.onScreenTap();
           },
           child: const Center(
