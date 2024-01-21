@@ -11,6 +11,7 @@ import 'package:home_tutor/views/teacher/teacher_main_screen.dart';
 import 'package:home_tutor/views/teacher/teacher_singup_screen.dart';
 import '../views/auth/singin_screen.dart';
 import '../views/student/s_account_screen.dart';
+import '../views/student/s_fav_tutors_screen.dart';
 import '../views/student/s_home_screen.dart';
 import '../views/student/s_profile_screen.dart';
 import '../views/student/student_singup_screen.dart';
@@ -101,6 +102,11 @@ class RouteManagement {
       GetPage(
         name: kSTutorsListScreenRoute,
         page: () => const STutorsListScreen(),
+        binding: ScreensBindings(),
+      ),
+       GetPage(
+        name: kSFavTeacherScreenRoute,
+        page: () => const SFavListScreen(),
         binding: ScreensBindings(),
       ),
     ];

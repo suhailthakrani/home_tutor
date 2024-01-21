@@ -1,9 +1,19 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 import '../../models/teacher_model.dart';
+import '../../services/students_service.dart';
 
 class SHomeScreenController extends GetxController {
+
+
+  @override
+  void onInit() {
+    print("object--------------${StudentsService().getFavTeachers()}");
+    super.onInit();
+  }
 
 
   TextEditingController searchController = TextEditingController();
@@ -17,7 +27,7 @@ class SHomeScreenController extends GetxController {
     "Science",
     "Chemistry",
     "Arts",
-    "urdu",
+    "Urdu",
     "Mathematics",
   ].obs;
 

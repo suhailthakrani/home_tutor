@@ -14,10 +14,15 @@ class SAccountScreen extends GetView<SAccountScreenController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 70,
-        backgroundColor: kPrimaryColor,
+         backgroundColor: kPrimaryColor,
+          toolbarHeight: 70,
+          centerTitle: true,
+          leading: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Image.asset('assets/images/reading.png'),
+          ),
         foregroundColor: kWhiteColor,
-        title: const Text("Settings"),
+        title: const Text("Account & Settings"),
       ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),

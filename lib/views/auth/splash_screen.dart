@@ -13,13 +13,13 @@ class SplashScreen extends GetView<SplashScreenController> {
 
    @override
      Widget build(BuildContext context) {
-      return  Scaffold(
-        backgroundColor: Colors.white,
-        body: GestureDetector(
-          onTap: () {
-            controller.onScreenTap();
-          },
-          child: const Center(
+      return  GestureDetector(
+        onTap: () {
+              controller.screenNavigation();
+            },
+        child:const Scaffold(
+          backgroundColor: Colors.white,
+          body:  Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
@@ -48,7 +48,7 @@ class SplashScreen extends GetView<SplashScreenController> {
                 )
               ],
             ),
-          ),
-        ));
+          )),
+      );
   }
 }

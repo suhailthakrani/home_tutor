@@ -8,7 +8,7 @@ import 'package:home_tutor/controllers/student/s_home_screen_controller.dart';
 import 'package:home_tutor/models/teacher_model.dart';
 import 'package:home_tutor/utils/app_colors.dart';
 import 'package:home_tutor/views/student/s_tutors_list_screen.dart';
-import '../../services/firebase_service.dart';
+import '../../services/students_service.dart';
 import '../../utils/constants.dart';
 import '../widgets/city_wise_tutor.dart';
 import 'teacher_search_deligate.dart';
@@ -153,7 +153,8 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                             ),
                           ),
                         );
-                      }),
+                      },
+                    ),
                 ),
               ),
               Padding(
@@ -190,7 +191,7 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                 ),
               ),
               FutureBuilder(
-                future: MyFirebaseService().getProfilesFromFirebase(),
+                future: StudentsService().getTeachersFromFirebase(),
                 builder: (context, snapshot) {
                   List<TeacherModel> teachers = snapshot.data ?? [];
                   if (snapshot.hasError) {
@@ -390,7 +391,7 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                     ]),
               ),
               FutureBuilder(
-                future: MyFirebaseService().getProfilesFromFirebase(),
+                future: StudentsService().getTeachersFromFirebase(),
                 builder: (context, snapshot) {
                   List<TeacherModel> teachers = snapshot.data ?? [];
                   if (snapshot.hasError) {
@@ -558,7 +559,7 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                           }),
                     );
                   }
-                  return Container();
+                  return Container(height: 140);
                 },
               ),
               Padding(
@@ -593,7 +594,7 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                     ]),
               ),
               FutureBuilder(
-                future: MyFirebaseService().getProfilesFromFirebase(),
+                future: StudentsService().getTeachersFromFirebase(),
                 builder: (context, snapshot) {
                   List<TeacherModel> teachers = snapshot.data ?? [];
                   if (snapshot.hasError) {
