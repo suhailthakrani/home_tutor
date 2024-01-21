@@ -26,7 +26,7 @@ const String kSAccountScreenRoute = '/SAccountScreenRoute';
 const String kSHomeScreenRoute = '/SHomeScreenRoute';
 const String kSProfileScreenRoute = '/SProfileScreenRoute';
 const String kSTutorsListScreenRoute = '/STutorsListScreenRoute';
-
+const String kSTeacherDetailsScreenRoute = '/STeacherDetailsScreenRoute';
 
 ///*********************  Messages   *********************///
 const String kPermissionPermanentlyDenied =

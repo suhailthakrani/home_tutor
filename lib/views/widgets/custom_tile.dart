@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:home_tutor/utils/app_colors.dart';
 
 class CustomListTile extends StatelessWidget {
   final String title;
@@ -22,27 +23,33 @@ class CustomListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListTile(
-      contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-      leading: leading,
-      title: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 15,
-          fontWeight: FontWeight.w500,
+    return PhysicalModel(
+      color: kFieldGreyColor,
+      borderRadius: BorderRadius.circular(16),
+      // padding: const EdgeInsets.all(8.0),
+      elevation: 1,
+      child: ListTile(
+        contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        leading: leading,
+        title: Text(
+          title,
+          style: const TextStyle(
+            fontSize: 15,
+            fontWeight: FontWeight.w500,
+          ),
         ),
+        subtitle: subtitle != null
+            ? Text(
+                subtitle!,
+                style: const TextStyle(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                ),
+              )
+            : null,
+        trailing: trailing,
+        onTap: onTap,
       ),
-      subtitle: subtitle != null
-          ? Text(
-              subtitle!,
-              style: const TextStyle(
-                fontSize: 12,
-                fontWeight: FontWeight.w400,
-              ),
-            )
-          : null,
-      trailing: trailing,
-      onTap: onTap,
     );
   }
 }

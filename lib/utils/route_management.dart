@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:home_tutor/views/auth/welcome_screen.dart';
+import 'package:home_tutor/views/student/s_tutor_details_screen.dart';
 import 'package:home_tutor/views/student/s_tutors_list_screen.dart';
 import 'package:home_tutor/views/student/student_main_screen.dart';
 import 'package:home_tutor/views/teacher/t_account_screen.dart';
@@ -85,6 +86,11 @@ class RouteManagement {
       GetPage(
         name: kSProfileScreenRoute,
         page: () => const SProfileScreen(),
+        binding: ScreensBindings(),
+      ),
+       GetPage(
+        name: kSTeacherDetailsScreenRoute,
+        page: () => const STeacherDetailsScreen(),
         binding: ScreensBindings(),
       ),
       GetPage(

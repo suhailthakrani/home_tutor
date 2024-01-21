@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_tutor/controllers/teacher/t_account_screen_controller.dart';
+import 'package:home_tutor/utils/constants.dart';
 
 import '../../utils/app_colors.dart';
 import '../widgets/custom_tile.dart';
@@ -24,22 +25,27 @@ class TAccountScreen extends GetView<TAccountScreenController> {
           const SizedBox(height: 16),
           CustomListTile(
             leading: const Icon(Icons.person),
-            onTap: () {},
+            onTap: () {
+              Get.toNamed(kTProfileScreenRoute);
+            },
             title: 'Profile',
             subtitle: 'Customize Your Profile Settings',
           ),
+          const SizedBox(height: 16),
           CustomListTile(
             leading: const Icon(Icons.person),
             onTap: () {},
             title: 'My Students',
             subtitle: 'See your teachers you are teaching',
           ),
+          const SizedBox(height: 16),
           CustomListTile(
             leading: const Icon(Icons.person),
             onTap: () {},
             title: 'My Subjects',
             subtitle: 'See your subjets you are teaching',
           ),
+          const SizedBox(height: 16),
           CustomListTile(
             leading: const Icon(Icons.location_on_outlined),
             onTap: () {},

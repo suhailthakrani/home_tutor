@@ -3,6 +3,9 @@ import 'package:get/get.dart';
 import 'package:home_tutor/controllers/student/s_tutors_list_screen_controller.dart';
 import 'package:home_tutor/utils/app_colors.dart';
 
+import '../../utils/constants.dart';
+import 'teacher_search_deligate.dart';
+
 class STutorsListScreen extends GetView<STutorsListScreenController> {
   const STutorsListScreen({super.key});
 
@@ -10,12 +13,15 @@ class STutorsListScreen extends GetView<STutorsListScreenController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.green,
+        backgroundColor: kPrimaryColor,
         centerTitle: true,
         title: const Text(
-          "Tutor",
+          "Your Favourite Tutors",
           style: TextStyle(
-              fontSize: 20, fontWeight: FontWeight.bold, color: Colors.white),
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+            color: Colors.white,
+          ),
         ),
         bottom: PreferredSize(
           preferredSize: const Size(3, 60),
@@ -31,16 +37,29 @@ class STutorsListScreen extends GetView<STutorsListScreenController> {
                   ),
                   child: TextFormField(
                     decoration: InputDecoration(
-                        hintText: 'Search',
-                        hintStyle: const TextStyle(
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        prefixIcon: const Icon(Icons.search),
-                        border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(10),
-                            borderSide: const BorderSide(color: Colors.white)),
-                        fillColor: Colors.white),
+                      hintText: 'Search Here',
+                      hintStyle: const TextStyle(
+                        fontSize: 14,
+                      ),
+                      prefixIcon: const Icon(Icons.search),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10),
+                        borderSide: BorderSide.none,
+                      ),
+                      fillColor: Colors.white,
+                      suffix: IconButton(
+                        onPressed: () {
+                          showSearch(
+                            context: context,
+                            delegate: TeacherSearchDelegate(
+                              controller.teacherList,
+                              controller.searchController.text,
+                            ),
+                          );
+                        },
+                        icon: const Icon(Icons.search),
+                      ),
+                    ),
                   ),
                 ),
               ),
@@ -50,6 +69,7 @@ class STutorsListScreen extends GetView<STutorsListScreenController> {
       ),
       body: SingleChildScrollView(
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Obx(
               () => Padding(
@@ -87,6 +107,120 @@ class STutorsListScreen extends GetView<STutorsListScreenController> {
                 ),
               ),
             ),
+            ListView.separated(
+              physics: const NeverScrollableScrollPhysics(),
+              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+              itemCount: 7,
+              shrinkWrap: true,
+              itemBuilder: (context, index) {
+                return InkWell(
+                  onTap: () {
+                    Get.toNamed(kSTeacherDetailsScreenRoute);
+                  },
+                  child: SizedBox(
+                    height: 120,
+                    child: Row(
+                      children: [
+                        ClipRRect(
+                          borderRadius: BorderRadius.circular(24),
+                          child: Image.asset(
+                            'assets/images/reading.png',
+                            width: Get.width * 0.3,
+                          ),
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding: const EdgeInsets.only(
+                              left: 8.0,
+                              top: 8,
+                              bottom: 8,
+                            ),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      "Karan Malhi",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                    Text(
+                                      " 5\$ Per Hour  ",
+                                      style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        backgroundColor: Colors.amber,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                const Text("BA (Mathermatics)"),
+                                const Align(
+                                  alignment: Alignment.centerLeft,
+                                  child: Text(
+                                    "Add Address Here, City",
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(fontSize: 11),
+                                  ),
+                                ),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    TextButton(
+                                        style: ElevatedButton.styleFrom(
+                                          backgroundColor: kFieldGreyColor,
+                                          foregroundColor: kPrimaryColor,
+                                          padding: const EdgeInsets.symmetric(
+                                            horizontal: 8,
+                                          ),
+                                        ),
+                                        onPressed: () {},
+                                        child: const Text("Request")),
+                                    Wrap(
+                                      children: [
+                                        IconButton(
+                                          style: ElevatedButton.styleFrom(
+                                              padding: EdgeInsets.zero),
+                                          onPressed: () {},
+                                          icon: const Icon(
+                                            Icons.call,
+                                            size: 20,
+                                            color: kPrimaryColor,
+                                          ),
+                                        ),
+                                        const SizedBox(
+                                          width: 24,
+                                        ),
+                                        IconButton(
+                                          style: ElevatedButton.styleFrom(
+                                              padding: EdgeInsets.zero),
+                                          onPressed: () {},
+                                          icon: const Icon(
+                                            Icons.message,
+                                            size: 24,
+                                            color: kPrimaryColor,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                  ],
+                                )
+                              ],
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+              separatorBuilder: (_, int index) => const Divider(),
+            )
           ],
         ),
       ),

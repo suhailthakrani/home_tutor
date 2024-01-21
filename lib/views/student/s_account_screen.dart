@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_tutor/controllers/student/s_account_screen_controller.dart';
 import 'package:home_tutor/utils/app_colors.dart';
+import 'package:home_tutor/utils/constants.dart';
 
 import '../widgets/custom_tile.dart';
 
@@ -18,49 +19,58 @@ class SAccountScreen extends GetView<SAccountScreenController> {
         foregroundColor: kWhiteColor,
         title: const Text("Settings"),
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(height: 16),
-          CustomListTile(
-            leading: const Icon(Icons.person),
-            onTap: () {},
-            title: 'Profile',
-            subtitle: 'Customize Your Profile Settings',
-          ),
-          CustomListTile(
-            leading: const Icon(Icons.person),
-            onTap: () {},
-            title: 'My Teachers',
-            subtitle: 'See your teachers you are learning from',
-          ),
-          CustomListTile(
-            leading: const Icon(Icons.person),
-            onTap: () {},
-            title: 'My Subjects',
-            subtitle: 'See your subjets you are studying',
-          ),
-          CustomListTile(
-            leading: const Icon(Icons.location_on_outlined),
-            onTap: () {},
-            title: 'Location',
-            trailing: Switch(
-              value: false,
-              onChanged: (value) {
-                //
+      body: Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 16),
+            CustomListTile(
+              leading: const Icon(Icons.person),
+              onTap: () {
+                Get.toNamed(kSProfileScreenRoute);
               },
+              title: 'Profile',
+              subtitle: 'Customize Your Profile Settings',
             ),
-          ),
-          Spacer(),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: CustomListTile(
-              leading: const Icon(Icons.logout),
+            const SizedBox(height: 16),
+            CustomListTile(
+              leading: const Icon(Icons.person),
               onTap: () {},
-              title: 'Logout',
+              title: 'My Teachers',
+              subtitle: 'See your teachers you are learning from',
             ),
-          ),
-        ],
+            const SizedBox(height: 16),
+            CustomListTile(
+              leading: const Icon(Icons.person),
+              onTap: () {},
+              title: 'My Subjects',
+              subtitle: 'See your subjets you are studying',
+            ),
+            const SizedBox(height: 16),
+            CustomListTile(
+              leading: const Icon(Icons.location_on_outlined),
+              onTap: () {},
+              title: 'Location',
+              trailing: Switch(
+                value: false,
+                onChanged: (value) {
+                  //
+                },
+              ),
+            ),
+            const SizedBox(height: 16),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CustomListTile(
+                leading: const Icon(Icons.logout),
+                onTap: () {},
+                title: 'Logout',
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

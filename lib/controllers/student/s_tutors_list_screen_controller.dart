@@ -1,19 +1,22 @@
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:home_tutor/models/teacher_model.dart';
 
 class STutorsListScreenController extends GetxController {
+
+  TextEditingController searchController = TextEditingController();
+  RxList<TeacherModel> teacherList = <TeacherModel>[].obs;
   RxString selectedChip = ''.obs;
 
   RxList<String> subject = [
-    "Medical Tuition",
     "Physics",
-    " Sindhi Tuition",
-    "English Tuition",
-    "Science Tuition",
+    "Sindhi",
+    "English",
+    "Science",
     "Chemistry",
-    "Arts Tuition",
+    "Arts",
     "urdu",
-    "Mathematics Tuition",
-    "1 to 8 class Tuition",
+    "Mathematics",
   ].obs;
 
    void selectChip(String chipLabel) {
