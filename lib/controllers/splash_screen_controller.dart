@@ -14,7 +14,7 @@ class SplashScreenController extends GetxController{
 
   @override
   void onInit() {
-    Future.delayed(Duration(seconds: 5)).then((value) => screenNavigation);
+    Future.delayed(const Duration(seconds: 5)).then((value) => screenNavigation);
     super.onInit();
   }
 

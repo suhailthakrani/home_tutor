@@ -75,7 +75,11 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
           child: Column(
             children: [
               const Padding(
-                padding: EdgeInsets.only(top: 10, left: 12, bottom: 8),
+                padding: EdgeInsets.only(
+                  top: 10,
+                  left: 12,
+                  bottom: 8,
+                ),
                 child:
                     Row(mainAxisAlignment: MainAxisAlignment.start, children: [
                   Text(
@@ -116,10 +120,11 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                             borderRadius: BorderRadius.circular(15),
                             boxShadow: [
                               BoxShadow(
-                                  color: Colors.grey.shade100,
-                                  spreadRadius: 2,
-                                  blurRadius: 1,
-                                  offset: const Offset(0, 2)),
+                                color: Colors.grey.shade100,
+                                spreadRadius: 2,
+                                blurRadius: 1,
+                                offset: const Offset(0, 2),
+                              ),
                             ],
                           ),
                           child: Column(
@@ -174,32 +179,34 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
               Padding(
                 padding: const EdgeInsets.only(top: 10, left: 12),
                 child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Tutors Near By",
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const Text(
+                      "Tutors Near By",
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
                       ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const STutorsListScreen()));
-                        },
-                        child: const Text(
-                          "See All",
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
-                            fontSize: 14,
+                    ),
+                    TextButton(
+                      onPressed: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => const STutorsListScreen(),
                           ),
+                        );
+                      },
+                      child: const Text(
+                        "See All",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 14,
                         ),
                       ),
-                    ]),
+                    ),
+                  ],
+                ),
               ),
               FutureBuilder(
                 future: MyFirebaseService().getProfilesFromFirebase(),
@@ -212,14 +219,11 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                     return SizedBox(
                       height: 280,
                       child: ListView.builder(
-                          padding: EdgeInsets.only(left: 12),
+                          padding: const EdgeInsets.only(left: 12),
                           itemCount: teachers.length,
                           shrinkWrap: true,
                           scrollDirection: Axis.horizontal,
-                          itemBuilder: (
-                            context,
-                            index,
-                          ) {
+                          itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {
                                 // Navigator.pushReplacement(

@@ -31,11 +31,11 @@ class TeacherMainScreen extends GetView<TMainScreenController> {
               label: "Home",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.ac_unit_outlined),
-              label: "Students",
+              icon: Icon(Icons.school),
+              label: "My Students",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.message),
+              icon: Icon(Icons.person),
               label: "Account",
             ),
           ],

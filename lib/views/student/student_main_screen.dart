@@ -31,11 +31,11 @@ class StudentMainScreen extends GetView<SMainScreenController> {
               label: "Home",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.ac_unit_outlined),
-              label: "Students",
+              icon: Icon(Icons.school),
+              label: "My Tutors",
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.message),
+              icon: Icon(Icons.person),
               label: "Account",
             ),
           ],
