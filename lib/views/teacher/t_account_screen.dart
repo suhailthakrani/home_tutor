@@ -14,59 +14,66 @@ class TAccountScreen extends GetView<TAccountScreenController> {
   Widget build(BuildContext context) {
    return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 100,
+        toolbarHeight: 70,
         backgroundColor: kPrimaryColor,
         foregroundColor: kWhiteColor,
-        title: const Text("Settings"),
-      ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(height: 16),
-          CustomListTile(
-            leading: const Icon(Icons.person),
-            onTap: () {
-              Get.toNamed(kTProfileScreenRoute);
-            },
-            title: 'Profile',
-            subtitle: 'Customize Your Profile Settings',
-          ),
-          const SizedBox(height: 16),
-          CustomListTile(
-            leading: const Icon(Icons.person),
-            onTap: () {},
-            title: 'My Students',
-            subtitle: 'See your teachers you are teaching',
-          ),
-          const SizedBox(height: 16),
-          CustomListTile(
-            leading: const Icon(Icons.person),
-            onTap: () {},
-            title: 'My Subjects',
-            subtitle: 'See your subjets you are teaching',
-          ),
-          const SizedBox(height: 16),
-          CustomListTile(
-            leading: const Icon(Icons.location_on_outlined),
-            onTap: () {},
-            title: 'Location',
-            trailing: Switch(
-              value: false,
-              onChanged: (value) {
-                //
-              },
-            ),
-          ),
-          Spacer(),
-          Padding(
+        leading: Padding(
             padding: const EdgeInsets.all(8.0),
-            child: CustomListTile(
-              leading: const Icon(Icons.logout),
-              onTap: () {},
-              title: 'Logout',
+            child: Image.asset('assets/images/reading.png'),
+        ),
+        title: const Text("Account & Settings"),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(16),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            const SizedBox(height: 16),
+            CustomListTile(
+              leading: const Icon(Icons.person),
+              onTap: () {
+                Get.toNamed(kTProfileScreenRoute);
+              },
+              title: 'Profile',
+              subtitle: 'Customize Your Profile Settings',
             ),
-          ),
-        ],
+            const SizedBox(height: 16),
+            CustomListTile(
+              leading: const Icon(Icons.person),
+              onTap: () {},
+              title: 'My Students',
+              subtitle: 'See your teachers you are teaching',
+            ),
+            const SizedBox(height: 16),
+            CustomListTile(
+              leading: const Icon(Icons.person),
+              onTap: () {},
+              title: 'My Subjects',
+              subtitle: 'See your subjets you are teaching',
+            ),
+            const SizedBox(height: 16),
+            CustomListTile(
+              leading: const Icon(Icons.location_on_outlined),
+              onTap: () {},
+              title: 'Location',
+              trailing: Switch(
+                value: false,
+                onChanged: (value) {
+                  //
+                },
+              ),
+            ),
+            Spacer(),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: CustomListTile(
+                leading: const Icon(Icons.logout),
+                onTap: () {},
+                title: 'Logout',
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

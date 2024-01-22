@@ -116,6 +116,7 @@ class SignInScreen extends GetView<SignInScreenController> {
               ),
             ],
           )
-        : const CustomCircularProgressIndicator());
+        : const Center(child: CircularProgressIndicator(color: kPrimaryColor),),
+        );
   }
 }

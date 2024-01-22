@@ -85,8 +85,8 @@ class SignInScreenController extends GetxController {
       CustomDialogs().showErrorDialog("Alert", "No Internet is available!", DialogType.error, kRequiredRedColor);
 
     }
-
-
+    isLoading.value = false;
+    notifyChildrens();
   }
 
 

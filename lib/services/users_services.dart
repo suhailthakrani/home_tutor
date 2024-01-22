@@ -74,4 +74,15 @@ class UserService {
       return '${e.toString()}';
     }
   }
+
+  Future<bool> logOut() async {
+    try {
+      await _auth.signOut();
+      bool result = await UserSession().logout();
+      return result;
+    } catch (e) {
+      print('Error during registration: $e');
+      return false;
+    }
+  }
 }

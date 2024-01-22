@@ -10,9 +10,10 @@ class SHomeScreenController extends GetxController {
 
 
   @override
-  void onInit() {
-    print("object--------------${StudentsService().getFavTeachers()}");
-    super.onInit();
+  Future<void> onReady() async {
+    List<TeacherModel> teacherModel = await StudentsService().getFavTeachers();
+    print("object--------------${teacherModel.map((e) => e.toJson()).toList()}");
+    super.onReady();
   }
 
 

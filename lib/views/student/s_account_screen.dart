@@ -2,8 +2,10 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_tutor/controllers/student/s_account_screen_controller.dart';
+import 'package:home_tutor/services/users_services.dart';
 import 'package:home_tutor/utils/app_colors.dart';
 import 'package:home_tutor/utils/constants.dart';
+import 'package:home_tutor/views/widgets/custom_dialogs.dart';
 
 import '../widgets/custom_tile.dart';
 
@@ -14,13 +16,13 @@ class SAccountScreen extends GetView<SAccountScreenController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-         backgroundColor: kPrimaryColor,
-          toolbarHeight: 70,
-          centerTitle: true,
-          leading: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset('assets/images/reading.png'),
-          ),
+        backgroundColor: kPrimaryColor,
+        toolbarHeight: 70,
+        centerTitle: true,
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.asset('assets/images/reading.png'),
+        ),
         foregroundColor: kWhiteColor,
         title: const Text("Account & Settings"),
       ),
@@ -70,7 +72,15 @@ class SAccountScreen extends GetView<SAccountScreenController> {
               padding: const EdgeInsets.all(8.0),
               child: CustomListTile(
                 leading: const Icon(Icons.logout),
-                onTap: () {},
+                onTap: () async {
+                  CustomDialogs().showAwesomeConfirmationDialog(
+                      "Are you sure want to logout?", onOkBtnPressed: () async {
+                    bool result = await UserService().logOut();
+                    if (result) {
+                      Get.offAllNamed(kWelcomeScreenRoute);
+                    }
+                  });
+                },
                 title: 'Logout',
               ),
             ),

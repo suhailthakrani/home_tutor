@@ -31,7 +31,7 @@ class SFavListScreen extends GetView<SFavTutorsListScreenController> {
         child: Column(
           children: [
             if(controller.teacherList.isEmpty)
-            const Center(child: CircularProgressIndicator(),),
+            Obx(()=> const Center(child: CircularProgressIndicator(),)),
             Obx(
               ()=> ListView.separated(
                 physics: const NeverScrollableScrollPhysics(),

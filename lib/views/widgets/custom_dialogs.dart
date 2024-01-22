@@ -277,13 +277,13 @@ class CustomDialogs {
           ),
         ),
       ),
-      customHeader: Container(
-        margin: const EdgeInsets.all(6),
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(50),
-            child: Image.asset("assets/images/success_icon.png")
-        ),
-      ),
+      // customHeader: Container(
+      //   margin: const EdgeInsets.all(6),
+      //   child: ClipRRect(
+      //     borderRadius: BorderRadius.circular(50),
+      //       child: Image.asset("assets/images/success_icon.png")
+      //   ),
+      // ),
       btnOkText: 'YES',
       btnOkOnPress: () {
         if (onOkBtnPressed != null) {
