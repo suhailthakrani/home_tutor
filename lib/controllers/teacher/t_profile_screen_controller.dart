@@ -19,12 +19,12 @@ class TProfileScreenController extends GetxController {
   final TextEditingController phoneController = TextEditingController();
   final TextEditingController addressController = TextEditingController();
 
-  final String selectedSubject = '';
-  String selectedCity = '';
-  String selectedQualification = '';
-  String role = '';
-  File? image;
-  String? imageUrl;
+  Rx<String> selectedSubject = RxString('');
+  Rx<String> selectedCity = RxString('');
+  Rx<String> selectedQualification = RxString('');
+  Rx<String> role = RxString('');
+  Rx<File>? image;
+  Rx<String>? imageUrl;
   final picker = ImagePicker();
 
 
@@ -32,7 +32,7 @@ class TProfileScreenController extends GetxController {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
 
     if (pickedFile != null) {
-        image = File(pickedFile.path);
+        image!.value = File(pickedFile.path);
     }
   }
 
@@ -42,7 +42,7 @@ class TProfileScreenController extends GetxController {
         var snapshot = await storage
             .ref()
             .child('profileimages/${auth.currentUser!.uid}')
-            .putFile(image!);
+            .putFile(image!.value);
 
         String downloadUrl = await snapshot.ref.getDownloadURL();
         return downloadUrl;
