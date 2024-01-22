@@ -12,6 +12,8 @@ class TeacherModel {
   String address = '';
   String profileUrl = '';
   String specialty = '';
+  String experience = '';
+  String teachingStyle = '';
   double rating = 0.0;
   List<String> subjects = [];
 
@@ -27,6 +29,8 @@ class TeacherModel {
     required this.address,
     required this.profileUrl,
     required this.specialty,
+    required this.experience,
+    required this.teachingStyle,
     required this.rating,
     required this.subjects,
   });
@@ -46,6 +50,8 @@ class TeacherModel {
       'gender': gender,
       'profileUrl': profileUrl,
       'specialty': specialty,
+      'experience':experience,
+      'teachingStyle':teachingStyle,
       'rating': rating,
       'subject': subjects,
     };
@@ -61,6 +67,8 @@ class TeacherModel {
     address = json['address']??'',
     profileUrl = json['profileUrl']??'',
     specialty = json['specialty']??'',
+    experience = json['experience']??'',
+    teachingStyle = json['teachingStyle']??'',
     rating = json['rating']??0.0,
     subjects = List<String>.from(json['subjects']??[]);
 

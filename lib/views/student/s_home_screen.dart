@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 import 'package:home_tutor/controllers/student/s_home_screen_controller.dart';
 import 'package:home_tutor/models/teacher_model.dart';
 import 'package:home_tutor/utils/app_colors.dart';
+import 'package:home_tutor/utils/common_code.dart';
 import 'package:home_tutor/views/student/s_tutors_list_screen.dart';
 import '../../services/students_service.dart';
 import '../../utils/constants.dart';
@@ -341,7 +342,9 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                                                 padding:
                                                                     EdgeInsets
                                                                         .zero),
-                                                        onPressed: () {},
+                                                        onPressed: () {
+                                                          CommonCode().openDialer('${controller.teacherList[index].phone}');
+                                                        },
                                                         icon: const Icon(
                                                           Icons.call,
                                                           size: 20,
@@ -354,7 +357,9 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                                                 padding:
                                                                     EdgeInsets
                                                                         .zero),
-                                                        onPressed: () {},
+                                                        onPressed: () {
+                                                          CommonCode().whatsApp('${controller.teacherList[index].phone}');
+                                                        },
                                                         icon: const Icon(
                                                           Icons.message,
                                                           size: 20,
@@ -426,6 +431,7 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
               FutureBuilder(
                 future: StudentsService().getTeachersFromFirebase(),
                 builder: (context, snapshot) {
+                  log("----------${snapshot.data }");
                   List<TeacherModel> teachers = snapshot.data ?? [];
                   if (snapshot.hasError) {
                     return Container(height: 140);
@@ -562,7 +568,9 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                                             .styleFrom(
                                                                 padding: EdgeInsets
                                                                     .zero),
-                                                        onPressed: () {},
+                                                        onPressed: () {
+                                                          CommonCode().openDialer('${controller.teacherList[index].phone}');
+                                                        },
                                                         icon: const Icon(
                                                           Icons.call,
                                                           size: 20,
@@ -574,7 +582,9 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                                             .styleFrom(
                                                                 padding: EdgeInsets
                                                                     .zero),
-                                                        onPressed: () {},
+                                                        onPressed: () {
+                                                          CommonCode().whatsApp('${controller.teacherList[index].phone}');
+                                                        },
                                                         icon: const Icon(
                                                           Icons.message,
                                                           size: 20,
@@ -784,7 +794,9 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                                           ElevatedButton.styleFrom(
                                                               padding:
                                                                   EdgeInsets.zero),
-                                                      onPressed: () {},
+                                                      onPressed: () {
+                                                        CommonCode().openDialer('${controller.teacherList[index].phone}');
+                                                      },
                                                       icon: const Icon(
                                                         Icons.call,
                                                         size: 20,
@@ -796,7 +808,9 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                                           ElevatedButton.styleFrom(
                                                               padding:
                                                                   EdgeInsets.zero),
-                                                      onPressed: () {},
+                                                      onPressed: () {
+                                                        CommonCode().whatsApp('${controller.teacherList[index].phone}');
+                                                      },
                                                       icon: const Icon(
                                                         Icons.message,
                                                         size: 20,

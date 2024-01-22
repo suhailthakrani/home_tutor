@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:get/get.dart';
 import 'package:home_tutor/controllers/student/s_tutors_fav_list_screen_controller.dart';
+import 'package:home_tutor/utils/common_code.dart';
 
 import '../../utils/app_colors.dart';
 import '../../utils/constants.dart';
@@ -112,11 +113,8 @@ class SFavListScreen extends GetView<SFavTutorsListScreenController> {
                                             style: ElevatedButton.styleFrom(
                                                 padding: EdgeInsets.zero),
                                             onPressed: () async {
-                                              try{
-                                              await FlutterPhoneDirectCaller.callNumber('${controller.teacherList[index].phone}'); 
-                                              } catch (e){
-                                                log("==============${e}");
-                                              }
+                                             CommonCode().openDialer('${controller.teacherList[index].phone}');
+                                             
                                             },
                                             icon: const Icon(
                                               Icons.call,
@@ -128,7 +126,7 @@ class SFavListScreen extends GetView<SFavTutorsListScreenController> {
                                             style: ElevatedButton.styleFrom(
                                                 padding: EdgeInsets.zero),
                                             onPressed: () {
-                                              controller.whatsApp('${controller.teacherList[index].phone}');
+                                              CommonCode().whatsApp('${controller.teacherList[index].phone}');
                                               // controller.whatsApp('+923483053712');
                                             },
                                             icon: const Icon(

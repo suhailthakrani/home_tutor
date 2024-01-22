@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:home_tutor/controllers/student/s_tutors_list_screen_controller.dart';
 import 'package:home_tutor/utils/app_colors.dart';
 
+import '../../utils/common_code.dart';
 import '../../utils/constants.dart';
 import 'teacher_search_deligate.dart';
 
@@ -186,7 +187,9 @@ class STutorsListScreen extends GetView<STutorsListScreenController> {
                                         IconButton(
                                           style: ElevatedButton.styleFrom(
                                               padding: EdgeInsets.zero),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            CommonCode().openDialer('${controller.teacherList[index].phone}');
+                                          },
                                           icon: const Icon(
                                             Icons.call,
                                             size: 20,
@@ -199,7 +202,9 @@ class STutorsListScreen extends GetView<STutorsListScreenController> {
                                         IconButton(
                                           style: ElevatedButton.styleFrom(
                                               padding: EdgeInsets.zero),
-                                          onPressed: () {},
+                                          onPressed: () {
+                                            CommonCode().whatsApp('${controller.teacherList[index].phone}');
+                                          },
                                           icon: const Icon(
                                             Icons.message,
                                             size: 24,
