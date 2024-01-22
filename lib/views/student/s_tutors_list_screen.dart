@@ -15,6 +15,7 @@ class STutorsListScreen extends GetView<STutorsListScreenController> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: kPrimaryColor,
+        foregroundColor: kWhiteColor,
         centerTitle: true,
         title: const Text(
           "Your Favourite Tutors",

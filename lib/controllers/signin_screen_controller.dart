@@ -55,30 +55,14 @@ class SignInScreenController extends GetxController {
         print('--------------------:::::::::::::::::::::2: $response');
         UserSession().createSession(user: loginModel);
         if(UserSession.userModel.value.role == "Student"){
-          Get.offAllNamed(kStudentHomeScreenRoute);
+          Get.offAllNamed(kSHomeScreenRoute);
         } else {
-          Get.offAllNamed(kTeacherHomeScreenRoute);
+          Get.offAllNamed(kTHomeScreenRoute);
         }
       }
-      else if(response.contains("email")){
+      else{
         isLoading.value = false;
         CustomDialogs().showErrorDialog("Alert", "$response!", DialogType.error, kRequiredRedColor);
-      }
-      else if(response.contains("user-not-found")){
-        isLoading.value = false;
-        CustomDialogs().showErrorDialog("Alert", "User Not Found!", DialogType.error, kRequiredRedColor);
-      }
-      else if(response.contains("wrong-password")){
-        isLoading.value = false;
-        CustomDialogs().showErrorDialog("Alert", "Password is incorrect!", DialogType.error, kRequiredRedColor);
-      }
-      else if(response.contains("invalid-login-credentials")){
-        isLoading.value = false;
-        CustomDialogs().showErrorDialog("Alert", "Invalid Email/Password!", DialogType.error, kRequiredRedColor);
-      }
-      else if(response == "OTHER"){
-        isLoading.value = false;
-        CustomDialogs().showErrorDialog("Alert", "Something went wrong. Try Again!", DialogType.error, kRequiredRedColor);
       }
     }else{
       isLoading.value = false;

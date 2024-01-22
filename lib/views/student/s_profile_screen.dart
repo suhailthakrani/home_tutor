@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_tutor/utils/app_colors.dart';
+import 'package:home_tutor/views/widgets/general_text_field.dart';
 
 import '../../controllers/student/s_profile_screen_controller.dart';
 
@@ -34,19 +35,33 @@ class SProfileScreen extends GetView<SProfileScreenController> {
           elevation: 1,
         ),
         body: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              const SizedBox(height: 16),
               GestureDetector(
                 onTap: controller.getImage,
-                child: (controller.image != null || controller.imageUrl != null)
-                    ? CircleAvatar(
-                        radius: 70,
-                        backgroundImage: (controller.imageUrl != null)
-                            ? NetworkImage(controller.imageUrl!)
-                                as ImageProvider
-                            : FileImage(controller.image!),
+                child: controller.studentModel.value.profile.isNotEmpty
+                    ? Center(
+                        child: CircleAvatar(
+                          radius: 90,
+                          child: ClipOval(
+                            // borderRadius: BorderRadius.circular(50),
+                            child: Image.network(
+                              controller.studentModel.value.profile,
+                              height: 180,
+                              width: 180,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) {
+                                return Image.asset(
+                                  'assets/images/reading.png',
+                                  height: 140,
+                                  width: 140,
+                                );
+                              },
+                            ),
+                          ),
+                        ),
                       )
                     : Container(
                         height: 140,
@@ -62,183 +77,56 @@ class SProfileScreen extends GetView<SProfileScreenController> {
                         ),
                       ),
               ),
-         
               const SizedBox(height: 20.0),
-              TextFormField(
-                controller: controller.nameController,
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.person),
-                  contentPadding: const EdgeInsets.all(10),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
+              GeneralTextField(
+                tfManager: controller.nameController,
+                isObscure: RxBool(false),
+              ),
+             
+              GeneralTextField(
+                tfManager: controller.emailController,
+                readOnly: true,
+                isObscure: RxBool(false),
+              ),
+              GeneralTextField(
+                tfManager: controller.phoneController,
+                isObscure: RxBool(false),
+              ),
+              GeneralTextField(
+                tfManager: controller.addressController,
+                isObscure: RxBool(false),
+              ),
+              GeneralTextField(
+                tfManager: controller.cityController,
+                isObscure: RxBool(false),
+              ),
+              const SizedBox(height: 20.0),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal:20),
+                child: ElevatedButton(
+                  onPressed: () async {
+                    String imageUrl = await controller.uploadImage() ?? '';
+                    if (imageUrl != '') {
+                      controller
+                          .saveProfileData(controller.studentModel.value.profile);
+                    } else {
+                      // Handle image upload error
+                      print("Error uploading image");
+                    }
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: kPrimaryColor,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
                   ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: controller.emailController,
-                decoration: InputDecoration(
-                  prefixIcon: const Icon(Icons.email),
-                  contentPadding: const EdgeInsets.all(10),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                ),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: controller.phoneController,
-                decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.phone),
-                    contentPadding: const EdgeInsets.all(10),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10))),
-              ),
-              const SizedBox(height: 10),
-              TextField(
-                controller: controller.addressController,
-                decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.location_city_outlined),
-                    contentPadding: const EdgeInsets.all(10),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10))),
-              ),
-              const SizedBox(height: 20.0),
-              DropdownButtonFormField(
-                decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.all(10),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10))),
-                items: controller.subjectsList.map((String subject) {
-                  return DropdownMenuItem<String>(
-                    value: subject,
-                    child: Text(subject),
-                  );
-                }).toList(),
-                onChanged: (String? value) {
-                  if (value != null) {
-                    controller.selectedSubjects.add(value);
-                  }
-                },
-                hint: const Text('Select Subjects'),
-                isExpanded: true,
-                value: controller.selectedSubjects.isNotEmpty
-                    ? controller.selectedSubjects.last
-                    : null,
-              ),
-              const SizedBox(height: 20.0),
-              const Text(
-                'Selected Subjects:',
-                style: TextStyle(fontSize: 18.0),
-              ),
-              Wrap(
-                children: controller.selectedSubjects
-                    .map((subject) => Chip(
-                          label: Text(subject),
-                          onDeleted: () {
-                            controller.selectedSubjects.remove(subject);
-                          },
-                        ))
-                    .toList(),
-              ),
-              const SizedBox(height: 20.0),
-              DropdownButtonFormField<String>(
-                decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.all(10),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10))),
-                value: controller.selectedCity.isNotEmpty
-                    ? controller.selectedCity
-                    : null,
-                hint: const Text('Select City'),
-                onChanged: (String? newValue) {
-                  controller.selectedCity = newValue!;
-                },
-                items: <String>[
-                  ' Hyderabad',
-                  'Karachi',
-                  'jamshoro',
-
-                  // Add more cities as needed
-                ].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-              ),
-              const SizedBox(height: 20.0),
-              DropdownButtonFormField<String>(
-                decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.all(10),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10))),
-                value: controller.selectedQualification.isNotEmpty
-                    ? controller.selectedQualification
-                    : null,
-                hint: const Text('Select Qualification'),
-                onChanged: (String? newValue) {
-                  controller.selectedQualification = newValue!;
-                },
-                items: <String>[
-                  'Bachelor\'s Degree',
-                  'Master\'s Degree',
-                  'PhD',
-                  'Diploma',
-                  'Matric',
-                  'Fsc',
-                  // Add more qualifications as needed
-                ].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-              ),
-              const SizedBox(height: 20.0),
-              DropdownButtonFormField<String>(
-                decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.all(10),
-                    border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10))),
-                value: controller.role.isNotEmpty ? controller.role : null,
-                hint: const Text('Select Role'),
-                onChanged: (String? newValue) {
-                  controller.role = newValue!;
-                },
-                items: <String>[
-                  "Teacher",
-                  "Student",
-                  // Add more qualifications as needed
-                ].map<DropdownMenuItem<String>>((String value) {
-                  return DropdownMenuItem<String>(
-                    value: value,
-                    child: Text(value),
-                  );
-                }).toList(),
-              ),
-              const SizedBox(height: 20.0),
-              ElevatedButton(
-                onPressed: () async {
-                  String imageUrl = await controller.uploadImage() ?? '';
-                  if (imageUrl != '') {
-                    controller.saveProfileData(controller.imageUrl!);
-                  } else {
-                    // Handle image upload error
-                    print("Error uploading image");
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xff58ee4a),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5.0),
-                  ),
-                ),
-                child: const Text(
-                  'Save Profile',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.bold,
+                  child: const Text(
+                    'Save Profile',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontWeight: FontWeight.bold,
+                      color: kWhiteColor,
+                    ),
                   ),
                 ),
               ),

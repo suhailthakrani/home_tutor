@@ -11,7 +11,6 @@ const String kSignInScreenRoute = "/SIGN_IN_SCREEN";
 
 const String kTeacherSignUpScreenRoute = "/TEACHER_SIGN_UP_SCREEN";
 const String kTMainScreenRoute = "/TMainScreenRoute";
-const String kTeacherHomeScreenRoute = "/TEACHER_HOME_SCREEN";
 const String kTStudentsHomeScreenRoute = "/kTStudentsHomeScreenRoute";
 const String kTAccountScreenRoute = '/TAccountScreenRoute';
 const String kTHomeScreenRoute = '/THomeScreenRoute';
@@ -21,7 +20,6 @@ const String kTTutorsListScreenRoute = '/TTutorsListScreenRoute';
 
 const String kStudentSignUpScreenRoute = "/STUDENT_SIGN_UP_SCREEN";
 const String kSMainScreenRoute = "/SMainScreenRoute";
-const String kStudentHomeScreenRoute = "/StudentHomeScreenRoute";
 const String kSAccountScreenRoute = '/SAccountScreenRoute';
 const String kSHomeScreenRoute = '/SHomeScreenRoute';
 const String kSProfileScreenRoute = '/SProfileScreenRoute';

@@ -52,7 +52,7 @@ class TeacherModel {
       'specialty': specialty,
       'experience':experience,
       'teachingStyle':teachingStyle,
-      'rating': rating,
+      'rating': rating.toDouble(),
       'subject': subjects,
     };
   }
@@ -69,7 +69,7 @@ class TeacherModel {
     specialty = json['specialty']??'',
     experience = json['experience']??'',
     teachingStyle = json['teachingStyle']??'',
-    rating = json['rating']??0.0,
+    rating = (json['rating']??0.0).toDouble(),
     subjects = List<String>.from(json['subjects']??[]);
 
   @override

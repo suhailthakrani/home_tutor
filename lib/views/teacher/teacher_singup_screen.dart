@@ -21,7 +21,7 @@ class TeacherSignUpScreen extends GetView<TeacherSignUpScreenController> {
       className: runtimeType.toString(),
       screenName: "Create Account",
       onWillPop: () {
-        Get.back();
+        // Get.back();
       },
     );
   }
@@ -31,6 +31,7 @@ class TeacherSignUpScreen extends GetView<TeacherSignUpScreenController> {
         ? SizedBox(
             height: Get.height * 0.85,
             child: SingleChildScrollView(
+              padding: EdgeInsets.only(bottom: MediaQuery.of(Get.context!).viewInsets.bottom),
               child: Column(
                 children: [
                   SizedBox(
@@ -72,18 +73,14 @@ class TeacherSignUpScreen extends GetView<TeacherSignUpScreenController> {
                       tfManager: controller.confirmPasswordManager,
                       isObscure: RxBool(true),
                       icon: Icons.lock,
-                      paddingVertical: 5),
+                      paddingVertical: 5,),
                   GeneralButton(
                     onPressed: () {
                       controller.onSubmit();
                     },
                     text: "Sign Up",
                   ),
-                  GestureDetector(
-                    onTap: () {
-                      Get.back();
-                    },
-                    child: Container(
+                  Container(
                       padding: EdgeInsets.only(
                           top: Get.height * 0.02, bottom: Get.height * 0.05),
                       alignment: Alignment.bottomCenter,
@@ -109,7 +106,7 @@ class TeacherSignUpScreen extends GetView<TeacherSignUpScreenController> {
                         ],
                       ),
                     ),
-                  ),
+                    
                 ],
               ),
             ),

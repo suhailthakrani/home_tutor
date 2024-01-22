@@ -17,6 +17,7 @@ class UserService {
         email: teacherModel.email,
         password: teacherModel.password,
       );
+      log("-------------------------------${userCredential}");
 
 
       User? user = userCredential.user;
@@ -29,8 +30,8 @@ class UserService {
         return 'OTHER';
       }
 
-    } catch (e) {
-      print('Error during registration: $e');
+    } catch (e, Stacktrace) {
+      print('Error during registration: $e ${Stacktrace}');
       return '${e.toString()}';
     }
   }  

@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_tutor/utils/app_colors.dart';
+import 'package:home_tutor/utils/common_code.dart';
 
 import '../../controllers/student/s_tutor_details_screen_controller.dart';
 
@@ -25,13 +26,14 @@ class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
             children: [
               Center(
                 child: CircleAvatar(
-                  radius: 100,
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(50),
+                  radius: 90,
+                  child: ClipOval(
+                    // borderRadius: BorderRadius.circular(50),
                     child: Image.network(
                       controller.teacherModel.value.profileUrl,
                       height: 180,
                       width: 180,
+                      fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return Image.asset(
                       'assets/images/reading.png',
@@ -64,7 +66,7 @@ class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      "Mr. ${controller.teacherModel.value.name}",
+                      "${controller.teacherModel.value.name}",
                       style: const TextStyle(
                         fontSize: 22,
                         fontWeight: FontWeight.w600,
@@ -130,7 +132,9 @@ class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
                                 backgroundColor: kPrimaryColor,
                                 foregroundColor: kWhiteColor,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                CommonCode().openDialer('${controller.teacherModel.value.phone}');
+                              },
                               child: const Icon(Icons.call),
                             ),
                             const SizedBox(width: 8),
@@ -139,7 +143,9 @@ class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
                                 backgroundColor: kPrimaryColor,
                                 foregroundColor: kWhiteColor,
                               ),
-                              onPressed: () {},
+                              onPressed: () {
+                                CommonCode().whatsApp('${controller.teacherModel.value.phone}');
+                              },
                               child: const Icon(Icons.message_outlined),
                             ),
                           ],
@@ -191,7 +197,6 @@ class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
                     ),
                    const SizedBox(height: 8),
                     Text(
-                      // "Greetings! I'm Karan Malhi, an experienced online English Literature tutor dedicated to fostering a love for literature and helping students excel. With a Master's degree in English Literature and 8 years of teaching experience, I bring passion, knowledge, and a student-centered approach to my virtual classroom.",
                       "${controller.teacherModel.value.bio}"
                     ),
                    const SizedBox(height: 8),
@@ -204,8 +209,7 @@ class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(
-                        // "My teaching style is interactive and student-centered. I believe in creating an engaging learning environment that encourages critical thinking, effective communication, and a deep appreciation for literature",
+                    Text(                     
                       "${controller.teacherModel.value.teachingStyle}"
                     ),
                   ],

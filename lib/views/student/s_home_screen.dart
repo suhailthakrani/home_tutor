@@ -197,6 +197,7 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                 builder: (context, snapshot) {
                   List<TeacherModel> teachers = snapshot.data ?? [];
                   if (snapshot.hasError) {
+                    print("--------${snapshot.error}");
                     return Container(height: 140);
                   }
                   if (snapshot.hasData && snapshot.data != null) {

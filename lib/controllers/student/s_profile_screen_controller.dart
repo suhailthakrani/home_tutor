@@ -6,31 +6,58 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_tutor/services/students_service.dart';
+import 'package:home_tutor/utils/dropdown_controller.dart';
+import 'package:home_tutor/utils/text_field_manager.dart';
+import 'package:home_tutor/views/widgets/general_dropdown.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../models/student_model.dart';
+
 class SProfileScreenController extends GetxController {
+
+  Rx<StudentModel> studentModel = Rx(StudentModel.empty());
 
    final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseStorage storage = FirebaseStorage.instance;
 
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
+  TextFieldManager nameController = TextFieldManager('Name');
+  TextFieldManager emailController = TextFieldManager('Email');
+  TextFieldManager phoneController = TextFieldManager('Phone');
+  TextFieldManager addressController = TextFieldManager('Address');
+  TextFieldManager cityController = TextFieldManager('City');
+  TextFieldManager qualificationController = TextFieldManager('Qualification');
 
+  
   final String selectedSubject = '';
   String selectedCity = '';
   String selectedQualification = '';
   String role = '';
   File? image;
-  String? imageUrl;
   final picker = ImagePicker();
+
+
+  @override
+  void onReady() async {
+    studentModel.value = await StudentsService().getCurrentUserDocument();
+    await populateData();
+    super.onReady();
+  }
+
+
+  Future<void> populateData() async{
+    nameController.controller.text = studentModel.value.name;
+    emailController.controller.text = studentModel.value.email;
+    phoneController.controller.text = studentModel.value.phone;
+    addressController.controller.text = studentModel.value.address;    
+    addressController.controller.text = studentModel.value.address;    
+    cityController.controller.text = studentModel.value.city;    
+  }
 
 
   Future getImage() async {
     final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
     if (pickedFile != null) {
         image = File(pickedFile.path);
     }
@@ -86,11 +113,11 @@ class SProfileScreenController extends GetxController {
     if (userData.isEmpty) {
       return;
     }
-    imageUrl = userData["imageUrl"]??'';
-    nameController.text = userData["name"]??'';
-    emailController.text = userData["email"]??'';
-    phoneController.text = userData["phone"]??'';
-    addressController.text = userData["address"]??'';
+    // imageUrl = userData["imageUrl"]??'';
+    nameController.controller.text = userData["name"]??'';
+    emailController.controller.text = userData["email"]??'';
+    phoneController.controller.text = userData["phone"]??'';
+    addressController.controller.text = userData["address"]??'';
     selectedSubjects = List<String>.from(userData["subjects"]??[]);
     selectedCity = userData["selectedCity"];
     selectedQualification = userData["selectedQualification"]??'';

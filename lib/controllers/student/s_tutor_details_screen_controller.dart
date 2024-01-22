@@ -7,7 +7,7 @@ class STeacherDetailsScreenController extends GetxController {
 
   @override
   void onReady() {
-    teacherModel = Get.arguments??TeacherModel.empty();
+    teacherModel.value = Get.arguments??TeacherModel.empty();
     super.onReady();
   }
   //
