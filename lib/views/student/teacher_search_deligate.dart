@@ -60,11 +60,7 @@ class TeacherSearchDelegate extends SearchDelegate {
           title: Text("Dr. ${filteredTeacherModels[index].name}"),
           subtitle: Text(filteredTeacherModels[index].specialty),
           onTap: () {
-            Get.toNamed(kSTeacherDetailsScreenRoute,
-            //  arguments: {
-            //   "dotor": filteredTeacherModels[index],
-            // },
-            );
+          //  Get.toNamed(kSTeacherDetailsScreenRoute, arguments: controller.teacherList[index]);
           },
         );
       },

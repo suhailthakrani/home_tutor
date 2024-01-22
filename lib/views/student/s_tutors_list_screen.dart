@@ -115,7 +115,7 @@ class STutorsListScreen extends GetView<STutorsListScreenController> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    Get.toNamed(kSTeacherDetailsScreenRoute);
+                    Get.toNamed(kSTeacherDetailsScreenRoute, arguments: controller.teacherList[index]);
                   },
                   child: SizedBox(
                     height: 120,

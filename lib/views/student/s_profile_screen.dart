@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_tutor/utils/app_colors.dart';
 
 import '../../controllers/student/s_profile_screen_controller.dart';
 
@@ -13,8 +14,10 @@ class SProfileScreen extends GetView<SProfileScreenController> {
     return Scaffold(
         appBar: AppBar(
           centerTitle: true,
+          backgroundColor: kPrimaryColor,
+          foregroundColor: kWhiteColor,
           title: const Text(
-            "Profile",
+            "Complete Your Profile",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,
@@ -23,6 +26,7 @@ class SProfileScreen extends GetView<SProfileScreenController> {
           leading: IconButton(
             icon: const Icon(Icons.arrow_back),
             onPressed: () {
+              Get.back();
               // Navigator.pushReplacement(
               //     context, MaterialPageRoute(builder: (context) => Student()));
             },
@@ -58,63 +62,7 @@ class SProfileScreen extends GetView<SProfileScreenController> {
                         ),
                       ),
               ),
-              const SizedBox(height: 20),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  TextButton(
-                      onPressed: () {},
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.green),
-                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                          const EdgeInsets.symmetric(
-                              horizontal: 50.0, vertical: 10.0),
-                        ),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                      ),
-                      child: const Text(
-                        "Edit",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      )),
-                  const SizedBox(width: 20),
-                  TextButton(
-                      onPressed: () {
-                        // logout(context);
-                      },
-                      style: ButtonStyle(
-                        backgroundColor:
-                            MaterialStateProperty.all<Color>(Colors.green),
-                        padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
-                          const EdgeInsets.symmetric(
-                              horizontal: 50.0, vertical: 10.0),
-                        ),
-                        shape:
-                            MaterialStateProperty.all<RoundedRectangleBorder>(
-                          RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
-                          ),
-                        ),
-                      ),
-                      child: const Text(
-                        "Logout",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 14,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ))
-                ],
-              ),
+         
               const SizedBox(height: 20.0),
               TextFormField(
                 controller: controller.nameController,
