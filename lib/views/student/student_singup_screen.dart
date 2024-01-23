@@ -41,38 +41,36 @@ class StudentSignUpScreen extends GetView<StudentSignUpScreenController> {
                       tfManager: controller.usernameManager,
                       isObscure: RxBool(false),
                       icon: Icons.person,
-                      paddingVertical: 5),
+                      paddingVertical: 8),
                   GeneralTextField(
                       tfManager: controller.userEmailManager,
                       isObscure: RxBool(false),
                       icon: Icons.email,
-                      paddingVertical: 5),
+                      paddingVertical: 8),
                   GeneralTextField(
                       tfManager: controller.userPhoneManager,
                       isObscure: RxBool(false),
                       icon: Icons.phone,
-                      paddingVertical: 5),
-                  GeneralDropdown(
-                      controller: controller.genderDropdown,
-                      paddingVertical: 5),
+                      paddingVertical: 8),
                   GeneralTextField(
                       tfManager: controller.userAddressManager,
                       isObscure: RxBool(false),
                       icon: Icons.home,
-                      paddingVertical: 5),
+                      paddingVertical: 8),
                   GeneralDropdown(
-                      controller: controller.cityDD, paddingVertical: 5),
+                      controller: controller.cityDD, paddingVertical: 8),
                   GeneralTextField(
                       tfManager: controller.passwordManager,
                       isObscure: RxBool(true),
                       icon: Icons.lock,
-                      paddingVertical: 5),
+                      paddingVertical: 8),
                   GeneralTextField(
                       tfManager: controller.confirmPasswordManager,
                       isObscure: RxBool(true),
                       icon: Icons.lock,
-                      paddingVertical: 5),
+                      paddingVertical: 8),
                   GeneralButton(
+                    height: 48,
                     onPressed: () {
                       controller.onSubmit();
                     },
@@ -97,7 +95,8 @@ class StudentSignUpScreen extends GetView<StudentSignUpScreenController> {
                             child:const Text(
                               "Login Now!",
                               style: TextStyle(
-                                fontWeight: FontWeight.w900,
+                                fontWeight: FontWeight.w600,
+                                fontSize: 16,
                               ),
                             ),
                           )

@@ -38,7 +38,6 @@ class GeneralButton extends StatelessWidget {
             style: TextStyle(
                 fontSize: fontSize,
                 color: Colors.white,
-              fontFamily: kLogoFontFamily
             ),
           )
       ),

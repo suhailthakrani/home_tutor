@@ -107,7 +107,9 @@ class SignInScreen extends GetView<SignInScreenController> {
                           TextSpan(
                             text: "Register Now!",
                             style: TextStyle(
-                              fontWeight: FontWeight.w900,
+                              fontWeight: FontWeight.w600,
+                              color: kTextColor,
+                              fontSize: 16,
                             ),
                           )
                         ]),
