@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 class TeacherModel {
+  String id = '';
   String name = '';
   String email = '';
   String password = '';
@@ -18,6 +19,7 @@ class TeacherModel {
   List<String> subjects = [];
 
   TeacherModel({
+    this.id = '',
     required this.name,
     required this.email,
     this.password = '',
@@ -58,6 +60,7 @@ class TeacherModel {
   }
 
   TeacherModel.fromJson(Map<String, dynamic> json):
+    id = json['id']??'',
     name = json['name']??'',
     email = json['email']??'',
     password = json['password']??'',

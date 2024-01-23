@@ -161,7 +161,7 @@ class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
                             ),
                           ),
                           onPressed: () {
-                            Get.toNamed(kSRequestTutorScreenRoute);
+                            Get.toNamed(kSRequestTutorScreenRoute,arguments: {'teacherId': controller.teacherModel.value.id});
                           },
                           child: const Text("Send Request"),
                         ),

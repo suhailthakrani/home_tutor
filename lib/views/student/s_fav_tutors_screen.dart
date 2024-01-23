@@ -46,7 +46,7 @@ class SFavListScreen extends GetView<SFavTutorsListScreenController> {
                       },
                       child: Container(
                         height: 140,
-                        padding: EdgeInsets.symmetric(vertical: 8),
+                        padding: const EdgeInsets.symmetric(vertical: 8),
                         decoration: BoxDecoration(
                         color: kWhiteColor,
                         borderRadius: BorderRadius.circular(16),
@@ -81,11 +81,11 @@ class SFavListScreen extends GetView<SFavTutorsListScreenController> {
                                       children: [
                                         Text(
                                           "${controller.teacherList[index].name}",
-                                          style: TextStyle(
+                                          style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
-                                        Text(
+                                        const Text(
                                           " 5\$ Per Hour  ",
                                           style: TextStyle(
                                             fontWeight: FontWeight.bold,
@@ -101,7 +101,7 @@ class SFavListScreen extends GetView<SFavTutorsListScreenController> {
                                         "${controller.teacherList[index].address}, ${controller.teacherList[index].city}",
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(fontSize: 11),
+                                        style: const TextStyle(fontSize: 11),
                                       ),
                                     ),
                                     Row(

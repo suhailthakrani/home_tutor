@@ -80,8 +80,8 @@ class SRequestTutorScreen extends GetView<SRequestTutorScreenController> {
               MultiSelectionCheckbox(
                 paddingHorizontal: 16,
                 controller: controller.subjectsController,
+                paddingVertical: 4,
               ),
-              const SizedBox(height: 20.0),
                GeneralTextField(
                 tfManager: controller.instructionsController,
                 isObscure: RxBool(false),

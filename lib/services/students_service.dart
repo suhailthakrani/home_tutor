@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:home_tutor/models/request_model.dart';
 import 'package:home_tutor/models/student_model.dart';
+import 'package:home_tutor/views/teacher/t_home_screen.dart';
 
 import '../models/teacher_model.dart';
 
@@ -18,7 +19,11 @@ class StudentsService {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await FirebaseFirestore.instance.collection('teachers').get();
-      List<TeacherModel> profiles = (querySnapshot.docs.map((doc) => TeacherModel.fromJson((doc.data()))).toList());
+      List<TeacherModel> profiles = (querySnapshot.docs.map((doc) {
+        TeacherModel teacherModel = TeacherModel.fromJson(doc.data());
+        teacherModel.id = doc.id;
+        return teacherModel ;
+      }).toList());
       return profiles;
     } on Exception catch(e) {
       log("[GetTeachersFromFirebase]---->${e}");
@@ -30,7 +35,11 @@ class StudentsService {
   Future<List<TeacherModel>> getTeachersFromBySubject({required String subject}) async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance.collection('teachers').where('specialty', isEqualTo: subject).get();
-      List<TeacherModel> profiles = (querySnapshot.docs.map((doc) => TeacherModel.fromJson((doc.data()))).toList());
+       List<TeacherModel> profiles = (querySnapshot.docs.map((doc) {
+        TeacherModel teacherModel = TeacherModel.fromJson(doc.data());
+        teacherModel.id = doc.id;
+        return teacherModel ;
+      }).toList());
       return profiles;
     } on Exception catch(e) {
       log("[GetTeachersFromBySubject]---->${e}");
@@ -49,7 +58,9 @@ class StudentsService {
       List<TeacherModel> favTeachers = [];
       for(Map<String, dynamic> request in requests){
         DocumentSnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance.collection('teachers').doc(request['teacherId']??'').get();
-        favTeachers.add(TeacherModel.fromJson(querySnapshot.data()??{}));
+        TeacherModel teacherModel = TeacherModel.fromJson(querySnapshot.data()??{});
+        teacherModel.id = querySnapshot.id;
+        favTeachers.add(teacherModel);
       }   
       return favTeachers;
     } on Exception catch(e) {
