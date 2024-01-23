@@ -211,7 +211,8 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                           itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {
-                                Get.toNamed(kSTeacherDetailsScreenRoute, arguments: teachers[index]);
+                                Get.toNamed(kSTeacherDetailsScreenRoute,
+                                    arguments: teachers[index]);
                               },
                               child: Stack(
                                 children: [
@@ -250,8 +251,7 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                               topRight: Radius.circular(15),
                                             ),
                                             child: Image.network(
-                                              // teachers[index].profileUrl,
-                                              'https://www.hindustantimes.com/ht-img/img/2023/09/02/1600x900/teachers_day_1693652054152_1693652065719.jpg',
+                                              teachers[index].profileUrl,
                                               fit: BoxFit.fitWidth,
                                               errorBuilder: (context, error,
                                                       stackTrace) =>
@@ -294,24 +294,28 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                               const SizedBox(
                                                 height: 8,
                                               ),
-                                              const Align(
+                                              Align(
                                                 alignment: Alignment.centerLeft,
                                                 child: Text(
                                                   // Degree (Subject or Specialty)
-                                                  'BA (Mathematics)',
-                                                  style:
-                                                      TextStyle(fontSize: 12),
+                                                  teachers[index].specialty.isNotEmpty?"${teachers[index].degree.capitalizeFirst} (${teachers[index].specialty})":"${teachers[index].degree.capitalizeFirst} Degree",
+                                                  style: TextStyle(fontSize: 12),
                                                 ),
                                               ),
-                                              const Align(
+                                              Align(
                                                 alignment: Alignment.centerLeft,
-                                                child: Text(
-                                                  "Add Address Here, City",
-                                                  maxLines: 1,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style:
-                                                      TextStyle(fontSize: 11),
+                                                child: Wrap(
+                                                  children: [
+                                                    Icon(Icons.location_on_outlined,size: 16, color: kPrimaryColor,),
+                                                    Text(
+                                                      "${teachers[index].address}, ${teachers[index].city}",
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style:
+                                                          TextStyle(fontSize: 11),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                               Row(
@@ -332,7 +336,10 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                                           horizontal: 8,
                                                         ),
                                                       ),
-                                                      onPressed: () {},
+                                                      onPressed: () {
+                                                        Get.toNamed(
+                                                            kSRequestTutorScreenRoute);
+                                                      },
                                                       child: const Text(
                                                           "Request")),
                                                   Wrap(
@@ -344,7 +351,8 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                                                     EdgeInsets
                                                                         .zero),
                                                         onPressed: () {
-                                                          CommonCode().openDialer('${controller.teacherList[index].phone}');
+                                                          CommonCode().openDialer(
+                                                              '${controller.teacherList[index].phone}');
                                                         },
                                                         icon: const Icon(
                                                           Icons.call,
@@ -359,7 +367,8 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                                                     EdgeInsets
                                                                         .zero),
                                                         onPressed: () {
-                                                          CommonCode().whatsApp('${controller.teacherList[index].phone}');
+                                                          CommonCode().whatsApp(
+                                                              '${controller.teacherList[index].phone}');
                                                         },
                                                         icon: const Icon(
                                                           Icons.message,
@@ -432,7 +441,7 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
               FutureBuilder(
                 future: StudentsService().getTeachersFromFirebase(),
                 builder: (context, snapshot) {
-                  log("----------${snapshot.data }");
+                  log("----------${snapshot.data}");
                   List<TeacherModel> teachers = snapshot.data ?? [];
                   if (snapshot.hasError) {
                     return Container(height: 140);
@@ -451,12 +460,14 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                           ) {
                             return InkWell(
                               onTap: () {
-                                Get.toNamed(kSTeacherDetailsScreenRoute, arguments: teachers[index]);
+                                Get.toNamed(kSTeacherDetailsScreenRoute,
+                                    arguments: teachers[index]);
                               },
                               child: Stack(
                                 children: [
                                   Container(
-                                    width: MediaQuery.of(context).size.width * 0.6,
+                                    width:
+                                        MediaQuery.of(context).size.width * 0.6,
                                     margin: const EdgeInsets.only(
                                       right: 16,
                                       top: 8,
@@ -475,24 +486,26 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                       ],
                                     ),
                                     child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
                                       mainAxisSize: MainAxisSize.min,
                                       children: [
                                         Expanded(
                                           flex: 3,
                                           child: ClipRRect(
-                                            borderRadius: const BorderRadius.only(
+                                            borderRadius:
+                                                const BorderRadius.only(
                                               topLeft: Radius.circular(15),
                                               topRight: Radius.circular(15),
                                             ),
                                             child: Image.network(
-                                              // teachers[index].profileUrl,
-                                              'https://www.hindustantimes.com/ht-img/img/2023/09/02/1600x900/teachers_day_1693652054152_1693652065719.jpg',
+                                              teachers[index].profileUrl,
                                               fit: BoxFit.fitWidth,
-                                              errorBuilder:
-                                                  (context, error, stackTrace) =>
-                                                      Container(height: 140),
+                                              errorBuilder: (context, error,
+                                                      stackTrace) =>
+                                                  Container(height: 140),
                                             ),
                                           ),
                                         ),
@@ -505,21 +518,25 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                             children: [
                                               Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.spaceBetween,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
                                                     teachers[index].name,
                                                     style: const TextStyle(
-                                                      fontWeight: FontWeight.bold,
+                                                      fontWeight:
+                                                          FontWeight.bold,
                                                     ),
                                                   ),
                                                   const Text(
                                                     " 5\$ Per Hour  ",
                                                     style: TextStyle(
-                                                      fontWeight: FontWeight.bold,
-                                                      backgroundColor: Colors.amber,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      backgroundColor:
+                                                          Colors.amber,
                                                     ),
                                                   ),
                                                 ],
@@ -527,50 +544,66 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                               const SizedBox(
                                                 height: 8,
                                               ),
-                                              const Align(
+                                              Align(
                                                 alignment: Alignment.centerLeft,
                                                 child: Text(
                                                   // Degree (Subject or Specialty)
-                                                  'BA (Mathematics)',
-                                                  style: TextStyle(fontSize: 12),
+                                                  "${teachers[index].degree} (${teachers[index].specialty})",
+                                                  style:
+                                                      TextStyle(fontSize: 12),
                                                 ),
                                               ),
-                                              const Align(
+                                               Align(
                                                 alignment: Alignment.centerLeft,
-                                                child: Text(
-                                                  "Add Address Here, City",
-                                                  maxLines: 1,
-                                                  overflow: TextOverflow.ellipsis,
-                                                  style: TextStyle(fontSize: 11),
+                                                child: Wrap(
+                                                  children: [
+                                                    Icon(Icons.location_on_outlined,size: 16, color: kPrimaryColor,),
+                                                    Text(
+                                                      "${teachers[index].address}, ${teachers[index].city}",
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style:
+                                                          TextStyle(fontSize: 11),
+                                                    ),
+                                                  ],
                                                 ),
                                               ),
                                               Row(
                                                 mainAxisAlignment:
-                                                    MainAxisAlignment.spaceBetween,
+                                                    MainAxisAlignment
+                                                        .spaceBetween,
                                                 children: [
                                                   TextButton(
-                                                      style:
-                                                          ElevatedButton.styleFrom(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
                                                         backgroundColor:
                                                             kFieldGreyColor,
                                                         foregroundColor:
                                                             kPrimaryColor,
-                                                        padding: const EdgeInsets
-                                                            .symmetric(
+                                                        padding:
+                                                            const EdgeInsets
+                                                                .symmetric(
                                                           horizontal: 8,
                                                         ),
                                                       ),
-                                                      onPressed: () {},
-                                                      child: const Text("Request")),
+                                                      onPressed: () {
+                                                        Get.toNamed(
+                                                            kSRequestTutorScreenRoute);
+                                                      },
+                                                      child: const Text(
+                                                          "Request")),
                                                   Wrap(
                                                     children: [
                                                       IconButton(
                                                         style: ElevatedButton
                                                             .styleFrom(
-                                                                padding: EdgeInsets
-                                                                    .zero),
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .zero),
                                                         onPressed: () {
-                                                          CommonCode().openDialer('${controller.teacherList[index].phone}');
+                                                          CommonCode().openDialer(
+                                                              '${controller.teacherList[index].phone}');
                                                         },
                                                         icon: const Icon(
                                                           Icons.call,
@@ -581,10 +614,12 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                                       IconButton(
                                                         style: ElevatedButton
                                                             .styleFrom(
-                                                                padding: EdgeInsets
-                                                                    .zero),
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .zero),
                                                         onPressed: () {
-                                                          CommonCode().whatsApp('${controller.teacherList[index].phone}');
+                                                          CommonCode().whatsApp(
+                                                              '${controller.teacherList[index].phone}');
                                                         },
                                                         icon: const Icon(
                                                           Icons.message,
@@ -610,7 +645,8 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                       style: ElevatedButton.styleFrom(
                                         backgroundColor: kFieldGreyColor,
                                       ),
-                                      icon: const Icon(CupertinoIcons.heart,size: 24),
+                                      icon: const Icon(CupertinoIcons.heart,
+                                          size: 24),
                                     ),
                                   ),
                                 ],
@@ -674,17 +710,14 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                         ) {
                           return InkWell(
                             onTap: () {
-                              // Navigator.pushReplacement(
-                              //   context,
-                              //   MaterialPageRoute(
-                              //     builder: (context) => const TutorHire(),
-                              //   ),
-                              // );
+                              Get.toNamed(kSTeacherDetailsScreenRoute,
+                                  arguments: teachers[index]);
                             },
                             child: Stack(
                               children: [
                                 Container(
-                                  width: MediaQuery.of(context).size.width * 0.6,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.6,
                                   margin: const EdgeInsets.only(
                                     right: 16,
                                     top: 8,
@@ -702,7 +735,8 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                     ],
                                   ),
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     mainAxisSize: MainAxisSize.min,
                                     children: [
@@ -714,8 +748,7 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                             topRight: Radius.circular(15),
                                           ),
                                           child: Image.network(
-                                            // teachers[index].profileUrl,
-                                            'https://www.hindustantimes.com/ht-img/img/2023/09/02/1600x900/teachers_day_1693652054152_1693652065719.jpg',
+                                            teachers[index].profileUrl,
                                             fit: BoxFit.fitWidth,
                                             errorBuilder:
                                                 (context, error, stackTrace) =>
@@ -732,7 +765,8 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                           children: [
                                             Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               crossAxisAlignment:
                                                   CrossAxisAlignment.start,
                                               children: [
@@ -746,7 +780,8 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                                   " 5\$ Per Hour  ",
                                                   style: TextStyle(
                                                     fontWeight: FontWeight.bold,
-                                                    backgroundColor: Colors.amber,
+                                                    backgroundColor:
+                                                        Colors.amber,
                                                   ),
                                                 ),
                                               ],
@@ -754,29 +789,38 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                             const SizedBox(
                                               height: 8,
                                             ),
-                                            const Align(
+                                            Align(
                                               alignment: Alignment.centerLeft,
                                               child: Text(
                                                 // Degree (Subject or Specialty)
-                                                'BA (Mathematics)',
+                                                "${teachers[index].degree} (${teachers[index].specialty})",
                                                 style: TextStyle(fontSize: 12),
                                               ),
                                             ),
-                                            const Align(
-                                              alignment: Alignment.centerLeft,
-                                              child: Text(
-                                                "Add Address Here, City",
-                                                maxLines: 1,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: TextStyle(fontSize: 11),
+                                             Align(
+                                                alignment: Alignment.centerLeft,
+                                                child: Wrap(
+                                                  children: [
+                                                    Icon(Icons.location_on_outlined,size: 16, color: kPrimaryColor,),
+                                                    Text(
+                                                      "${teachers[index].address}, ${teachers[index].city}",
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style:
+                                                          TextStyle(fontSize: 11),
+                                                    ),
+                                                  ],
+                                                ),
                                               ),
-                                            ),
                                             Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment.spaceBetween,
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
                                               children: [
                                                 TextButton(
-                                                    style: ElevatedButton.styleFrom(
+                                                    style: ElevatedButton
+                                                        .styleFrom(
                                                       backgroundColor:
                                                           kFieldGreyColor,
                                                       foregroundColor:
@@ -786,17 +830,23 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                                         horizontal: 8,
                                                       ),
                                                     ),
-                                                    onPressed: () {},
-                                                    child: const Text("Request")),
+                                                    onPressed: () {
+                                                      Get.toNamed(
+                                                          kSRequestTutorScreenRoute);
+                                                    },
+                                                    child:
+                                                        const Text("Request")),
                                                 Wrap(
                                                   children: [
                                                     IconButton(
-                                                      style:
-                                                          ElevatedButton.styleFrom(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
                                                               padding:
-                                                                  EdgeInsets.zero),
+                                                                  EdgeInsets
+                                                                      .zero),
                                                       onPressed: () {
-                                                        CommonCode().openDialer('${controller.teacherList[index].phone}');
+                                                        CommonCode().openDialer(
+                                                            '${controller.teacherList[index].phone}');
                                                       },
                                                       icon: const Icon(
                                                         Icons.call,
@@ -805,12 +855,14 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                                       ),
                                                     ),
                                                     IconButton(
-                                                      style:
-                                                          ElevatedButton.styleFrom(
+                                                      style: ElevatedButton
+                                                          .styleFrom(
                                                               padding:
-                                                                  EdgeInsets.zero),
+                                                                  EdgeInsets
+                                                                      .zero),
                                                       onPressed: () {
-                                                        CommonCode().whatsApp('${controller.teacherList[index].phone}');
+                                                        CommonCode().whatsApp(
+                                                            '${controller.teacherList[index].phone}');
                                                       },
                                                       icon: const Icon(
                                                         Icons.message,
@@ -829,16 +881,17 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                   ),
                                 ),
                                 Positioned(
-                                    top: 20,
-                                    right: 20,
-                                    child: IconButton(
-                                      onPressed: () {},
-                                      style: ElevatedButton.styleFrom(
-                                        backgroundColor: kFieldGreyColor,
-                                      ),
-                                      icon: const Icon(CupertinoIcons.heart,size: 24),
+                                  top: 20,
+                                  right: 20,
+                                  child: IconButton(
+                                    onPressed: () {},
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: kFieldGreyColor,
                                     ),
+                                    icon: const Icon(CupertinoIcons.heart,
+                                        size: 24),
                                   ),
+                                ),
                               ],
                             ),
                           );

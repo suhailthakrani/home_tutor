@@ -2,6 +2,7 @@ import 'package:get/get.dart';
 import 'package:home_tutor/controllers/student/s_home_screen_controller.dart';
 import 'package:home_tutor/controllers/student/s_main_screen_controller.dart';
 import 'package:home_tutor/controllers/student/s_profile_screen_controller.dart';
+import 'package:home_tutor/controllers/student/s_request_tutor_screen_controller.dart';
 import 'package:home_tutor/controllers/student/s_tutor_details_screen_controller.dart';
 import 'package:home_tutor/controllers/student/s_tutors_fav_list_screen_controller.dart';
 import 'package:home_tutor/controllers/student/s_tutors_list_screen_controller.dart';
@@ -34,6 +35,7 @@ class ScreensBindings extends Bindings {
     Get.lazyPut(() => SProfileScreenController());
     Get.lazyPut(() => STeacherDetailsScreenController());
     Get.lazyPut(() => SFavTutorsListScreenController());
+    Get.lazyPut(() => SRequestTutorScreenController());
     //
     Get.lazyPut(() => TAccountScreenController());
     Get.lazyPut(() => TStudentListScreenController());

@@ -4,12 +4,9 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_tutor/services/students_service.dart';
-import 'package:home_tutor/utils/dropdown_controller.dart';
 import 'package:home_tutor/utils/text_field_manager.dart';
-import 'package:home_tutor/views/widgets/general_dropdown.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../models/student_model.dart';

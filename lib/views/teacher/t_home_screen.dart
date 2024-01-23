@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_tutor/controllers/teacher/t_home_screen_controller.dart';
 import 'package:home_tutor/utils/app_colors.dart';
+import 'package:home_tutor/views/widgets/option_card.dart';
 
 import '../../utils/common_code.dart';
 import '../../utils/constants.dart';
@@ -34,27 +35,50 @@ class TeacherHomeScreen extends GetView<THomeScreenController> {
             GridView.builder(
               padding: const EdgeInsets.all(16),
               shrinkWrap: true,
-              itemCount: 4,
+              itemCount: controller.dashboardCounts.length,
               gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 2,
                 crossAxisSpacing: 16,
                 mainAxisSpacing: 16,
               ),
               itemBuilder: (context, index) {
-                return Container(
-                  decoration: BoxDecoration(
-                    color: kFieldGreyColor,
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      Text("12"),
-                      Text("Total Students"),
-                    ],
-                  ),
-                );
+                return OptionCard(
+                    title: '${controller.dashboardCounts[index].count}',
+                    subtitle: '${controller.dashboardCounts[index].title}');
+                // return Container(
+                //   decoration: BoxDecoration(
+                //     color: kWhiteColor,
+                //     borderRadius: BorderRadius.circular(16),
+                //     boxShadow: [
+                //       BoxShadow(
+                //         color: kPrimaryColor,
+                //         offset: Offset(2, 2),
+                //       )
+                //     ]
+                //   ),
+                //   child: Column(
+                //     mainAxisAlignment: MainAxisAlignment.center,
+                //     crossAxisAlignment: CrossAxisAlignment.center,
+                //     children: [
+                //       Text(
+                //         "${controller.dashboardCounts[index].count}",
+                //         style: TextStyle(
+                //           fontSize: 28,
+                //           fontWeight: FontWeight.w600,
+                //           color: kPrimaryColor
+                //         ),
+                //       ),
+                //       Text(
+                //         "${controller.dashboardCounts[index].title}",
+                //         style: TextStyle(
+                //           fontSize: 16,
+                //           fontWeight: FontWeight.w500,
+                //           color: kGreyColor,
+                //         ),
+                //       ),
+                //     ],
+                //   ),
+                // );
               },
             ),
             Padding(
@@ -67,7 +91,7 @@ class TeacherHomeScreen extends GetView<THomeScreenController> {
                   color: kGreyColor,
                 ),
               ),
-            ), 
+            ),
             ListView.separated(
               physics: const NeverScrollableScrollPhysics(),
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
@@ -78,8 +102,17 @@ class TeacherHomeScreen extends GetView<THomeScreenController> {
                   onTap: () {
                     // Get.toNamed(kSTeacherDetailsScreenRoute, arguments: controller.teacherList[index]);
                   },
-                  child: SizedBox(
+                  child: Container(
                     height: 120,
+                    decoration: BoxDecoration(
+                        color: kWhiteColor,
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          BoxShadow(
+                            color: kPrimaryColor,
+                            offset: Offset(2, 2),
+                          )
+                        ]),
                     child: Row(
                       children: [
                         ClipRRect(
@@ -109,16 +142,9 @@ class TeacherHomeScreen extends GetView<THomeScreenController> {
                                         fontWeight: FontWeight.bold,
                                       ),
                                     ),
-                                    Text(
-                                      " 5\$ Per Hour  ",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        backgroundColor: Colors.amber,
-                                      ),
-                                    ),
                                   ],
                                 ),
-                                const Text("BA (Mathermatics)"),
+                                const Text("Matric Class"),
                                 const Align(
                                   alignment: Alignment.centerLeft,
                                   child: Text(
@@ -129,49 +155,34 @@ class TeacherHomeScreen extends GetView<THomeScreenController> {
                                   ),
                                 ),
                                 Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  mainAxisAlignment: MainAxisAlignment.end,
                                   children: [
-                                    TextButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: kFieldGreyColor,
-                                          foregroundColor: kPrimaryColor,
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 8,
-                                          ),
-                                        ),
-                                        onPressed: () {},
-                                        child: const Text("Request")),
-                                    Wrap(
-                                      children: [
-                                        IconButton(
-                                          style: ElevatedButton.styleFrom(
-                                              padding: EdgeInsets.zero),
-                                          onPressed: () {
-                                            // CommonCode().openDialer('${controller.teacherList[index].phone}');
-                                          },
-                                          icon: const Icon(
-                                            Icons.call,
-                                            size: 20,
-                                            color: kPrimaryColor,
-                                          ),
-                                        ),
-                                        const SizedBox(
-                                          width: 24,
-                                        ),
-                                        IconButton(
-                                          style: ElevatedButton.styleFrom(
-                                              padding: EdgeInsets.zero),
-                                          onPressed: () {
-                                            // CommonCode().whatsApp('${controller.teacherList[index].phone}');
-                                          },
-                                          icon: const Icon(
-                                            Icons.message,
-                                            size: 24,
-                                            color: kPrimaryColor,
-                                          ),
-                                        ),
-                                      ],
+                                    IconButton(
+                                      style: ElevatedButton.styleFrom(
+                                          padding: EdgeInsets.zero),
+                                      onPressed: () {
+                                        // CommonCode().openDialer('${controller.teacherList[index].phone}');
+                                      },
+                                      icon: const Icon(
+                                        Icons.call,
+                                        size: 20,
+                                        color: kPrimaryColor,
+                                      ),
+                                    ),
+                                    const SizedBox(
+                                      width: 24,
+                                    ),
+                                    IconButton(
+                                      style: ElevatedButton.styleFrom(
+                                          padding: EdgeInsets.zero),
+                                      onPressed: () {
+                                        // CommonCode().whatsApp('${controller.teacherList[index].phone}');
+                                      },
+                                      icon: const Icon(
+                                        Icons.message,
+                                        size: 24,
+                                        color: kPrimaryColor,
+                                      ),
                                     ),
                                   ],
                                 )
@@ -184,8 +195,8 @@ class TeacherHomeScreen extends GetView<THomeScreenController> {
                   ),
                 );
               },
-              separatorBuilder: (_, int index) => const Divider(),
-            )     
+              separatorBuilder: (_, int index) => const SizedBox(height: 12),
+            )
           ],
         ),
       ),

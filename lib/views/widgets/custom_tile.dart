@@ -23,11 +23,16 @@ class CustomListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PhysicalModel(
-      color: kFieldGreyColor,
-      borderRadius: BorderRadius.circular(16),
-      // padding: const EdgeInsets.all(8.0),
-      elevation: 1,
+    return Container(
+      decoration: BoxDecoration(
+          color: kWhiteColor,
+          borderRadius: BorderRadius.circular(16),
+          boxShadow: [
+            BoxShadow(
+              color: kPrimaryColor,
+              offset: Offset(2, 2),
+            )
+          ]),
       child: ListTile(
         contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
         leading: leading,

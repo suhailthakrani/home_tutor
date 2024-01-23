@@ -5,6 +5,7 @@ import 'package:home_tutor/utils/app_colors.dart';
 import 'package:home_tutor/utils/common_code.dart';
 
 import '../../controllers/student/s_tutor_details_screen_controller.dart';
+import '../../utils/constants.dart';
 
 class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
   const STeacherDetailsScreen({super.key});
@@ -159,7 +160,9 @@ class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
                               horizontal: 16,
                             ),
                           ),
-                          onPressed: () {},
+                          onPressed: () {
+                            Get.toNamed(kSRequestTutorScreenRoute);
+                          },
                           child: const Text("Send Request"),
                         ),
                       ],

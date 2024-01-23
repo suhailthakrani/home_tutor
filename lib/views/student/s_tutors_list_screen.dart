@@ -119,7 +119,16 @@ class STutorsListScreen extends GetView<STutorsListScreenController> {
                   onTap: () {
                     Get.toNamed(kSTeacherDetailsScreenRoute, arguments: controller.teacherList[index]);
                   },
-                  child: SizedBox(
+                  child: Container(
+                    decoration: BoxDecoration(
+                        color: kWhiteColor,
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: [
+                          const BoxShadow(
+                            color: kPrimaryColor,
+                            offset: Offset(2, 2),
+                          )
+                        ]),
                     height: 120,
                     child: Row(
                       children: [
@@ -225,7 +234,7 @@ class STutorsListScreen extends GetView<STutorsListScreenController> {
                   ),
                 );
               },
-              separatorBuilder: (_, int index) => const Divider(),
+              separatorBuilder: (_, int index) => const SizedBox(height: 16),
             )
           ],
         ),

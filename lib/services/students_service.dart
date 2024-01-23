@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:home_tutor/models/request_model.dart';
 import 'package:home_tutor/models/student_model.dart';
 
 import '../models/teacher_model.dart';
@@ -88,5 +89,22 @@ class StudentsService {
       print('No user signed in');
     }
     return studentModel;
+  }
+
+
+  //
+  Future<String> sendRequesToTeacher(RequestModel requestModel) async {
+    print("object");
+    try {
+      DocumentReference<Map<String, dynamic>> doc = await FirebaseFirestore.instance.collection('requests').add(requestModel.toJson());
+
+     if(doc.id.isNotEmpty) {
+      return 'Request has been sent successfully!';
+     }
+      return 'Can not send request. Please try later!';
+    } on Exception catch(e) {
+      log("[GetTeachersFromFirebase]---->${e}");
+      return e.toString();
+    }
   }
 }

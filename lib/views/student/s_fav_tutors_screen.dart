@@ -44,8 +44,18 @@ class SFavListScreen extends GetView<SFavTutorsListScreenController> {
                       onTap: () {
                         Get.toNamed(kSTeacherDetailsScreenRoute, arguments: controller.teacherList[index]);
                       },
-                      child: SizedBox(
-                        height: 120,
+                      child: Container(
+                        height: 140,
+                        padding: EdgeInsets.symmetric(vertical: 8),
+                        decoration: BoxDecoration(
+                        color: kWhiteColor,
+                        borderRadius: BorderRadius.circular(16),
+                        boxShadow: const[
+                          BoxShadow(
+                            color: kPrimaryColor,
+                            offset: Offset(2, 2),
+                          )
+                        ]),
                         child: Row(
                           children: [
                             ClipRRect(
@@ -159,10 +169,9 @@ class SFavListScreen extends GetView<SFavTutorsListScreenController> {
                       ),
                     );
                   },
-                  separatorBuilder: (_, int index) => const Divider(),
+                  separatorBuilder: (_, int index) => const SizedBox(height: 16,),
                 ),
               
-              const Divider(),
             ],
           ),
         ),

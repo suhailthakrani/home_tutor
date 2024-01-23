@@ -34,12 +34,14 @@ class UserSession {
 
   Future<String> getRole() async {
     final preference = await SharedPreferences.getInstance();
-    return preference.getString("role") ?? 'Student';
+    return preference.getString("role") ?? '';
   }
 
   Future<bool> logout() async {
     final preference = await SharedPreferences.getInstance();
+    userModel.value = LoginModel.empty();
     preference.remove('USER_DATA');
+    preference.remove('role');
     return true;
   }
 }

@@ -26,6 +26,7 @@ const String kSProfileScreenRoute = '/SProfileScreenRoute';
 const String kSTutorsListScreenRoute = '/STutorsListScreenRoute';
 const String kSTeacherDetailsScreenRoute = '/STeacherDetailsScreenRoute';
 const String kSFavTeacherScreenRoute = '/SFavTeacherScreenRoute';
+const String kSRequestTutorScreenRoute = '/SRequestTutprScreenRoute';
 
 ///*********************  Messages   *********************///
 const String kPermissionPermanentlyDenied =

@@ -53,11 +53,12 @@ class SignInScreenController extends GetxController {
         String role = await UserSession().getRole();
         loginModel.role = role;
         print('--------------------:::::::::::::::::::::2: $response');
-        UserSession().createSession(user: loginModel);
-        if(UserSession.userModel.value.role == "Student"){
-          Get.offAllNamed(kSHomeScreenRoute);
+        print('--------------------:::::::::::::::::::::3: $role');
+        await UserSession().createSession(user: loginModel);
+        if(role == "Student"){
+          Get.offAllNamed(kSMainScreenRoute);
         } else {
-          Get.offAllNamed(kTHomeScreenRoute);
+          Get.offAllNamed(kTMainScreenRoute);
         }
       }
       else{
