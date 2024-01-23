@@ -1,113 +1,116 @@
 import 'dart:io';
 
-
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_tutor/services/teachers_service.dart';
+import 'package:home_tutor/utils/app_colors.dart';
+import 'package:home_tutor/utils/dropdown_controller.dart';
+import 'package:home_tutor/utils/multi_selection_checkbox_controller.dart';
 import 'package:image_picker/image_picker.dart';
 
-class TProfileScreenController extends GetxController {
+import '../../models/teacher_model.dart';
+import '../../services/students_service.dart';
+import '../../utils/text_field_manager.dart';
+import '../../views/widgets/custom_dialogs.dart';
 
-   final FirebaseAuth auth = FirebaseAuth.instance;
+class TProfileScreenController extends GetxController {
+  final FirebaseAuth auth = FirebaseAuth.instance;
   final FirebaseFirestore firestore = FirebaseFirestore.instance;
   final FirebaseStorage storage = FirebaseStorage.instance;
 
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController phoneController = TextEditingController();
-  final TextEditingController addressController = TextEditingController();
+  Rx<TeacherModel> teacherModel = Rx(TeacherModel.empty());
 
-  Rx<String> selectedSubject = RxString('');
-  Rx<String> selectedCity = RxString('');
-  Rx<String> selectedQualification = RxString('');
-  Rx<String> role = RxString('');
+  final TextFieldManager nameController = TextFieldManager('Name');
+  final TextFieldManager emailController = TextFieldManager('Email');
+  final TextFieldManager phoneController = TextFieldManager('Phone');
+  final TextFieldManager addressController = TextFieldManager('Address');
+  final TextFieldManager degreeController = TextFieldManager('Degree');
+  final TextFieldManager specialtyController = TextFieldManager('Subject Specialty');
+  final TextFieldManager cityController = TextFieldManager('City');
+  final TextFieldManager bioController = TextFieldManager('Bio');
+  final TextFieldManager teachingStyleController = TextFieldManager('Teaching Style');
+  final DropdownController gender = DropdownController(title: 'Address', items: RxList(["Male", "Female"]));
+
+  MultiSelectionCheckboxController subjectsController =
+      MultiSelectionCheckboxController(
+    items: RxList(
+      [
+        "Maths",
+        "Science",
+        "English",
+        "History",
+        "Physics",
+        "chemistry",
+        "Art",
+        "sindhi",
+        "Urdu"
+      ],
+    ),
+    selectedItems: RxList([]),
+    title: "Select Subjects",
+  );
+
   Rx<File>? image;
-  Rx<String>? imageUrl;
-  final picker = ImagePicker();
 
+  @override
+  void onReady() async {
+    teacherModel.value = await TeachersService().getCurrentUserDocument();
+    await populateData();
+    super.onReady();
+  }
+
+  Future<void> populateData() async{
+    nameController.controller.text = teacherModel.value.name;
+    emailController.controller.text = teacherModel.value.email;
+    phoneController.controller.text = teacherModel.value.phone;
+    addressController.controller.text = teacherModel.value.address;    
+    cityController.controller.text = teacherModel.value.city;  
+    gender.selectedItem.value = teacherModel.value.gender;
+    degreeController.controller.text = teacherModel.value.degree;    
+    bioController.controller.text = teacherModel.value.bio;    
+    teachingStyleController.controller.text = teacherModel.value.teachingStyle;
+    subjectsController.selectedItems.value = teacherModel.value.subjects;  
+      
+  }
 
   Future getImage() async {
-    final pickedFile = await picker.pickImage(source: ImageSource.gallery);
-
+    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
-        image!.value = File(pickedFile.path);
+      image!.value = File(pickedFile.path);
     }
   }
 
-  Future<String?> uploadImage() async {
+  Future<String> uploadImage() async {
     if (image != null) {
       try {
         var snapshot = await storage
             .ref()
-            .child('profileimages/${auth.currentUser!.uid}')
+            .child('images/${auth.currentUser!.uid}')
             .putFile(image!.value);
-
         String downloadUrl = await snapshot.ref.getDownloadURL();
         return downloadUrl;
       } catch (e) {
         print("Error uploading image: $e");
-        return null;
+        return '';
       }
     } else {
-      return null;
+      return '';
     }
   }
 
-  Future<void> saveProfileData(String imageUrl) async {
-    User? user = auth.currentUser;
-    if (user != null) {
-      String uid = user.uid;
-      await firestore.collection('profiles').doc(uid).set({
-        'subjects': selectedSubjects,
-        'name': nameController.text,
-        'email': emailController.text,
-        'phone': phoneController.text,
-        'address': addressController.text,
-        'selectedCity': selectedCity,
-        'selectedQualification': selectedQualification,
-        'imageUrl': imageUrl,
-      }).then((value) {
-        print("Profile data added successfully!");
-        // Optionally, you can show a success message or navigate to another screen
-      }).catchError((error) {
-        print("Failed to add profile data: $error");
-        // Handle error accordingly
-      });
+
+
+  Future<void> updateProfile() async {
+    teacherModel.value.profileUrl = await uploadImage();
+    String message  = await TeachersService().updateProfile(teacherModel.value);
+    if(message == "Profile Updated Successfully!") {
+      CustomDialogs().showErrorDialog("Success", "You have successfully sent the request.", DialogType.error, kGreenNormalColor, onOkBtnPressed: ()=>Get.back());
+    } else {
+      CustomDialogs().showErrorDialog("Alert", "Unable to updated Profile due to $message. Please try later!", DialogType.error, kRequiredRedColor);
     }
   }
-
-  Future<void> loadProfile() async {
-    User? user = auth.currentUser;
-    String uid = user!.uid;
-    final userData =
-        (await firestore.collection('profiles').doc(uid).get()).data()!;
-    if (userData.isEmpty) {
-      return;
-    }
-    imageUrl = userData["imageUrl"]??'';
-    nameController.text = userData["name"]??'';
-    emailController.text = userData["email"]??'';
-    phoneController.text = userData["phone"]??'';
-    addressController.text = userData["address"]??'';
-    selectedSubjects = List<String>.from(userData["subjects"]??[]);
-    selectedCity = userData["selectedCity"];
-    selectedQualification = userData["selectedQualification"]??'';
-
-  }
-
-  List<String> selectedSubjects = [];
-  List<String> subjectsList = [
-    'Maths',
-    'Science',
-    'English',
-    'History'
-        "Physics",
-    "chemistry",
-    "Art",
-    "sindhi",
-    "Urdu"
-  ];
-  
 }

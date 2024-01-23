@@ -92,10 +92,11 @@ class SRequestTutorScreenController extends GetxController {
       requestedTime: dailyTimeController.controller.text,
     );
     String message  = await StudentsService().sendRequesToTeacher(requestModel);
-    if(message == "Success") {
+    if(message == "Request has been sent successfully!") {
       CustomDialogs().showErrorDialog("Success", "You have successfully sent the request.", DialogType.error, kGreenNormalColor, onOkBtnPressed: ()=>Get.back());
     } else {
-      CustomDialogs().showErrorDialog("Alert", "Cannot send request. Please try later!", DialogType.error, kRequiredRedColor);
+      
+      CustomDialogs().showErrorDialog("Alert", "Cannot send request due to $message. Please try later!", DialogType.error, kRequiredRedColor);
 
     }
   }

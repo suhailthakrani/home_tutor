@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_tutor/views/widgets/general_dropdown.dart';
+import 'package:home_tutor/views/widgets/general_text_field.dart';
+import 'package:home_tutor/views/widgets/multi_selection_checkbox.dart';
 
 import '../../controllers/teacher/t_profile_screen_controller.dart';
 import '../../utils/app_colors.dart';
@@ -36,18 +39,20 @@ class TProfileScreen extends GetView<TProfileScreenController> {
         body: SingleChildScrollView(
           padding: const EdgeInsets.all(20.0),
           child: Obx(
-            ()=> Column(
+            () => Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
                 GestureDetector(
                   onTap: controller.getImage,
-                  child: (controller.image != null || controller.imageUrl != null)
+                  child: (controller.image != null ||
+                          controller.teacherModel.value.profileUrl.isNotEmpty)
                       ? CircleAvatar(
                           radius: 70,
-                          backgroundImage: (controller.imageUrl != null)
-                              ? NetworkImage(controller.imageUrl!.value)
-                                  as ImageProvider
-                              : FileImage(controller.image!.value),
+                          backgroundImage:
+                              (controller.teacherModel.value.profileUrl != null)
+                                  ? NetworkImage(controller.teacherModel.value
+                                      .profileUrl) as ImageProvider
+                                  : FileImage(controller.image!.value),
                         )
                       : Container(
                           height: 140,
@@ -64,169 +69,56 @@ class TProfileScreen extends GetView<TProfileScreenController> {
                         ),
                 ),
                 const SizedBox(height: 20.0),
-                TextFormField(
-                  controller: controller.nameController,
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.person),
-                    contentPadding: const EdgeInsets.all(10),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
+                GeneralTextField(
+                  tfManager: controller.nameController,
+                  isObscure: RxBool(false),
                 ),
-                const SizedBox(height: 10),
-                TextField(
-                  controller: controller.emailController,
-                  decoration: InputDecoration(
-                    prefixIcon: const Icon(Icons.email),
-                    contentPadding: const EdgeInsets.all(10),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
+                GeneralTextField(
+                  tfManager: controller.emailController,
+                  isObscure: RxBool(false),
                 ),
-                const SizedBox(height: 10),
-                TextField(
-                  controller: controller.phoneController,
-                  decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.phone),
-                      contentPadding: const EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
+                GeneralTextField(
+                  tfManager: controller.phoneController,
+                  isObscure: RxBool(false),
                 ),
-                const SizedBox(height: 10),
-                TextField(
-                  controller: controller.addressController,
-                  decoration: InputDecoration(
-                      prefixIcon: const Icon(Icons.location_city_outlined),
-                      contentPadding: const EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
+                GeneralTextField(
+                  tfManager: controller.degreeController,
+                  isObscure: RxBool(false),
                 ),
-                const SizedBox(height: 20.0),
-                DropdownButtonFormField(
-                  decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                  items: controller.subjectsList.map((String subject) {
-                    return DropdownMenuItem<String>(
-                      value: subject,
-                      child: Text(subject),
-                    );
-                  }).toList(),
-                  onChanged: (String? value) {
-                    if (value != null) {
-                      controller.selectedSubjects.add(value);
-                    }
-                  },
-                  hint: const Text('Select Subjects'),
-                  isExpanded: true,
-                  value: controller.selectedSubjects.isNotEmpty
-                      ? controller.selectedSubjects.last
-                      : null,
+                GeneralTextField(
+                  tfManager: controller.specialtyController,
+                  isObscure: RxBool(false),
                 ),
-                const SizedBox(height: 20.0),
-                const Text(
-                  'Selected Subjects:',
-                  style: TextStyle(fontSize: 18.0),
+                GeneralTextField(
+                  tfManager: controller.addressController,
+                  isObscure: RxBool(false),
+                  maxLines: 2,
                 ),
-                Wrap(
-                  children: controller.selectedSubjects
-                      .map((subject) => Chip(
-                            label: Text(subject),
-                            onDeleted: () {
-                              controller.selectedSubjects.remove(subject);
-                            },
-                          ))
-                      .toList(),
+                GeneralTextField(
+                  tfManager: controller.cityController,
+                  isObscure: RxBool(false),
                 ),
-                const SizedBox(height: 20.0),
-                DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                  value: controller.selectedCity.value.isNotEmpty
-                      ? controller.selectedCity.value
-                      : null,
-                  hint: const Text('Select City'),
-                  onChanged: (String? newValue) {
-                    controller.selectedCity.value = newValue!;
-                  },
-                  items: <String>[
-                    ' Hyderabad',
-                    'Karachi',
-                    'jamshoro',
-          
-                    // Add more cities as needed
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                
+                GeneralDropdown(
+                  controller: controller.gender,
                 ),
-                const SizedBox(height: 20.0),
-                DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                  value: controller.selectedQualification.value.isNotEmpty
-                      ? controller.selectedQualification.value
-                      : null,
-                  hint: const Text('Select Qualification'),
-                  onChanged: (String? newValue) {
-                    controller.selectedQualification.value = newValue!;
-                  },
-                  items: <String>[
-                    'Bachelor\'s Degree',
-                    'Master\'s Degree',
-                    'PhD',
-                    'Diploma',
-                    'Matric',
-                    'Fsc',
-                    // Add more qualifications as needed
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                GeneralTextField(
+                  tfManager: controller.bioController,
+                  isObscure: RxBool(false),
+                  maxLines: 6,
                 ),
-                const SizedBox(height: 20.0),
-                DropdownButtonFormField<String>(
-                  decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(10),
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(10))),
-                  value: controller.role.value.isNotEmpty ? controller.role.value : null,
-                  hint: const Text('Select Role'),
-                  onChanged: (String? newValue) {
-                    controller.role.value = newValue!;
-                  },
-                  items: <String>[
-                    "Teacher",
-                    "Student",
-                    // Add more qualifications as needed
-                  ].map<DropdownMenuItem<String>>((String value) {
-                    return DropdownMenuItem<String>(
-                      value: value,
-                      child: Text(value),
-                    );
-                  }).toList(),
+                GeneralTextField(
+                  tfManager: controller.teachingStyleController,
+                  maxLines: 5,
+                  isObscure: RxBool(false),
                 ),
-                const SizedBox(height: 20.0),
+               
+                MultiSelectionCheckbox(
+                  controller: controller.subjectsController,
+                ),
                 ElevatedButton(
                   onPressed: () async {
-                    String imageUrl = await controller.uploadImage() ?? '';
-                    if (imageUrl != '') {
-                      controller.saveProfileData(controller.imageUrl!.value);
-                    } else {
-                      // Handle image upload error
-                      print("Error uploading image");
-                    }
+                    await controller.updateProfile();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: const Color(0xff58ee4a),

@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_tutor/models/student_model.dart';
 import 'package:home_tutor/models/teacher_model.dart';
 import 'package:home_tutor/utils/constants.dart';
 

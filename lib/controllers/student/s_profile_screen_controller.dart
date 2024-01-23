@@ -60,24 +60,6 @@ class SProfileScreenController extends GetxController {
     }
   }
 
-  Future<String?> uploadImage() async {
-    if (image != null) {
-      try {
-        var snapshot = await storage
-            .ref()
-            .child('profileimages/${auth.currentUser!.uid}')
-            .putFile(image!);
-
-        String downloadUrl = await snapshot.ref.getDownloadURL();
-        return downloadUrl;
-      } catch (e) {
-        print("Error uploading image: $e");
-        return null;
-      }
-    } else {
-      return null;
-    }
-  }
 
   Future<void> saveProfileData(String imageUrl) async {
     User? user = auth.currentUser;

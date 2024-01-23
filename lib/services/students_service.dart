@@ -107,11 +107,21 @@ class StudentsService {
   Future<String> sendRequesToTeacher(RequestModel requestModel) async {
     print("object");
     try {
-      DocumentReference<Map<String, dynamic>> doc = await FirebaseFirestore.instance.collection('requests').add(requestModel.toJson());
-
-     if(doc.id.isNotEmpty) {
-      return 'Request has been sent successfully!';
-     }
+       QuerySnapshot<Map<String, dynamic>> favourites = await FirebaseFirestore.instance.collection('requests').where('studentId', isEqualTo: FirebaseAuth.instance.currentUser!.uid).get();
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> favDocs = favourites.docs??[];
+      List<Map<String, dynamic>> requests =  favDocs.map((e) => e.data()).toList()??[];
+      for(Map<String, dynamic> request in requests){
+        String teacherId = request['teacherId']??'';
+        if(teacherId.isEmpty || teacherId != requestModel.teacherId){
+          DocumentReference<Map<String, dynamic>> doc = await FirebaseFirestore.instance.collection('requests').add(requestModel.toJson());
+          if(doc.id.isNotEmpty) {
+            return 'Request has been sent successfully!';
+          }
+        } else {
+           await FirebaseFirestore.instance.collection('requests').doc(request['teacherId']).set(requestModel.toJson());
+            return 'Request has been sent successfully!';
+        }
+      }   
       return 'Can not send request. Please try later!';
     } on Exception catch(e) {
       log("[GetTeachersFromFirebase]---->${e}");

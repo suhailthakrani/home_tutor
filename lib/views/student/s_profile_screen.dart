@@ -39,50 +39,63 @@ class SProfileScreen extends GetView<SProfileScreenController> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               const SizedBox(height: 16),
-              GestureDetector(
-                onTap: controller.getImage,
-                child: controller.studentModel.value.profile.isNotEmpty
-                    ? Center(
-                        child: CircleAvatar(
-                          radius: 90,
-                          child: ClipOval(
-                            // borderRadius: BorderRadius.circular(50),
-                            child: Image.network(
-                              controller.studentModel.value.profile,
-                              height: 180,
-                              width: 180,
-                              fit: BoxFit.cover,
-                              errorBuilder: (context, error, stackTrace) {
-                                return Image.asset(
-                                  'assets/images/reading.png',
-                                  height: 140,
-                                  width: 140,
-                                );
-                              },
+              Obx(
+                () => GestureDetector(
+                  onTap: controller.getImage,
+                  child: controller.studentModel.value.profile.isNotEmpty
+                      ? Center(
+                          child: CircleAvatar(
+                            radius: 90,
+                            child: ClipOval(
+                              // borderRadius: BorderRadius.circular(50),
+                              child: Image.network(
+                                controller.studentModel.value.profile,
+                                height: 180,
+                                width: 180,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) {
+                                  return Image.asset(
+                                    'assets/images/reading.png',
+                                    height: 140,
+                                    width: 140,
+                                  );
+                                },
+                              ),
                             ),
                           ),
-                        ),
-                      )
-                    : Container(
-                        height: 140,
-                        width: 140,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.add_a_photo,
-                          size: 50,
-                          color: Colors.grey[800],
-                        ),
-                      ),
+                        )
+                      : controller.image != null
+                          ? CircleAvatar(
+                            radius: 90,
+                            child: ClipOval(
+                              // borderRadius: BorderRadius.circular(50),
+                            child: Image.file(
+                                controller.image!,
+                                height: 170,
+                                width: 170,
+                                fit: BoxFit.cover,
+                              ),
+                          ))
+                          : Container(
+                              height: 140,
+                              width: 140,
+                              decoration: BoxDecoration(
+                                color: Colors.grey[200],
+                                shape: BoxShape.circle,
+                              ),
+                              child: Icon(
+                                Icons.add_a_photo,
+                                size: 50,
+                                color: Colors.grey[800],
+                              ),
+                            ),
+                ),
               ),
               const SizedBox(height: 20.0),
               GeneralTextField(
                 tfManager: controller.nameController,
                 isObscure: RxBool(false),
               ),
-             
               GeneralTextField(
                 tfManager: controller.emailController,
                 readOnly: true,
@@ -102,17 +115,10 @@ class SProfileScreen extends GetView<SProfileScreenController> {
               ),
               const SizedBox(height: 20.0),
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal:20),
+                padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: ElevatedButton(
                   onPressed: () async {
-                    String imageUrl = await controller.uploadImage() ?? '';
-                    if (imageUrl != '') {
-                      controller
-                          .saveProfileData(controller.studentModel.value.profile);
-                    } else {
-                      // Handle image upload error
-                      print("Error uploading image");
-                    }
+                    //
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kPrimaryColor,
@@ -135,14 +141,3 @@ class SProfileScreen extends GetView<SProfileScreenController> {
         ));
   }
 }
-
-// Future<void> logout(BuildContext context) async {
-//   const CircularProgressIndicator();
-//   await FirebaseAuth.instance.signOut();
-//   Navigator.pushReplacement(
-//     context,
-//     MaterialPageRoute(
-//       builder: (context) => const LoginScreen(),
-//     ),
-//   );
-// }

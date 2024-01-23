@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'utils/constants.dart';
 import 'utils/route_management.dart';
 import 'utils/screen_bindings.dart';
-import 'views/student/s_request_teacher_screen.dart';
+import '../../utils/app_colors.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -26,7 +26,7 @@ class MyApp extends StatelessWidget {
       initialBinding: ScreensBindings(),
       getPages: RouteManagement.getPages(),
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+        colorScheme: ColorScheme.fromSeed(seedColor: kPrimaryColor),
         useMaterial3: true,
       ),
     );
