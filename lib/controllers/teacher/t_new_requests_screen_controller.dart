@@ -10,12 +10,13 @@ import '../../models/teacher_model.dart';
 
 class TNewRequestsScreenController extends GetxController {
 
-  RxList<StudentModel> studentsList = RxList([]);
+  // RxList<StudentModel> studentsList = RxList([]);
 
-  @override
-  Future<void> onReady() async {
-    studentsList.value = await TeachersService().getNewRequests();
-    super.onReady();
-  }
+  // @override
+  // Future<void> onReady() async {
+  //   studentsList.value = await TeachersService().getNewRequests();
+  //   studentsList.refresh();
+  //   super.onReady();
+  // }
   
 }

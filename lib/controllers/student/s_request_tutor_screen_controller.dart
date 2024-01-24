@@ -40,8 +40,8 @@ class SRequestTutorScreenController extends GetxController {
       'Maths',
       'Science',
       'English',
-      'History'
-          "Physics",
+      'History',
+       "Physics",
       "chemistry",
       "Art",
       "sindhi",

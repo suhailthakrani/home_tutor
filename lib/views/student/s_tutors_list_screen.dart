@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:home_tutor/controllers/student/s_tutors_list_screen_controller.dart';
 import 'package:home_tutor/utils/app_colors.dart';
 
+import '../../services/students_service.dart';
 import '../../utils/common_code.dart';
 import '../../utils/constants.dart';
 import 'teacher_search_deligate.dart';
@@ -79,7 +80,7 @@ class STutorsListScreen extends GetView<STutorsListScreenController> {
                 child: Wrap(
                   spacing: 15.0,
                   runSpacing: 10.0,
-                  children: controller.subject.map((String chipLabel) {
+                  children: controller.subjects.map((String chipLabel) {
                     return GestureDetector(
                       onTap: () {
                         // Handle chip tap
@@ -109,132 +110,169 @@ class STutorsListScreen extends GetView<STutorsListScreenController> {
                 ),
               ),
             ),
-            ListView.separated(
-              physics: const NeverScrollableScrollPhysics(),
-              padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
-              itemCount: 7,
-              shrinkWrap: true,
-              itemBuilder: (context, index) {
-                return InkWell(
-                  onTap: () {
-                    Get.toNamed(kSTeacherDetailsScreenRoute, arguments: controller.teacherList[index]);
-                  },
-                  child: Container(
-                    decoration: BoxDecoration(
-                        color: kWhiteColor,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
-                          const BoxShadow(
-                            color: kPrimaryColor,
-                            offset: Offset(2, 2),
-                          )
-                        ]),
-                    height: 120,
-                    child: Row(
-                      children: [
-                        ClipRRect(
-                          borderRadius: BorderRadius.circular(24),
-                          child: Image.asset(
-                            'assets/images/reading.png',
-                            width: Get.width * 0.3,
-                          ),
-                        ),
-                        Expanded(
-                          child: Padding(
-                            padding: const EdgeInsets.only(
-                              left: 8.0,
-                              top: 8,
-                              bottom: 8,
-                            ),
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
+            Obx(
+              () => controller.teacherList.isEmpty
+                  ?  Container(
+                    height: Get.height * 0.5,
+                    width: Get.width,
+                      child: Center(child: Text("No Teacher Found")),
+                    )
+                  : ListView.separated(
+                      physics: const NeverScrollableScrollPhysics(),
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 12),
+                      itemCount: controller.teacherList.length,
+                      shrinkWrap: true,
+                      itemBuilder: (context, index) {
+                        return InkWell(
+                          onTap: () {
+                            Get.toNamed(kSTeacherDetailsScreenRoute,
+                                arguments: controller.teacherList[index]);
+                          },
+                          child: Container(
+                            decoration: BoxDecoration(
+                                color: kWhiteColor,
+                                borderRadius: BorderRadius.circular(16),
+                                boxShadow: const [
+                                  BoxShadow(
+                                    color: kPrimaryColor,
+                                    offset: Offset(2, 2),
+                                  )
+                                ]),
+                            height: 120,
+                            child: Row(
                               children: [
-                                const Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "Karan Malhi",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                      ),
+                                ClipRRect(
+                                  borderRadius: BorderRadius.circular(24),
+                                  child: Image.network(
+                                    controller.teacherList[index].profileUrl,
+                                    errorBuilder:
+                                        (context, error, stackTrace) =>
+                                            Image.asset(
+                                      'assets/images/reading.png',
+                                      width: Get.width * 0.3,
                                     ),
-                                    Text(
-                                      " 5\$ Per Hour  ",
-                                      style: TextStyle(
-                                        fontWeight: FontWeight.bold,
-                                        backgroundColor: Colors.amber,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                const Text("BA (Mathermatics)"),
-                                const Align(
-                                  alignment: Alignment.centerLeft,
-                                  child: Text(
-                                    "Add Address Here, City",
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(fontSize: 11),
+                                    width: Get.width * 0.3,
                                   ),
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    TextButton(
-                                        style: ElevatedButton.styleFrom(
-                                          backgroundColor: kFieldGreyColor,
-                                          foregroundColor: kPrimaryColor,
-                                          padding: const EdgeInsets.symmetric(
-                                            horizontal: 8,
-                                          ),
-                                        ),
-                                        onPressed: () {},
-                                        child: const Text("Request")),
-                                    Wrap(
+                                Expanded(
+                                  child: Padding(
+                                    padding: const EdgeInsets.only(
+                                      left: 8.0,
+                                      top: 8,
+                                      bottom: 8,
+                                    ),
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
                                       children: [
-                                        IconButton(
-                                          style: ElevatedButton.styleFrom(
-                                              padding: EdgeInsets.zero),
-                                          onPressed: () {
-                                            CommonCode().openDialer('${controller.teacherList[index].phone}');
-                                          },
-                                          icon: const Icon(
-                                            Icons.call,
-                                            size: 20,
-                                            color: kPrimaryColor,
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            Text(
+                                              "${controller.teacherList[index].name}",
+                                              style: const TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            const Text(
+                                              " 5\$ Per Hour  ",
+                                              style: TextStyle(
+                                                fontWeight: FontWeight.bold,
+                                                backgroundColor: Colors.amber,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        Text(
+                                            "${controller.teacherList[index].degree} (${controller.teacherList[index].specialty})"),
+                                        Align(
+                                          alignment: Alignment.centerLeft,
+                                          child: Text(
+                                            "${controller.teacherList[index].address}, ${controller.teacherList[index].city}",
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                            style:
+                                                const TextStyle(fontSize: 11),
                                           ),
                                         ),
-                                        const SizedBox(
-                                          width: 24,
-                                        ),
-                                        IconButton(
-                                          style: ElevatedButton.styleFrom(
-                                              padding: EdgeInsets.zero),
-                                          onPressed: () {
-                                            CommonCode().whatsApp('${controller.teacherList[index].phone}');
-                                          },
-                                          icon: const Icon(
-                                            Icons.message,
-                                            size: 24,
-                                            color: kPrimaryColor,
-                                          ),
-                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.spaceBetween,
+                                          children: [
+                                            TextButton(
+                                                style: ElevatedButton.styleFrom(
+                                                  backgroundColor:
+                                                      kFieldGreyColor,
+                                                  foregroundColor:
+                                                      kPrimaryColor,
+                                                  padding: const EdgeInsets
+                                                      .symmetric(
+                                                    horizontal: 8,
+                                                  ),
+                                                ),
+                                                onPressed: () async {
+                                                  Get.toNamed(
+                                                      kSRequestTutorScreenRoute,
+                                                      arguments: {
+                                                        'teacherId': controller
+                                                            .teacherList[index]
+                                                            .id
+                                                      });
+                                                },
+                                                child: const Text("Request")),
+                                            Wrap(
+                                              children: [
+                                                IconButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                          padding:
+                                                              EdgeInsets.zero),
+                                                  onPressed: () {
+                                                    CommonCode().openDialer(
+                                                        '${controller.teacherList[index].phone}');
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.call,
+                                                    size: 20,
+                                                    color: kPrimaryColor,
+                                                  ),
+                                                ),
+                                                const SizedBox(
+                                                  width: 24,
+                                                ),
+                                                IconButton(
+                                                  style:
+                                                      ElevatedButton.styleFrom(
+                                                          padding:
+                                                              EdgeInsets.zero),
+                                                  onPressed: () {
+                                                    CommonCode().whatsApp(
+                                                        '${controller.teacherList[index].phone}');
+                                                  },
+                                                  icon: const Icon(
+                                                    Icons.message,
+                                                    size: 24,
+                                                    color: kPrimaryColor,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        )
                                       ],
                                     ),
-                                  ],
-                                )
+                                  ),
+                                ),
                               ],
                             ),
                           ),
-                        ),
-                      ],
+                        );
+                      },
+                      separatorBuilder: (_, int index) =>
+                          const SizedBox(height: 16),
                     ),
-                  ),
-                );
-              },
-              separatorBuilder: (_, int index) => const SizedBox(height: 16),
             )
           ],
         ),

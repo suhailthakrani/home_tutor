@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:awesome_dialog/awesome_dialog.dart';
@@ -28,11 +29,14 @@ class TProfileScreenController extends GetxController {
   final TextFieldManager phoneController = TextFieldManager('Phone');
   final TextFieldManager addressController = TextFieldManager('Address');
   final TextFieldManager degreeController = TextFieldManager('Degree');
-  final TextFieldManager specialtyController = TextFieldManager('Subject Specialty');
+  final TextFieldManager specialtyController =
+      TextFieldManager('Subject Specialty');
   final TextFieldManager cityController = TextFieldManager('City');
   final TextFieldManager bioController = TextFieldManager('Bio');
-  final TextFieldManager teachingStyleController = TextFieldManager('Teaching Style');
-  final DropdownController genderController = DropdownController(title: 'Gender', items: RxList([]));
+  final TextFieldManager teachingStyleController =
+      TextFieldManager('Teaching Style');
+  final DropdownController genderController =
+      DropdownController(title: 'Gender', items: RxList([]));
 
   MultiSelectionCheckboxController subjectsController =
       MultiSelectionCheckboxController(
@@ -57,34 +61,39 @@ class TProfileScreenController extends GetxController {
 
   @override
   void onReady() async {
-    genderController.items.value = [ItemModel('1', "Male"), ItemModel('1',"Female")];
+    genderController.items.value = [
+      ItemModel('1', "Male"),
+      ItemModel('1', "Female")
+    ];
     teacherModel.value = await TeachersService().getCurrentUserDocument();
     await populateData();
     super.onReady();
   }
 
-  Future<void> populateData() async{
+  Future<void> populateData() async {
     nameController.controller.text = teacherModel.value.name;
     emailController.controller.text = teacherModel.value.email;
     phoneController.controller.text = teacherModel.value.phone;
-    addressController.controller.text = teacherModel.value.address;    
-    cityController.controller.text = teacherModel.value.city; 
+    addressController.controller.text = teacherModel.value.address;
+    cityController.controller.text = teacherModel.value.city;
     genderController.selectedItem.value = null;
     for (var g in genderController.items) {
-      if(teacherModel.value.gender.isNotEmpty && g.toString().toLowerCase() == teacherModel.value.gender.toString().toLowerCase()) {
+      if (teacherModel.value.gender.isNotEmpty &&
+          g.toString().toLowerCase() ==
+              teacherModel.value.gender.toString().toLowerCase()) {
         genderController.selectedItem.value = teacherModel.value.gender;
       }
-    } 
-   
-    degreeController.controller.text = teacherModel.value.degree;    
-    bioController.controller.text = teacherModel.value.bio;    
+    }
+
+    degreeController.controller.text = teacherModel.value.degree;
+    bioController.controller.text = teacherModel.value.bio;
     teachingStyleController.controller.text = teacherModel.value.teachingStyle;
-    subjectsController.selectedItems.value = teacherModel.value.subjects;  
-      
+    subjectsController.selectedItems.value = teacherModel.value.subjects;
   }
 
   Future pickImage() async {
-    final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
+    final pickedFile =
+        await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       image!.value = File(pickedFile.path);
     }
@@ -108,31 +117,43 @@ class TProfileScreenController extends GetxController {
     }
   }
 
-  bool validate(){
+  bool validateData() {
     bool isValid = true;
-    isValid = nameController.validate() & 
-    emailController.validateEmail() & 
-    phoneController.validateMobileNumber() & 
-    addressController.validate() & 
-    cityController.validate() &
-    genderController.validate() & 
-    bioController.validate() & 
-    teachingStyleController.validate() & 
-    subjectsController.validate();
+    isValid = nameController.validate() &
+        emailController.validateEmail() &
+        phoneController.validateMobileNumber() &
+        addressController.validate() &
+        cityController.validate() &
+        genderController.validate() &
+        bioController.validate() &
+        teachingStyleController.validate() &
+        subjectsController.validate();
 
     return isValid;
   }
 
-
-
   Future<void> updateProfile() async {
-    teacherModel.value.subjects = subjectsController.selectedItems;
-    teacherModel.value.profileUrl = await uploadImage();
-    String message  = await TeachersService().updateProfile(teacherModel.value);
-    if(message == "Profile Updated Successfully!") {
-      CustomDialogs().showErrorDialog("Success", "You have successfully sent the request.", DialogType.error, kGreenNormalColor, onOkBtnPressed: ()=>Get.back());
-    } else {
-      CustomDialogs().showErrorDialog("Alert", "Unable to updated Profile due to $message. Please try later!", DialogType.error, kRequiredRedColor);
+    if (validateData()) {
+      teacherModel.value.subjects = subjectsController.selectedItems;
+      teacherModel.value.profileUrl = await uploadImage();
+      log("------------::::: ${teacherModel.toJson()}");
+      String message = await TeachersService().updateProfile(teacherModel.value);
+      if (message == "Profile Updated Successfully!") {
+        CustomDialogs().showErrorDialog(
+          "Success",
+          "You have successfully sent the request.",
+          DialogType.error,
+          kGreenNormalColor,
+          onOkBtnPressed: () => Get.back(),
+        );
+      } else {
+        CustomDialogs().showErrorDialog(
+          "Alert",
+          "Unable to updated Profile due to $message. Please try later!",
+          DialogType.error,
+          kRequiredRedColor,
+        );
+      }
     }
   }
 }

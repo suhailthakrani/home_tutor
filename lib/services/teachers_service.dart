@@ -81,25 +81,22 @@ class TeachersService {
     return teacherModel;
   }
 
-
   Future<List<StudentModel>> getNewRequests() async {
     try {
       QuerySnapshot<Map<String, dynamic>> favourites = await FirebaseFirestore
           .instance
           .collection('requests')
-          .where('teacherId', isEqualTo: FirebaseAuth.instance.currentUser!.uid)
+          .where('teacherId', isEqualTo:'Csv7qeYqPCRdG0lNwZ5Lnq5ZioN2' /* FirebaseAuth.instance.currentUser!.uid*/)
           .get();
       List<QueryDocumentSnapshot<Map<String, dynamic>>> favDocs =
           favourites.docs ?? [];
-      List<Map<String, dynamic>> requests =
-          favDocs.map((e) => e.data()).toList() ?? [];
-      log("================${requests}");
-      print("================${requests}");
+      List<Map<String, dynamic>> requests = favDocs.map((e) => e.data()).toList() ?? [];
+      log("===================${requests}");
       List<StudentModel> newRequests = [];
       for (Map<String, dynamic> request in requests) {
         DocumentSnapshot<Map<String, dynamic>> querySnapshot =
             await FirebaseFirestore.instance
-                .collection('teachers')
+                .collection('students')
                 .doc(request['studentId'] ?? '')
                 .get();
         StudentModel studentModel =

@@ -9,7 +9,6 @@ import 'package:home_tutor/controllers/student/s_home_screen_controller.dart';
 import 'package:home_tutor/models/teacher_model.dart';
 import 'package:home_tutor/utils/app_colors.dart';
 import 'package:home_tutor/utils/common_code.dart';
-import 'package:home_tutor/views/student/s_tutors_list_screen.dart';
 import '../../services/students_service.dart';
 import '../../utils/constants.dart';
 import 'teacher_search_deligate.dart';
@@ -89,12 +88,9 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                     itemBuilder: (context, index) {
                       return InkWell(
                         onTap: () {
-                          // Navigator.pushReplacement(
-                          //   context,
-                          //   MaterialPageRoute(
-                          //     builder: (context) => const TutorHire(),
-                          //   ),
-                          // );
+                          Get.toNamed(kSTutorsListScreenRoute, arguments: {
+                            'subject': controller.subjects[index]
+                          });
                         },
                         child: Container(
                           width: MediaQuery.of(context).size.width * 0.35,
@@ -173,12 +169,7 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                     ),
                     TextButton(
                       onPressed: () {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const STutorsListScreen(),
-                          ),
-                        );
+                        Get.toNamed(kSTutorsListScreenRoute, arguments: {'subject': ''},);
                       },
                       child: const Text(
                         "See All",
@@ -297,22 +288,32 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                                 alignment: Alignment.centerLeft,
                                                 child: Text(
                                                   // Degree (Subject or Specialty)
-                                                  teachers[index].specialty.isNotEmpty?"${teachers[index].degree.capitalizeFirst} (${teachers[index].specialty})":"${teachers[index].degree.capitalizeFirst} Degree",
-                                                  style: TextStyle(fontSize: 12),
+                                                  teachers[index]
+                                                          .specialty
+                                                          .isNotEmpty
+                                                      ? "${teachers[index].degree.capitalizeFirst} (${teachers[index].specialty})"
+                                                      : "${teachers[index].degree.capitalizeFirst} Degree",
+                                                  style:
+                                                      TextStyle(fontSize: 12),
                                                 ),
                                               ),
                                               Align(
                                                 alignment: Alignment.centerLeft,
                                                 child: Wrap(
                                                   children: [
-                                                    Icon(Icons.location_on_outlined,size: 16, color: kPrimaryColor,),
+                                                    Icon(
+                                                      Icons
+                                                          .location_on_outlined,
+                                                      size: 16,
+                                                      color: kPrimaryColor,
+                                                    ),
                                                     Text(
                                                       "${teachers[index].address}, ${teachers[index].city}",
                                                       maxLines: 1,
                                                       overflow:
                                                           TextOverflow.ellipsis,
-                                                      style:
-                                                          TextStyle(fontSize: 11),
+                                                      style: TextStyle(
+                                                          fontSize: 11),
                                                     ),
                                                   ],
                                                 ),
@@ -421,11 +422,7 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const STutorsListScreen()));
+                          Get.toNamed(kSTutorsListScreenRoute, arguments: {'subject': ''},);
                         },
                         child: const Text(
                           "See All",
@@ -552,18 +549,23 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                                       TextStyle(fontSize: 12),
                                                 ),
                                               ),
-                                               Align(
+                                              Align(
                                                 alignment: Alignment.centerLeft,
                                                 child: Wrap(
                                                   children: [
-                                                    Icon(Icons.location_on_outlined,size: 16, color: kPrimaryColor,),
+                                                    Icon(
+                                                      Icons
+                                                          .location_on_outlined,
+                                                      size: 16,
+                                                      color: kPrimaryColor,
+                                                    ),
                                                     Text(
                                                       "${teachers[index].address}, ${teachers[index].city}",
                                                       maxLines: 1,
                                                       overflow:
                                                           TextOverflow.ellipsis,
-                                                      style:
-                                                          TextStyle(fontSize: 11),
+                                                      style: TextStyle(
+                                                          fontSize: 11),
                                                     ),
                                                   ],
                                                 ),
@@ -672,11 +674,10 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                       ),
                       TextButton(
                         onPressed: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>
-                                      const STutorsListScreen()));
+                          Get.toNamed(
+                            kSTutorsListScreenRoute,
+                            arguments: {'subject': ''},
+                          );
                         },
                         child: const Text(
                           "See All",
@@ -796,22 +797,26 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                                 style: TextStyle(fontSize: 12),
                                               ),
                                             ),
-                                             Align(
-                                                alignment: Alignment.centerLeft,
-                                                child: Wrap(
-                                                  children: [
-                                                    Icon(Icons.location_on_outlined,size: 16, color: kPrimaryColor,),
-                                                    Text(
-                                                      "${teachers[index].address}, ${teachers[index].city}",
-                                                      maxLines: 1,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style:
-                                                          TextStyle(fontSize: 11),
-                                                    ),
-                                                  ],
-                                                ),
+                                            Align(
+                                              alignment: Alignment.centerLeft,
+                                              child: Wrap(
+                                                children: [
+                                                  Icon(
+                                                    Icons.location_on_outlined,
+                                                    size: 16,
+                                                    color: kPrimaryColor,
+                                                  ),
+                                                  Text(
+                                                    "${teachers[index].address}, ${teachers[index].city}",
+                                                    maxLines: 1,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style:
+                                                        TextStyle(fontSize: 11),
+                                                  ),
+                                                ],
                                               ),
+                                            ),
                                             Row(
                                               mainAxisAlignment:
                                                   MainAxisAlignment

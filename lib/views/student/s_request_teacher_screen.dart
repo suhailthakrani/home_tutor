@@ -19,7 +19,7 @@ class SRequestTutorScreen extends GetView<SRequestTutorScreenController> {
           backgroundColor: kPrimaryColor,
           foregroundColor: kWhiteColor,
           title: const Text(
-            "Complete Your Profile",
+            "Send Request",
             style: TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 18,

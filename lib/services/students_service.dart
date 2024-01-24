@@ -53,10 +53,9 @@ class StudentsService {
       QuerySnapshot<Map<String, dynamic>> favourites = await FirebaseFirestore.instance.collection('requests').where('studentId', isEqualTo: FirebaseAuth.instance.currentUser!.uid).get();
       List<QueryDocumentSnapshot<Map<String, dynamic>>> favDocs = favourites.docs??[];
       List<Map<String, dynamic>> requests =  favDocs.map((e) => e.data()).toList()??[];
-      log("================${requests}");
-      print("================${requests}");
       List<TeacherModel> favTeachers = [];
       for(Map<String, dynamic> request in requests){
+        log("teacherId=======================${request['teacherId']??''}");
         DocumentSnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance.collection('teachers').doc(request['teacherId']??'').get();
         TeacherModel teacherModel = TeacherModel.fromJson(querySnapshot.data()??{});
         teacherModel.id = querySnapshot.id;

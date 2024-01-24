@@ -25,37 +25,46 @@ class SFavListScreen extends GetView<SFavTutorsListScreenController> {
           child: Image.asset('assets/images/reading.png'),
         ),
         foregroundColor: kWhiteColor,
-        title: const Text("Tutors You Like", style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),),
+        title: const Text(
+          "Tutors You Requested",
+          style: TextStyle(fontWeight: FontWeight.w600, fontSize: 20),
+        ),
       ),
       body: SingleChildScrollView(
         child: Obx(
-          ()=> Column(
+          () => Column(
             children: [
-              if(controller.teacherList.isEmpty)
-              const Center(child: CircularProgressIndicator(),)
+              if (controller.teacherList.isEmpty)
+                const Center(
+                  child: CircularProgressIndicator(),
+                )
               else
-              ListView.separated(
+                ListView.separated(
                   physics: const NeverScrollableScrollPhysics(),
-                  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
                   itemCount: controller.teacherList.length,
                   shrinkWrap: true,
                   itemBuilder: (context, index) {
                     return InkWell(
                       onTap: () {
-                        Get.toNamed(kSTeacherDetailsScreenRoute, arguments: controller.teacherList[index]);
+                        Get.toNamed(
+                          kSTeacherDetailsScreenRoute,
+                          arguments: controller.teacherList[index],
+                        );
                       },
                       child: Container(
                         height: 140,
                         padding: const EdgeInsets.symmetric(vertical: 8),
                         decoration: BoxDecoration(
-                        color: kWhiteColor,
-                        borderRadius: BorderRadius.circular(16),
-                        boxShadow: const[
-                          BoxShadow(
-                            color: kPrimaryColor,
-                            offset: Offset(2, 2),
-                          )
-                        ]),
+                            color: kWhiteColor,
+                            borderRadius: BorderRadius.circular(16),
+                            boxShadow: const [
+                              BoxShadow(
+                                color: kPrimaryColor,
+                                offset: Offset(2, 2),
+                              )
+                            ]),
                         child: Row(
                           children: [
                             ClipRRect(
@@ -94,7 +103,8 @@ class SFavListScreen extends GetView<SFavTutorsListScreenController> {
                                         ),
                                       ],
                                     ),
-                                    Text("${controller.teacherList[index].degree} (${controller.teacherList[index].specialty})"),
+                                    Text(
+                                        "${controller.teacherList[index].degree} (${controller.teacherList[index].specialty})"),
                                     Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
@@ -112,7 +122,8 @@ class SFavListScreen extends GetView<SFavTutorsListScreenController> {
                                             style: ElevatedButton.styleFrom(
                                               backgroundColor: kFieldGreyColor,
                                               foregroundColor: kPrimaryColor,
-                                              padding: const EdgeInsets.symmetric(
+                                              padding:
+                                                  const EdgeInsets.symmetric(
                                                 horizontal: 8,
                                               ),
                                             ),
@@ -124,8 +135,8 @@ class SFavListScreen extends GetView<SFavTutorsListScreenController> {
                                               style: ElevatedButton.styleFrom(
                                                   padding: EdgeInsets.zero),
                                               onPressed: () async {
-                                               CommonCode().openDialer('${controller.teacherList[index].phone}');
-                                               
+                                                CommonCode().openDialer(
+                                                    '${controller.teacherList[index].phone}');
                                               },
                                               icon: const Icon(
                                                 Icons.call,
@@ -137,7 +148,8 @@ class SFavListScreen extends GetView<SFavTutorsListScreenController> {
                                               style: ElevatedButton.styleFrom(
                                                   padding: EdgeInsets.zero),
                                               onPressed: () {
-                                                CommonCode().whatsApp('${controller.teacherList[index].phone}');
+                                                CommonCode().whatsApp(
+                                                    '${controller.teacherList[index].phone}');
                                                 // controller.whatsApp('+923483053712');
                                               },
                                               icon: const Icon(
@@ -169,9 +181,10 @@ class SFavListScreen extends GetView<SFavTutorsListScreenController> {
                       ),
                     );
                   },
-                  separatorBuilder: (_, int index) => const SizedBox(height: 16,),
+                  separatorBuilder: (_, int index) => const SizedBox(
+                    height: 16,
+                  ),
                 ),
-              
             ],
           ),
         ),

@@ -1,14 +1,32 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:home_tutor/models/request_model.dart';
 import 'package:home_tutor/models/teacher_model.dart';
+import 'package:home_tutor/services/students_service.dart';
 
 class STutorsListScreenController extends GetxController {
 
+  RxString subject = RxString('');
+
   TextEditingController searchController = TextEditingController();
   RxList<TeacherModel> teacherList = <TeacherModel>[].obs;
+
+
+
+  @override
+  Future<void> onReady() async {
+    subject.value = Get.arguments['subject']??'';
+    if(subject.isEmpty) {
+      teacherList.value = await StudentsService().getTeachersFromFirebase();
+    }
+    else {
+      teacherList.value = await StudentsService().getTeachersFromBySubject(subject: subject.value);
+    }
+    super.onReady();
+  }
   RxString selectedChip = ''.obs;
 
-  RxList<String> subject = [
+  RxList<String> subjects = [
     "Physics",
     "Sindhi",
     "English",
@@ -19,10 +37,12 @@ class STutorsListScreenController extends GetxController {
     "Mathematics",
   ].obs;
 
-   void selectChip(String chipLabel) {
-    // Update the selected chip label
+   Future<void> selectChip(String chipLabel) async {
+    
     selectedChip.value = chipLabel;
-    // print('Selected chip: $chipLabel');
+    teacherList.value = await StudentsService().getTeachersFromBySubject(subject: selectedChip.value);
   }
+
+
   
 }
