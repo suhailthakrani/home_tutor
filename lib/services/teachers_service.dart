@@ -99,13 +99,14 @@ class TeachersService {
       List<RequestStudentModel> studentRequests = [];
       String userId = FirebaseAuth.instance.currentUser!.uid;
       QuerySnapshot<Map<String, dynamic>> requests = await  FirebaseFirestore.instance.collection('requests').where('teacherId', isEqualTo:userId).get();
-      log("----------::::::${requests.docs}");
+
       List<RequestModel> requestsDocs = (requests.docs ?? []).map((e) {
         RequestModel requestModel = RequestModel.empty();
         requestModel = RequestModel.fromJson(e.data());
         requestModel.id = e.id;
         return requestModel;
       }).toList();
+
       for (RequestModel request in requestsDocs) {
         DocumentSnapshot<Map<String, dynamic>> querySnapshot =
             await FirebaseFirestore.instance.collection('students').doc(request.studentId).get();
@@ -114,8 +115,8 @@ class TeachersService {
         studentRequests.add(RequestStudentModel(student: studentModel, request: request));
       }
       return studentRequests;
-    } on Exception catch (e) {
-      log("[GetTeachersFromFirebase]---->${e}");
+    } on Exception catch (e, StackTrace) {
+      log("[GetTeachersFromFirebase]---->${e} ${StackTrace}");
       return [];
     }
   }

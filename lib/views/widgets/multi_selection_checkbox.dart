@@ -58,6 +58,7 @@ class MultiSelectionCheckbox extends StatelessWidget {
                         }
                       }:null,
                       child: Chip(
+                        side: BorderSide.none,
                         avatar: controller.selectedItems.contains(item)
                             ? const Icon(Icons.check_circle,color: kWhiteColor)
                             : const Icon(Icons.circle_outlined,color: kGreyColor),

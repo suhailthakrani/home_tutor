@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 class RequestModel {
   String id = '';
   String studentId = '';
@@ -5,7 +7,7 @@ class RequestModel {
   String expectedCharges = '';
   String instructions = '';
   String status = '';
-  List<String> requestedSubjects = [];
+  List<dynamic> requestedSubjects = [];
   String requestedTime = '';
 
   RequestModel({
@@ -21,15 +23,16 @@ class RequestModel {
   RequestModel.empty();
 
 
-   RequestModel.fromJson(Map<String, dynamic> json):
-      id= json['id'] ?? '',
-      studentId= json['studentId'] ?? '',
-      teacherId= json['teacherId'] ?? '',
-      expectedCharges= json['expectedCharges'] ?? '',
-      instructions= json['instructions'] ?? '',
-      status= json['status'] ?? '',
-      requestedSubjects= json['requestedSubjects'] ?? '',
+   RequestModel.fromJson(Map<String, dynamic> json){
+      id= json['id'] ?? '';
+      studentId= json['studentId'] ?? '';
+      teacherId= json['teacherId'] ?? '';
+      expectedCharges= json['expectedCharges'] ?? '';
+      instructions= json['instructions'] ?? '';
+      status= json['status'] ?? '';
+      requestedSubjects= json['requestedSubjects'] ?? [];
       requestedTime= json['requestedTime'] ?? '';
+   }
    
 
   // Method to convert a RequestModel instance to a JSON object

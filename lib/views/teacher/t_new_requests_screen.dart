@@ -1,9 +1,11 @@
 import 'dart:developer';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_tutor/models/student_request_model.dart';
+import 'package:home_tutor/utils/user_session.dart';
 
 import '../../controllers/teacher/t_new_requests_screen_controller.dart';
 import '../../models/student_model.dart';
@@ -34,15 +36,19 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
             return Center(
               child: Text("${snapshot.error}"),
             );
-          }
-          else if (snapshot.connectionState == ConnectionState.waiting) {
+          } else if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
-          } else if(snapshot.data!.isEmpty) {
-             return const Center(
-              child: Text("No Requests Found!"),
+          } else if (snapshot.data!.isEmpty) {
+            return GestureDetector(
+              onTap: () {
+                log(FirebaseAuth.instance.currentUser!.uid);
+                log(UserSession.userModel.value.uuid);
+              },
+              child: const Center(
+                child: Text("No Requests Found!"),
+              ),
             );
-          }
-          else if (snapshot.hasData && snapshot.data != null) {
+          } else if (snapshot.hasData && snapshot.data != null) {
             List<RequestStudentModel> studentsList = snapshot.data ?? [];
             return ListView.separated(
               physics: const BouncingScrollPhysics(),
@@ -55,7 +61,7 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
                     // Get.toNamed(kSTeacherDetailsScreenRoute, arguments: controller.teacherList[index]);
                   },
                   child: Container(
-                    height: 170,
+                    height: 200,
                     decoration: BoxDecoration(
                         color: kWhiteColor,
                         borderRadius: BorderRadius.circular(16),
@@ -66,6 +72,7 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
                           )
                         ]),
                     child: Column(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         Row(
                           children: [
@@ -107,20 +114,84 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
                                           "${studentsList[index].student.name}",
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
+                                            fontSize: 16
                                           ),
                                         ),
                                       ],
                                     ),
-                                    // TODO: Add Request Details
-                                    Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
+                                    const SizedBox(height: 5,),
+                                    Wrap(
+                                      children: [
+                                        const Icon(Icons.location_on_outlined, size: 16,),
+                                        Text(
                                         "${studentsList[index].student.address}, ${studentsList[index].student.city}",
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(fontSize: 11),
+                                        style: const TextStyle(fontSize: 12, ),
                                       ),
+                                      ]
                                     ),
+                                    const SizedBox(height: 5,),
+                                    Wrap(
+                                      children: [
+                                        const Icon(Icons.chrome_reader_mode_sharp, size: 16,),
+                                          const SizedBox(width: 5,),
+                                        Text(
+                                          "Subject: ${studentsList[index].request.requestedSubjects.join(',')}",
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: const TextStyle(fontSize: 12,fontWeight: FontWeight.w500),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 5,),
+                                    Wrap(
+                                      runAlignment: WrapAlignment.spaceEvenly,
+                                      crossAxisAlignment:
+                                          WrapCrossAlignment.center,
+                                      children: [
+                                        Wrap(
+                                          children: [
+                                            const Icon(
+                                              Icons.access_time_outlined,
+                                              size: 16,
+                                            ),
+                                            Text(
+                                              studentsList[index]
+                                                      .request
+                                                      .requestedTime
+                                                      .isNotEmpty
+                                                  ? "${studentsList[index].request.requestedTime}"
+                                                  : "3 Hours Daily",
+                                              maxLines: 1,
+                                              overflow: TextOverflow.ellipsis,
+                                              style:
+                                                  const TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
+                                            ),
+                                          ],
+                                        ),
+                                        const SizedBox(width: 8),
+                                        const Text(
+                                          "\$ 30 per month",
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                            fontSize: 11,
+                                            backgroundColor: kYellowAmberColor,
+                                            fontWeight: FontWeight.w600
+                                          ),
+                                        ),
+                                      ],
+                                    ),
+                                    const SizedBox(height: 5,),
+                                    Text(
+                                      "Note: ${studentsList[index].request.instructions}",
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: const TextStyle(
+                                        fontSize: 11,
+                                      ),
+                                    )
                                   ],
                                 ),
                               ),
@@ -135,6 +206,9 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
                                 // TODO: Reject Appointment
                               },
                               child: const Chip(
+                                padding: EdgeInsets.zero,
+                                elevation: 3,
+                                side: BorderSide.none,
                                 avatar: Icon(
                                   CupertinoIcons.multiply_circle,
                                   color: kWhiteColor,
@@ -155,6 +229,10 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
                                 // TODO: Accept Appointment
                               },
                               child: const Chip(
+                                elevation: 3,
+                                padding: EdgeInsets.zero,
+                                
+                                side: BorderSide.none,
                                 avatar: Icon(
                                   Icons.check_circle_outline,
                                   color: kWhiteColor,
@@ -202,12 +280,11 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
               },
               separatorBuilder: (_, int index) => const SizedBox(height: 16),
             );
-          } else{
+          } else {
             return const Center(
               child: Text("No Requests Found!"),
             );
           }
-          
         },
       ),
     );
