@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:home_tutor/models/student_model.dart';
 
 import '../models/teacher_model.dart';
 
@@ -70,6 +71,28 @@ class TeachersService {
     }
     return teacherModel;
   }
+
+  Future<List<StudentModel>> getNewRequests() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> favourites = await FirebaseFirestore.instance.collection('requests').where('teacherId', isEqualTo: FirebaseAuth.instance.currentUser!.uid).get();
+      List<QueryDocumentSnapshot<Map<String, dynamic>>> favDocs = favourites.docs??[];
+      List<Map<String, dynamic>> requests =  favDocs.map((e) => e.data()).toList()??[];
+      log("================${requests}");
+      print("================${requests}");
+      List<StudentModel> newRequests = [];
+      for(Map<String, dynamic> request in requests){
+        DocumentSnapshot<Map<String, dynamic>> querySnapshot = await FirebaseFirestore.instance.collection('teachers').doc(request['studentId']??'').get();
+        StudentModel studentModel = StudentModel.fromJson(querySnapshot.data()??{});
+        studentModel.id = querySnapshot.id;
+        newRequests.add(studentModel);
+      }   
+      return newRequests;
+    } on Exception catch(e) {
+      log("[GetTeachersFromFirebase]---->${e}");
+      return [];
+    }
+  }
+
 
   Future<String> updateProfile(TeacherModel teacherModel) async {
     try {

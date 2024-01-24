@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../../models/item_model.dart';
+
 class THomeScreenController extends GetxController {
   RxList<ItemModel> dashboardCounts = RxList([
     ItemModel('34', "Totoal Students"),
@@ -8,11 +10,4 @@ class THomeScreenController extends GetxController {
     ItemModel('2', "New Requests"),
   ]);
   
-}
-
-
-class ItemModel {
-  String count = '';
-  String title = '';
-  ItemModel(this.count, this.title);
 }

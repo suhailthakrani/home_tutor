@@ -55,20 +55,19 @@ class GeneralDropdown extends StatelessWidget {
                             ? Colors.grey.shade300
                             : kPrimaryColor),
                     iconEnabledColor: Colors.black,
-                    items:
-                        controller.items.map<DropdownMenuItem>((selectedItem) {
+                    items: controller.items.map<DropdownMenuItem>((selectedItem) {
                       return DropdownMenuItem(
                         value: selectedItem,
                         child: Text(
                           selectedItem.toString(),
                           overflow: TextOverflow.ellipsis,
-                          style: TextStyle(color: Colors.black,),
+                          style: const TextStyle(color: Colors.black,),
                         ),
                       );
                     }).toList(),
                     hint: Text(
                       hint ?? 'Select ${controller.title}',
-                      style: TextStyle(
+                      style: const TextStyle(
                           color: Colors.black54,
                           fontSize: 14,
                           fontWeight: FontWeight.w500),

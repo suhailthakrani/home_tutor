@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_tutor/controllers/teacher/t_home_screen_controller.dart';
 import 'package:home_tutor/services/teachers_service.dart';
 import 'package:home_tutor/utils/app_colors.dart';
 import 'package:home_tutor/utils/dropdown_controller.dart';
@@ -16,6 +17,7 @@ import '../../models/teacher_model.dart';
 import '../../services/students_service.dart';
 import '../../utils/text_field_manager.dart';
 import '../../views/widgets/custom_dialogs.dart';
+import '../../models/item_model.dart';
 
 class TProfileScreenController extends GetxController {
   final FirebaseAuth auth = FirebaseAuth.instance;
@@ -33,7 +35,7 @@ class TProfileScreenController extends GetxController {
   final TextFieldManager cityController = TextFieldManager('City');
   final TextFieldManager bioController = TextFieldManager('Bio');
   final TextFieldManager teachingStyleController = TextFieldManager('Teaching Style');
-  final DropdownController gender = DropdownController(title: 'Address', items: RxList(["Male", "Female"]));
+  final DropdownController genderController = DropdownController(title: 'Gender', items: RxList([]));
 
   MultiSelectionCheckboxController subjectsController =
       MultiSelectionCheckboxController(
@@ -58,6 +60,7 @@ class TProfileScreenController extends GetxController {
 
   @override
   void onReady() async {
+    genderController.items.value = [ItemModel('1', "Male"), ItemModel('1',"Female")];
     teacherModel.value = await TeachersService().getCurrentUserDocument();
     await populateData();
     super.onReady();
@@ -68,8 +71,14 @@ class TProfileScreenController extends GetxController {
     emailController.controller.text = teacherModel.value.email;
     phoneController.controller.text = teacherModel.value.phone;
     addressController.controller.text = teacherModel.value.address;    
-    cityController.controller.text = teacherModel.value.city;  
-    gender.selectedItem.value = teacherModel.value.gender;
+    cityController.controller.text = teacherModel.value.city; 
+    genderController.selectedItem.value = null;
+    for (var g in genderController.items) {
+      if(teacherModel.value.gender.isNotEmpty && g.toString().toLowerCase() == teacherModel.value.gender.toString().toLowerCase()) {
+        genderController.selectedItem.value = teacherModel.value.gender;
+      }
+    } 
+   
     degreeController.controller.text = teacherModel.value.degree;    
     bioController.controller.text = teacherModel.value.bio;    
     teachingStyleController.controller.text = teacherModel.value.teachingStyle;

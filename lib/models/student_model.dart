@@ -1,4 +1,5 @@
 class StudentModel {
+  String id = '';
   String name = '';
   String email = '';
   String profile = '';
@@ -9,6 +10,7 @@ class StudentModel {
   String city = '';
 
   StudentModel({
+    required this.id,
     required this.name,
     required this.email,
     required this.password,
@@ -21,6 +23,7 @@ class StudentModel {
    StudentModel.empty();
 
   StudentModel.fromJson(Map<String, dynamic> json):
+      id = json['id']??'',
       name = json['name']??'',
       email = json['email']??'',
       profile = json['profile']??'',
@@ -32,6 +35,7 @@ class StudentModel {
 
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'name': name,
       'email': email,
       'password': password,

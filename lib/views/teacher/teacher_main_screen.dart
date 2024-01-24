@@ -32,7 +32,7 @@ class TeacherMainScreen extends GetView<TMainScreenController> {
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.school),
-              label: "My Students",
+              label: "New Requests",
             ),
             BottomNavigationBarItem(
               icon: Icon(Icons.person),

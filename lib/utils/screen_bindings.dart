@@ -19,6 +19,7 @@ import '../controllers/signin_screen_controller.dart';
 import '../controllers/student/s_account_screen_controller.dart';
 import '../controllers/student/s_signup_screen_controller.dart';
 import '../controllers/splash_screen_controller.dart';
+import '../controllers/teacher/t_new_requests_screen_controller.dart';
 
 class ScreensBindings extends Bindings {
   @override
@@ -43,7 +44,7 @@ class ScreensBindings extends Bindings {
     Get.lazyPut(() => TMainScreenController());
     Get.lazyPut(() => TeacherSignUpScreenController());
     Get.lazyPut(() => TProfileScreenController());
-    // Get.lazyPut(() => TProfileScreenController());
+    Get.lazyPut(() => TNewRequestsScreenController());
 
   
   }

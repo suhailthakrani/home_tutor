@@ -1,148 +1,145 @@
-// import 'package:flutter/material.dart';
-// import 'package:get/get.dart';
-// import 'package:home_tutor/utils/app_colors.dart';
-// import 'package:home_tutor/views/widgets/general_text_field.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-// import '../../controllers/student/s_request_tutor_screen_controller.dart';
+import '../../controllers/teacher/t_new_requests_screen_controller.dart';
+import '../../utils/app_colors.dart';
+import '../../utils/common_code.dart';
 
-// class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
-//   const TNewRequestsScreen({super.key});
+class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
+  const TNewRequestsScreen({super.key});
 
-//   // Add more subjects as needed
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//         appBar: AppBar(
-//           centerTitle: true,
-//           backgroundColor: kPrimaryColor,
-//           foregroundColor: kWhiteColor,
-//           title: const Text(
-//             "Complete Your Profile",
-//             style: TextStyle(
-//               fontWeight: FontWeight.bold,
-//               fontSize: 18,
-//             ),
-//           ),
-//           leading: IconButton(
-//             icon: const Icon(Icons.arrow_back),
-//             onPressed: () {
-//               Get.back();
-//               // Navigator.pushReplacement(
-//               //     context, MaterialPageRoute(builder: (context) => Student()));
-//             },
-//           ),
-//           elevation: 1,
-//         ),
-//         body: SingleChildScrollView(
-//           child: Column(
-//             crossAxisAlignment: CrossAxisAlignment.stretch,
-//             children: [
-//               const SizedBox(height: 16),
-//               GestureDetector(
-//                 onTap: controller.getImage,
-//                 child: controller.studentModel.value.profile.isNotEmpty
-//                     ? Center(
-//                         child: CircleAvatar(
-//                           radius: 90,
-//                           child: ClipOval(
-//                             // borderRadius: BorderRadius.circular(50),
-//                             child: Image.network(
-//                               controller.studentModel.value.profile,
-//                               height: 180,
-//                               width: 180,
-//                               fit: BoxFit.cover,
-//                               errorBuilder: (context, error, stackTrace) {
-//                                 return Image.asset(
-//                                   'assets/images/reading.png',
-//                                   height: 140,
-//                                   width: 140,
-//                                 );
-//                               },
-//                             ),
-//                           ),
-//                         ),
-//                       )
-//                     : Container(
-//                         height: 140,
-//                         width: 140,
-//                         decoration: BoxDecoration(
-//                           color: Colors.grey[200],
-//                           shape: BoxShape.circle,
-//                         ),
-//                         child: Icon(
-//                           Icons.add_a_photo,
-//                           size: 50,
-//                           color: Colors.grey[800],
-//                         ),
-//                       ),
-//               ),
-//               const SizedBox(height: 20.0),
-//               GeneralTextField(
-//                 tfManager: controller.nameController,
-//                 isObscure: RxBool(false),
-//               ),
-             
-//               GeneralTextField(
-//                 tfManager: controller.emailController,
-//                 readOnly: true,
-//                 isObscure: RxBool(false),
-//               ),
-//               GeneralTextField(
-//                 tfManager: controller.phoneController,
-//                 isObscure: RxBool(false),
-//               ),
-//               GeneralTextField(
-//                 tfManager: controller.addressController,
-//                 isObscure: RxBool(false),
-//               ),
-//               GeneralTextField(
-//                 tfManager: controller.cityController,
-//                 isObscure: RxBool(false),
-//               ),
-//               const SizedBox(height: 20.0),
-//               Padding(
-//                 padding: const EdgeInsets.symmetric(horizontal:20),
-//                 child: ElevatedButton(
-//                   onPressed: () async {
-//                     String imageUrl = await controller.uploadImage() ?? '';
-//                     if (imageUrl != '') {
-//                       controller
-//                           .saveProfileData(controller.studentModel.value.profile);
-//                     } else {
-//                       // Handle image upload error
-//                       print("Error uploading image");
-//                     }
-//                   },
-//                   style: ElevatedButton.styleFrom(
-//                     backgroundColor: kPrimaryColor,
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(16),
-//                     ),
-//                   ),
-//                   child: const Text(
-//                     'Save Profile',
-//                     style: TextStyle(
-//                       fontSize: 16,
-//                       fontWeight: FontWeight.bold,
-//                       color: kWhiteColor,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//         ));
-//   }
-// }
-
-// // Future<void> logout(BuildContext context) async {
-// //   const CircularProgressIndicator();
-// //   await FirebaseAuth.instance.signOut();
-// //   Navigator.pushReplacement(
-// //     context,
-// //     MaterialPageRoute(
-// //       builder: (context) => const LoginScreen(),
-// //     ),
-// //   );
-// // }
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        toolbarHeight: 70,
+        backgroundColor: kPrimaryColor,
+        foregroundColor: kWhiteColor,
+        leading: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Image.asset('assets/images/reading.png'),
+        ),
+        title: const Text("New Requests"),
+      ),
+      body: ListView.separated(
+        physics: const BouncingScrollPhysics(),
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 12),
+        itemCount: controller.studentsList.length,
+        shrinkWrap: true,
+        itemBuilder: (context, index) {
+          return InkWell(
+            onTap: () {
+              // Get.toNamed(kSTeacherDetailsScreenRoute, arguments: controller.teacherList[index]);
+            },
+            child: Container(
+              height: 130,
+              decoration: BoxDecoration(
+                  color: kWhiteColor,
+                  borderRadius: BorderRadius.circular(16),
+                  boxShadow: const [
+                    BoxShadow(
+                      color: kPrimaryColor,
+                      offset: Offset(2, 2),
+                    )
+                  ]),
+              child: Row(
+                children: [
+                  Center(
+                    child: CircleAvatar(
+                      radius: 90,
+                      child: ClipOval(
+                        // borderRadius: BorderRadius.circular(50),
+                        child: Image.network(
+                          controller.studentsList[index].profile,
+                          height: Get.width * 0.3,
+                          width: Get.width * 0.3,
+                          fit: BoxFit.cover,
+                          errorBuilder: (context, error, stackTrace) {
+                            return Image.asset(
+                              'assets/images/reading.png',
+                              height: Get.width * 0.3,
+                              width: Get.width * 0.3,
+                            );
+                          },
+                        ),
+                      ),
+                    ),
+                  ),
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.only(
+                        left: 8.0,
+                        top: 8,
+                        bottom: 8,
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "${controller.studentsList[index].name}",
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            ],
+                          ),
+                          Align(
+                            alignment: Alignment.centerLeft,
+                            child: Text(
+                              "${controller.studentsList[index].address}, ${controller.studentsList[index].city}",
+                              maxLines: 1,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(fontSize: 11),
+                            ),
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              IconButton(
+                                style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.zero),
+                                onPressed: () {
+                                  CommonCode().openDialer(
+                                      '${controller.studentsList[index].phone}');
+                                },
+                                icon: const Icon(
+                                  Icons.call,
+                                  size: 20,
+                                  color: kPrimaryColor,
+                                ),
+                              ),
+                              const SizedBox(
+                                width: 24,
+                              ),
+                              IconButton(
+                                style: ElevatedButton.styleFrom(
+                                    padding: EdgeInsets.zero),
+                                onPressed: () {
+                                  CommonCode().whatsApp(
+                                      '${controller.studentsList[index].phone}');
+                                },
+                                icon: const Icon(
+                                  Icons.message,
+                                  size: 24,
+                                  color: kPrimaryColor,
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+        separatorBuilder: (_, int index) => const SizedBox(height: 16),
+      ),
+    );
+  }
+}

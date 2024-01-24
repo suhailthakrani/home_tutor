@@ -16,6 +16,7 @@ const String kTAccountScreenRoute = '/TAccountScreenRoute';
 const String kTHomeScreenRoute = '/THomeScreenRoute';
 const String kTProfileScreenRoute = '/TProfileScreenRoute';
 const String kTTutorsListScreenRoute = '/TTutorsListScreenRoute';
+const String kTNewRequestsScreenRoute = '/TNewRequestsScreenRoute';
 ///*********************  Student Routes   *********************///
 
 const String kStudentSignUpScreenRoute = "/STUDENT_SIGN_UP_SCREEN";

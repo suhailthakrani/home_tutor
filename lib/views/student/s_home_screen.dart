@@ -12,7 +12,6 @@ import 'package:home_tutor/utils/common_code.dart';
 import 'package:home_tutor/views/student/s_tutors_list_screen.dart';
 import '../../services/students_service.dart';
 import '../../utils/constants.dart';
-import '../widgets/city_wise_tutor.dart';
 import 'teacher_search_deligate.dart';
 
 class StudentHomeScreen extends GetView<SHomeScreenController> {

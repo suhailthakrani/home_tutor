@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_tutor/views/widgets/general_button.dart';
 import 'package:home_tutor/views/widgets/general_dropdown.dart';
 import 'package:home_tutor/views/widgets/general_text_field.dart';
 import 'package:home_tutor/views/widgets/multi_selection_checkbox.dart';
@@ -37,19 +38,18 @@ class TProfileScreen extends GetView<TProfileScreenController> {
           elevation: 1,
         ),
         body: SingleChildScrollView(
-          padding: const EdgeInsets.all(20.0),
-          child: Obx(
-            () => Column(
-              crossAxisAlignment: CrossAxisAlignment.stretch,
-              children: [
-                GestureDetector(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              const SizedBox(height: 10),
+              Obx(
+                () => GestureDetector(
                   onTap: controller.getImage,
-                  child: (controller.image != null ||
-                          controller.teacherModel.value.profileUrl.isNotEmpty)
+                  child: (controller.image != null || controller.teacherModel.value.profileUrl.isNotEmpty)
                       ? CircleAvatar(
                           radius: 70,
                           backgroundImage:
-                              (controller.teacherModel.value.profileUrl != null)
+                              (controller.teacherModel.value.profileUrl.isNotEmpty)
                                   ? NetworkImage(controller.teacherModel.value
                                       .profileUrl) as ImageProvider
                                   : FileImage(controller.image!.value),
@@ -68,74 +68,74 @@ class TProfileScreen extends GetView<TProfileScreenController> {
                           ),
                         ),
                 ),
-                const SizedBox(height: 20.0),
-                GeneralTextField(
-                  tfManager: controller.nameController,
-                  isObscure: RxBool(false),
+              ),
+              const SizedBox(height: 20.0),
+              GeneralTextField(
+                paddingHorizontal: 8,
+                tfManager: controller.nameController,
+                isObscure: RxBool(false),
+              ),
+              GeneralTextField(
+                paddingHorizontal: 8,
+                tfManager: controller.emailController,
+                isObscure: RxBool(false),
+              ),
+              GeneralTextField(
+                paddingHorizontal: 8,
+                tfManager: controller.phoneController,
+                isObscure: RxBool(false),
+              ),
+              GeneralTextField(
+                paddingHorizontal: 8,
+                tfManager: controller.degreeController,
+                isObscure: RxBool(false),
+              ),
+              GeneralTextField(
+                paddingHorizontal: 8,
+                tfManager: controller.specialtyController,
+                isObscure: RxBool(false),
+              ),
+              GeneralTextField(
+                paddingHorizontal: 8,
+                tfManager: controller.addressController,
+                isObscure: RxBool(false),
+                maxLines: 2,
+              ),
+              GeneralTextField(
+                paddingHorizontal: 8,
+                tfManager: controller.cityController,
+                isObscure: RxBool(false),
+              ),
+              GeneralDropdown(
+                paddingHorizontal: 8,
+                controller: controller.genderController,
+              ),
+              GeneralTextField(
+                paddingHorizontal: 8,
+                tfManager: controller.bioController,
+                isObscure: RxBool(false),
+                maxLines: 6,
+              ),
+              GeneralTextField(
+                paddingHorizontal: 8,
+                tfManager: controller.teachingStyleController,
+                maxLines: 5,
+                isObscure: RxBool(false),
+              ),
+              MultiSelectionCheckbox(
+                paddingHorizontal: 16,
+                controller: controller.subjectsController,
+              ),
+              GeneralButton(onPressed: () async {
+                  await controller.updateProfile();
+                },
+                text: "Update Profile",
+                color: kPrimaryColor,
+                height: 50,
                 ),
-                GeneralTextField(
-                  tfManager: controller.emailController,
-                  isObscure: RxBool(false),
-                ),
-                GeneralTextField(
-                  tfManager: controller.phoneController,
-                  isObscure: RxBool(false),
-                ),
-                GeneralTextField(
-                  tfManager: controller.degreeController,
-                  isObscure: RxBool(false),
-                ),
-                GeneralTextField(
-                  tfManager: controller.specialtyController,
-                  isObscure: RxBool(false),
-                ),
-                GeneralTextField(
-                  tfManager: controller.addressController,
-                  isObscure: RxBool(false),
-                  maxLines: 2,
-                ),
-                GeneralTextField(
-                  tfManager: controller.cityController,
-                  isObscure: RxBool(false),
-                ),
-                
-                GeneralDropdown(
-                  controller: controller.gender,
-                ),
-                GeneralTextField(
-                  tfManager: controller.bioController,
-                  isObscure: RxBool(false),
-                  maxLines: 6,
-                ),
-                GeneralTextField(
-                  tfManager: controller.teachingStyleController,
-                  maxLines: 5,
-                  isObscure: RxBool(false),
-                ),
-               
-                MultiSelectionCheckbox(
-                  controller: controller.subjectsController,
-                ),
-                ElevatedButton(
-                  onPressed: () async {
-                    await controller.updateProfile();
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xff58ee4a),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(5.0),
-                    ),
-                  ),
-                  child: const Text(
-                    'Save Profile',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.bold,
-                    ),
-                  ),
-                ),
-              ],
-            ),
+              
+              const SizedBox(height: 50)
+            ],
           ),
         ));
   }
