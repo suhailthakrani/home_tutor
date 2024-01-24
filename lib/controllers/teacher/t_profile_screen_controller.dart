@@ -4,9 +4,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:home_tutor/controllers/teacher/t_home_screen_controller.dart';
 import 'package:home_tutor/services/teachers_service.dart';
 import 'package:home_tutor/utils/app_colors.dart';
 import 'package:home_tutor/utils/dropdown_controller.dart';
@@ -14,7 +12,6 @@ import 'package:home_tutor/utils/multi_selection_checkbox_controller.dart';
 import 'package:image_picker/image_picker.dart';
 
 import '../../models/teacher_model.dart';
-import '../../services/students_service.dart';
 import '../../utils/text_field_manager.dart';
 import '../../views/widgets/custom_dialogs.dart';
 import '../../models/item_model.dart';
@@ -86,7 +83,7 @@ class TProfileScreenController extends GetxController {
       
   }
 
-  Future getImage() async {
+  Future pickImage() async {
     final pickedFile = await ImagePicker().pickImage(source: ImageSource.gallery);
     if (pickedFile != null) {
       image!.value = File(pickedFile.path);
@@ -111,9 +108,25 @@ class TProfileScreenController extends GetxController {
     }
   }
 
+  bool validate(){
+    bool isValid = true;
+    isValid = nameController.validate() & 
+    emailController.validateEmail() & 
+    phoneController.validateMobileNumber() & 
+    addressController.validate() & 
+    cityController.validate() &
+    genderController.validate() & 
+    bioController.validate() & 
+    teachingStyleController.validate() & 
+    subjectsController.validate();
+
+    return isValid;
+  }
+
 
 
   Future<void> updateProfile() async {
+    teacherModel.value.subjects = subjectsController.selectedItems;
     teacherModel.value.profileUrl = await uploadImage();
     String message  = await TeachersService().updateProfile(teacherModel.value);
     if(message == "Profile Updated Successfully!") {

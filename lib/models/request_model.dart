@@ -3,6 +3,7 @@ class RequestModel {
   String teacherId = '';
   String expectedCharges = '';
   String instructions = '';
+  String status = '';
   List<String> requestedSubjects = [];
   String requestedTime = '';
 
@@ -24,6 +25,7 @@ class RequestModel {
       teacherId= json['teacherId'] ?? '',
       expectedCharges= json['expectedCharges'] ?? '',
       instructions= json['instructions'] ?? '',
+      status= json['status'] ?? '',
       requestedSubjects= json['requestedSubjects'] ?? '',
       requestedTime= json['requestedTime'] ?? '';
    
@@ -34,6 +36,7 @@ class RequestModel {
       'studentId': studentId,
       'teacherId': teacherId,
       'expectedCharges': expectedCharges,
+      'status': status,
       'instructions': instructions,
       'requestedSubjects': requestedSubjects,
       'requestedTime': requestedTime,
