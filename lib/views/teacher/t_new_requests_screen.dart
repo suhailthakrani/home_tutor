@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:home_tutor/models/student_request_model.dart';
 
 import '../../controllers/teacher/t_new_requests_screen_controller.dart';
 import '../../models/student_model.dart';
@@ -36,7 +37,7 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
             return Center(child: CircularProgressIndicator());
           }
           if (snapshot.hasData && snapshot.data != null) {
-            List<StudentModel> studentsList = snapshot.data ?? [];
+            List<RequestStudentModel> studentsList = snapshot.data ?? [];
             return ListView.separated(
               physics: const BouncingScrollPhysics(),
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 20),
@@ -66,7 +67,7 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
                               child: ClipOval(
                                 // borderRadius: BorderRadius.circular(50),
                                 child: Image.network(
-                                  studentsList[index].profile,
+                                  studentsList[index].student.profile,
                                   height: Get.width * 0.3,
                                   width: Get.width * 0.3,
                                   fit: BoxFit.cover,
@@ -97,17 +98,18 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
                                           MainAxisAlignment.spaceBetween,
                                       children: [
                                         Text(
-                                          "${studentsList[index].name}",
+                                          "${studentsList[index].student.name}",
                                           style: const TextStyle(
                                             fontWeight: FontWeight.bold,
                                           ),
                                         ),
                                       ],
                                     ),
+                                    // TODO: Add Request Details
                                     Align(
                                       alignment: Alignment.centerLeft,
                                       child: Text(
-                                        "${studentsList[index].address}, ${studentsList[index].city}",
+                                        "${studentsList[index].student.address}, ${studentsList[index].student.city}",
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(fontSize: 11),

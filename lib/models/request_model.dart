@@ -1,4 +1,5 @@
 class RequestModel {
+  String id = '';
   String studentId = '';
   String teacherId = '';
   String expectedCharges = '';
@@ -8,6 +9,7 @@ class RequestModel {
   String requestedTime = '';
 
   RequestModel({
+   this.id = '',
    required this.studentId,
    required this.teacherId,
    required this.expectedCharges,
@@ -20,7 +22,7 @@ class RequestModel {
 
 
    RequestModel.fromJson(Map<String, dynamic> json):
-    
+      id= json['id'] ?? '',
       studentId= json['studentId'] ?? '',
       teacherId= json['teacherId'] ?? '',
       expectedCharges= json['expectedCharges'] ?? '',
@@ -33,6 +35,7 @@ class RequestModel {
   // Method to convert a RequestModel instance to a JSON object
   Map<String, dynamic> toJson() {
     return {
+      'id': id,
       'studentId': studentId,
       'teacherId': teacherId,
       'expectedCharges': expectedCharges,

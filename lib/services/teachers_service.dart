@@ -3,8 +3,10 @@ import 'dart:developer';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get_rx/src/rx_types/rx_types.dart';
+import 'package:home_tutor/models/request_model.dart';
 import 'package:home_tutor/models/student_model.dart';
 
+import '../models/student_request_model.dart';
 import '../models/teacher_model.dart';
 
 class TeachersService {
@@ -81,37 +83,45 @@ class TeachersService {
     return teacherModel;
   }
 
-  Future<List<StudentModel>> getNewRequests() async {
+  Future<void> acceptOrRejectRequest({required String requestId, required String status}) async {
+
     try {
-      QuerySnapshot<Map<String, dynamic>> favourites = await FirebaseFirestore
-          .instance
-          .collection('requests')
-          .where('teacherId', isEqualTo:'Csv7qeYqPCRdG0lNwZ5Lnq5ZioN2' /* FirebaseAuth.instance.currentUser!.uid*/)
-          .get();
-      List<QueryDocumentSnapshot<Map<String, dynamic>>> favDocs =
-          favourites.docs ?? [];
-      List<Map<String, dynamic>> requests = favDocs.map((e) => e.data()).toList() ?? [];
-      log("===================${requests}");
-      List<StudentModel> newRequests = [];
-      for (Map<String, dynamic> request in requests) {
+      await FirebaseFirestore.instance.collection('requests').doc(requestId).set({'status':status});
+      
+    } on Exception catch (e) {
+      log("[GetTeachersFromFirebase]---->${e}");
+    }
+
+  }
+
+  Future<List<RequestStudentModel>> getNewRequests() async {
+    try {
+      List<RequestStudentModel> studentRequests = [];
+      String userId = FirebaseAuth.instance.currentUser!.uid;
+      QuerySnapshot<Map<String, dynamic>> requests = await  FirebaseFirestore.instance.collection('requests').where('teacherId', isEqualTo:userId).get();
+      List<RequestModel> requestsDocs = (requests.docs ?? []).map((e) {
+        RequestModel requestModel = RequestModel.empty();
+        requestModel = RequestModel.fromJson(e.data());
+        requestModel.id = e.id;
+        return requestModel;
+      }).toList();
+      for (RequestModel request in requestsDocs) {
         DocumentSnapshot<Map<String, dynamic>> querySnapshot =
-            await FirebaseFirestore.instance
-                .collection('students')
-                .doc(request['studentId'] ?? '')
-                .get();
-        StudentModel studentModel =
-            StudentModel.fromJson(querySnapshot.data() ?? {});
+            await FirebaseFirestore.instance.collection('students').doc(request.studentId).get();
+        StudentModel studentModel = StudentModel.fromJson(querySnapshot.data() ?? {});
         studentModel.id = querySnapshot.id;
-        newRequests.add(studentModel);
+        studentRequests.add(RequestStudentModel(student: studentModel, request: request));
       }
-      return newRequests;
+      return studentRequests;
     } on Exception catch (e) {
       log("[GetTeachersFromFirebase]---->${e}");
       return [];
     }
   }
 
-  Future<String> updateProfile(TeacherModel teacherModel) async {
+ 
+
+   Future<String> updateProfile(TeacherModel teacherModel) async {
     try {
       CollectionReference<Map<String, dynamic>> collections =
           FirebaseFirestore.instance.collection('teachers');
