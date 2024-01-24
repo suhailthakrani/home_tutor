@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,10 +35,14 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
               child: Text("${snapshot.error}"),
             );
           }
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(child: CircularProgressIndicator());
+          else if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Center(child: CircularProgressIndicator());
+          } else if(snapshot.data!.isEmpty) {
+             return const Center(
+              child: Text("No Requests Found!"),
+            );
           }
-          if (snapshot.hasData && snapshot.data != null) {
+          else if (snapshot.hasData && snapshot.data != null) {
             List<RequestStudentModel> studentsList = snapshot.data ?? [];
             return ListView.separated(
               physics: const BouncingScrollPhysics(),
@@ -112,7 +118,7 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
                                         "${studentsList[index].student.address}, ${studentsList[index].student.city}",
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(fontSize: 11),
+                                        style: const TextStyle(fontSize: 11),
                                       ),
                                     ),
                                   ],
@@ -196,9 +202,12 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
               },
               separatorBuilder: (_, int index) => const SizedBox(height: 16),
             );
-          } else {
-            return Container();
+          } else{
+            return const Center(
+              child: Text("No Requests Found!"),
+            );
           }
+          
         },
       ),
     );

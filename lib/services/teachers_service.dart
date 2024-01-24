@@ -99,6 +99,7 @@ class TeachersService {
       List<RequestStudentModel> studentRequests = [];
       String userId = FirebaseAuth.instance.currentUser!.uid;
       QuerySnapshot<Map<String, dynamic>> requests = await  FirebaseFirestore.instance.collection('requests').where('teacherId', isEqualTo:userId).get();
+      log("----------::::::${requests.docs}");
       List<RequestModel> requestsDocs = (requests.docs ?? []).map((e) {
         RequestModel requestModel = RequestModel.empty();
         requestModel = RequestModel.fromJson(e.data());
