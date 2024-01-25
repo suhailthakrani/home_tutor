@@ -30,10 +30,10 @@ class OptionCard extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           Positioned(
-            bottom: 16,
-            right: 16,
-            top: -10,
-            left: -10,
+            bottom: 5,
+            right: 5,
+            top: -8,
+            left: -8,
             child: Container(
               height: 140,
               width: 140,

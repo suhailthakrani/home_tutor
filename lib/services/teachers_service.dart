@@ -122,6 +122,33 @@ class TeachersService {
     }
   }
 
+  Future<List<RequestStudentModel>> getMyStudents() async {
+    try {
+      List<RequestStudentModel> studentRequests = [];
+      String userId = FirebaseAuth.instance.currentUser!.uid;
+      QuerySnapshot<Map<String, dynamic>> requests = await  FirebaseFirestore.instance.collection('requests').where('teacherId', isEqualTo:userId).where('status', isEqualTo: 'accepted').get();
+
+      List<RequestModel> requestsDocs = (requests.docs ?? []).map((e) {
+        RequestModel requestModel = RequestModel.empty();
+        requestModel = RequestModel.fromJson(e.data());
+        requestModel.id = e.id;
+        return requestModel;
+      }).toList();
+
+      for (RequestModel request in requestsDocs) {
+        DocumentSnapshot<Map<String, dynamic>> querySnapshot =
+            await FirebaseFirestore.instance.collection('students').doc(request.studentId).get();
+        StudentModel studentModel = StudentModel.fromJson(querySnapshot.data() ?? {});
+        studentModel.id = querySnapshot.id;
+        studentRequests.add(RequestStudentModel(student: studentModel, request: request));
+      }
+      return studentRequests;
+    } on Exception catch (e, StackTrace) {
+      log("[GetTeachersFromFirebase]---->${e} ${StackTrace}");
+      return [];
+    }
+  }
+
  
 
    Future<String> updateProfile(TeacherModel teacherModel) async {

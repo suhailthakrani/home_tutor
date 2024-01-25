@@ -27,14 +27,14 @@ class CustomListTile extends StatelessWidget {
       decoration: BoxDecoration(
           color: kWhiteColor,
           borderRadius: BorderRadius.circular(16),
-          boxShadow: [
+          boxShadow: const [
             BoxShadow(
               color: kPrimaryColor,
               offset: Offset(3, 3),
             )
           ]),
       child: ListTile(
-        contentPadding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+        contentPadding: const EdgeInsets.symmetric(vertical: 4, horizontal: 12),
         leading: leading,
         title: Text(
           title,

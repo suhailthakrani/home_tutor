@@ -81,14 +81,14 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
                                 // borderRadius: BorderRadius.circular(50),
                                 child: Image.network(
                                   studentsList[index].student.profile,
-                                  height: Get.width * 0.3,
-                                  width: Get.width * 0.3,
+                                  height: Get.width * 0.24,
+                                  width: Get.width * 0.24,
                                   fit: BoxFit.cover,
                                   errorBuilder: (context, error, stackTrace) {
                                     return Image.asset(
                                       'assets/images/reading.png',
-                                      height: Get.width * 0.3,
-                                      width: Get.width * 0.3,
+                                      height: Get.width * 0.24,
+                                      width: Get.width * 0.24,
                                     );
                                   },
                                 ),

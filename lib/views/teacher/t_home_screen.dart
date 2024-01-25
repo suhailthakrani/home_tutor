@@ -81,8 +81,8 @@ class TeacherHomeScreen extends GetView<THomeScreenController> {
                 // );
               },
             ),
-            Padding(
-              padding: const EdgeInsets.all(8.0),
+            const Padding(
+              padding: EdgeInsets.all(8.0),
               child: Text(
                 "Students you are teaching",
                 style: TextStyle(
@@ -107,7 +107,7 @@ class TeacherHomeScreen extends GetView<THomeScreenController> {
                     decoration: BoxDecoration(
                         color: kWhiteColor,
                         borderRadius: BorderRadius.circular(16),
-                        boxShadow: [
+                        boxShadow: const[
                           BoxShadow(
                             color: kPrimaryColor,
                             offset: Offset(2, 2),

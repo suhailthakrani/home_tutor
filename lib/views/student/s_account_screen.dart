@@ -26,7 +26,7 @@ class SAccountScreen extends GetView<SAccountScreenController> {
         foregroundColor: kWhiteColor,
         title: const Text("Account & Settings"),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -81,7 +81,6 @@ class SAccountScreen extends GetView<SAccountScreenController> {
               ),
             ),
             const SizedBox(height: 16),
-            Spacer(),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: CustomListTile(
