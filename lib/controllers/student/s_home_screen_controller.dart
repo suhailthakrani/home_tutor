@@ -32,6 +32,17 @@ class SHomeScreenController extends GetxController {
     "Mathematics",
   ].obs;
 
+  RxList<String> pictures = [
+    "assets/images/physics.jpg",
+    "assets/images/sindhi.png",
+    "assets/images/english.png",
+    "assets/images/science.png",
+    "assets/images/chemistry.png",
+    "assets/images/english.png",
+    "assets/images/urdu.png",
+    "assets/images/maths.png",
+  ].obs;
+
   
   
  

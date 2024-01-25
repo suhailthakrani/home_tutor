@@ -118,14 +118,11 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                               Expanded(
                                 flex: 3,
                                 child: ClipRRect(
-                                  borderRadius: const BorderRadius.only(
-                                    topLeft: Radius.circular(15),
-                                    topRight: Radius.circular(15),
-                                  ),
                                   child: Image.asset(
-                                    'assets/images/reading.png',
-                                    height: 70,
-                                    width: 70,
+                                    controller.pictures[index],
+                                    height: 60,
+                                    width: 60,
+                                    fit: BoxFit.contain,
                                     errorBuilder:
                                         (context, error, stackTrace) =>
                                             Container(height: 140),
