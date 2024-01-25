@@ -56,6 +56,20 @@ class SAccountScreen extends GetView<SAccountScreenController> {
             ),
             const SizedBox(height: 16),
             CustomListTile(
+              leading: const Icon(Icons.person),
+              onTap: () {},
+              title: 'Privacy and Security',
+              subtitle: 'Check our terms and conditions',
+            ),
+            const SizedBox(height: 16),
+            CustomListTile(
+              leading: const Icon(Icons.person),
+              onTap: () {},
+              title: 'Feedback and Support',
+              subtitle: 'Get support from our team',
+            ),
+            const SizedBox(height: 16),
+            CustomListTile(
               leading: const Icon(Icons.location_on_outlined),
               onTap: () {},
               title: 'Location',

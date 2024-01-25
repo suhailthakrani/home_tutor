@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:home_tutor/utils/app_colors.dart';
 import 'package:home_tutor/utils/common_code.dart';
 
 import '../../controllers/student/s_tutor_details_screen_controller.dart';
 import '../../utils/constants.dart';
+import 'reviews_screen.dart';
 
 class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
   const STeacherDetailsScreen({super.key});
@@ -21,7 +23,7 @@ class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Obx(
-          ()=> Column(
+          () => Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
@@ -37,10 +39,10 @@ class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
                       fit: BoxFit.cover,
                       errorBuilder: (context, error, stackTrace) {
                         return Image.asset(
-                      'assets/images/reading.png',
-                      height: 180,
-                      width: 180,
-                    );
+                          'assets/images/reading.png',
+                          height: 180,
+                          width: 180,
+                        );
                       },
                     ),
                   ),
@@ -60,22 +62,54 @@ class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
                 width: double.maxFinite,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: kFieldGreyColor,
+                  color: kWhiteColor,
+                  boxShadow: [
+                    BoxShadow(
+                      color: kFieldGreyColor,
+                        blurRadius: 3,
+                      spreadRadius: 3,
+                    
+                    ),
+                    BoxShadow(
+                      color: kFieldGreyColor,
+                      blurRadius: 3,
+                      spreadRadius: 3,
+                     
+                    )
+                  ],
                   borderRadius: BorderRadius.circular(20),
                 ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      "${controller.teacherModel.value.name}",
-                      style: const TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: Text(
+                            "${controller.teacherModel.value.name}",
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.black87,
+                            ),
+                          ),
+                        ),
+                        RatingBarIndicator(
+                          rating: double.parse(
+                              '${controller.teacherModel.value.rating}'),
+                          itemBuilder: (context, index) => const Icon(
+                            Icons.star,
+                            color: Colors.amber,
+                          ),
+                          itemCount: 4,
+                          itemSize: 20.0,
+                          direction: Axis.horizontal,
+                        ),
+                      ],
                     ),
                     Text(
-                      "${controller.teacherModel.value.degree} (${controller.teacherModel.value.specialty})",
+                      "${controller.teacherModel.value.degree.capitalizeFirst} (${controller.teacherModel.value.specialty.capitalizeFirst})",
                       style: const TextStyle(
                         fontSize: 14,
                       ),
@@ -123,6 +157,15 @@ class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
                       ],
                     ),
                     const SizedBox(height: 8),
+                    Text(
+                      "Subjects: ${controller.teacherModel.value.subjects.join(',')}",
+                      style: const TextStyle(
+                        fontSize: 16,
+                        fontWeight: FontWeight.w500,
+                        color: Colors.black87,
+                      ),
+                    ),
+                    const SizedBox(height: 8),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -130,22 +173,26 @@ class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
                           children: [
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: kPrimaryColor,
-                                foregroundColor: kWhiteColor,
+                                elevation: 0,
+                                backgroundColor: kFieldGreyColor,
+                                foregroundColor: kPrimaryColor,
                               ),
                               onPressed: () {
-                                CommonCode().openDialer('${controller.teacherModel.value.phone}');
+                                CommonCode().openDialer(
+                                    '${controller.teacherModel.value.phone}');
                               },
                               child: const Icon(Icons.call),
                             ),
                             const SizedBox(width: 8),
                             ElevatedButton(
                               style: ElevatedButton.styleFrom(
-                                backgroundColor: kPrimaryColor,
-                                foregroundColor: kWhiteColor,
+                                elevation: 0,
+                                backgroundColor: kFieldGreyColor,
+                                foregroundColor: kPrimaryColor,
                               ),
                               onPressed: () {
-                                CommonCode().whatsApp('${controller.teacherModel.value.phone}');
+                                CommonCode().whatsApp(
+                                    '${controller.teacherModel.value.phone}');
                               },
                               child: const Icon(Icons.message_outlined),
                             ),
@@ -154,19 +201,49 @@ class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
                         ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             elevation: 0,
-                            backgroundColor: kPrimaryColor,
-                            foregroundColor: kWhiteColor,
+                            backgroundColor: kFieldGreyColor,
+                            foregroundColor: kPrimaryColor,
                             padding: const EdgeInsets.symmetric(
                               horizontal: 16,
                             ),
                           ),
                           onPressed: () {
-                            Get.toNamed(kSRequestTutorScreenRoute,arguments: {'teacherId': controller.teacherModel.value.id});
+                            Get.toNamed(kSRequestTutorScreenRoute, arguments: {
+                              'teacherId': controller.teacherModel.value.id
+                            });
                           },
                           child: const Text("Send Request"),
                         ),
                       ],
-                    )
+                    ),
+                    const SizedBox(height: 8),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        
+                        backgroundColor: kFieldGreyColor,
+                        foregroundColor: kPrimaryColor,
+                      ),
+                      onPressed: () {
+                        Navigator.push(
+                          context, 
+                          MaterialPageRoute(
+                            builder:(context) => 
+                            SRateTeacherScreen(
+                              teacherId:  controller.teacherModel.value.id, 
+                              teacherName:  controller.teacherModel.value.name, 
+                              teacherProfile: controller.teacherModel.value.profileUrl
+                              ),
+                              )
+                            );
+                      },
+                      child: const Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text("Rate Now"),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -184,13 +261,27 @@ class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
                 width: double.maxFinite,
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: kFieldGreyColor,
+                  color: kWhiteColor,
+                  boxShadow: [
+                    BoxShadow(
+                      color: kFieldGreyColor,
+                        blurRadius: 3,
+                      spreadRadius: 3,
+                    
+                    ),
+                    BoxShadow(
+                      color: kFieldGreyColor,
+                      blurRadius: 3,
+                      spreadRadius: 3,
+                     
+                    )
+                  ],
                   borderRadius: BorderRadius.circular(20),
                 ),
-                child:  Column(
+                child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                   const Text(
+                    const Text(
                       "About Me",
                       style: TextStyle(
                         fontSize: 18,
@@ -198,12 +289,10 @@ class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
                         color: Colors.black54,
                       ),
                     ),
-                   const SizedBox(height: 8),
-                    Text(
-                      "${controller.teacherModel.value.bio}"
-                    ),
-                   const SizedBox(height: 8),
-                   const Text(
+                    const SizedBox(height: 8),
+                    Text("${controller.teacherModel.value.bio}"),
+                    const SizedBox(height: 8),
+                    const Text(
                       "My Teaching Style",
                       style: TextStyle(
                         fontSize: 18,
@@ -212,9 +301,7 @@ class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
                       ),
                     ),
                     const SizedBox(height: 8),
-                    Text(                     
-                      "${controller.teacherModel.value.teachingStyle}"
-                    ),
+                    Text("${controller.teacherModel.value.teachingStyle}"),
                   ],
                 ),
               ),

@@ -87,8 +87,8 @@ class TeacherSearchDelegate extends SearchDelegate {
               errorBuilder: (context, child, loadingProgress) =>const CircleAvatar(radius: 36),
             ),
           ),
-          title: Text("${filteredTeacherModels[index].name}"),
-          subtitle: Text(filteredTeacherModels[index].specialty),
+          title: Text("${filteredTeacherModels[index].name.capitalizeFirst}"),
+          subtitle: Text("${filteredTeacherModels[index].specialty.capitalizeFirst}"),
           onTap: () {
           //  Get.toNamed(kSTeacherDetailsScreenRoute, arguments: controller.teacherList[index]);
           },
