@@ -8,15 +8,17 @@ import '../../services/students_service.dart';
 
 class SHomeScreenController extends GetxController {
 
+  TextEditingController searchController = TextEditingController();
+  RxList<TeacherModel> teacherList = <TeacherModel>[].obs;
 
   @override
   Future<void> onReady() async {
+    teacherList.value = await StudentsService().getTeachersFromFirebase();
     super.onReady();
   }
 
 
-  TextEditingController searchController = TextEditingController();
-  RxList<TeacherModel> teacherList = <TeacherModel>[].obs;
+  
 
 
   RxList<String> subjects = [

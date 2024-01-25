@@ -69,6 +69,7 @@ class TeachersService {
           // Document exists, you can access its data
           Map<String, dynamic> userData =
               documentSnapshot.data() as Map<String, dynamic>;
+          log("-------------------------${userData}");
           teacherModel = TeacherModel.fromJson(userData);
         } else {
           print('Document does not exist');

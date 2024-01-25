@@ -30,7 +30,7 @@ class CustomListTile extends StatelessWidget {
           boxShadow: [
             BoxShadow(
               color: kPrimaryColor,
-              offset: Offset(2, 2),
+              offset: Offset(3, 3),
             )
           ]),
       child: ListTile(

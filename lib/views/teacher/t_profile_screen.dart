@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_tutor/views/widgets/general_button.dart';
@@ -44,32 +46,43 @@ class TProfileScreen extends GetView<TProfileScreenController> {
             const SizedBox(height: 10),
             Obx(
               () => GestureDetector(
-                onTap: controller.pickImage,
-                child: (controller.image != null ||
-                        controller.teacherModel.value.profileUrl.isNotEmpty)
-                    ? CircleAvatar(
-                        radius: 70,
-                        backgroundImage:
-                            controller.teacherModel.value.profileUrl.isNotEmpty
-                                ? NetworkImage(
-                                    controller.teacherModel.value.profileUrl,
-                                  ) as ImageProvider
-                                : FileImage(controller.image!.value),
-                      )
-                    : Container(
-                        height: 140,
-                        width: 140,
-                        decoration: BoxDecoration(
-                          color: Colors.grey[200],
-                          shape: BoxShape.circle,
-                        ),
-                        child: Icon(
-                          Icons.add_a_photo,
-                          size: 50,
-                          color: Colors.grey[800],
-                        ),
-                      ),
-              ),
+                  onTap: controller.pickImage,
+                  child: controller.teacherModel.value.profileUrl.isNotEmpty ||
+                          controller.image.isNotEmpty
+                      ? CircleAvatar(
+                          backgroundColor: kPrimaryColor,
+                          radius: 70,
+                          child: ClipOval(
+                            child: Image.file(
+                              File(controller.teacherModel.value.profileUrl),
+                              height: 140,
+                              width: 140,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Image.file(
+                                File(controller.image.value),
+                                height: 140,
+                                width: 140,
+                                fit: BoxFit.cover,
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Container(),
+                              ),
+                            ),
+                          ),
+                        )
+                      : Container(
+                          height: 140,
+                          width: 140,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.add_a_photo,
+                            size: 50,
+                            color: Colors.grey[800],
+                          ),
+                        )),
             ),
             const SizedBox(height: 20.0),
             GeneralTextField(
@@ -80,6 +93,7 @@ class TProfileScreen extends GetView<TProfileScreenController> {
             GeneralTextField(
               paddingHorizontal: 12,
               tfManager: controller.emailController,
+              readOnly: true,
               isObscure: RxBool(false),
             ),
             GeneralTextField(
@@ -99,6 +113,11 @@ class TProfileScreen extends GetView<TProfileScreenController> {
             ),
             GeneralTextField(
               paddingHorizontal: 12,
+              tfManager: controller.experienceController,
+              isObscure: RxBool(false),
+            ),
+            GeneralTextField(
+              paddingHorizontal: 12,
               tfManager: controller.addressController,
               isObscure: RxBool(false),
               maxLines: 2,
@@ -108,9 +127,10 @@ class TProfileScreen extends GetView<TProfileScreenController> {
               tfManager: controller.cityController,
               isObscure: RxBool(false),
             ),
-            GeneralDropdown(
+            GeneralTextField(
               paddingHorizontal: 12,
-              controller: controller.genderController,
+              tfManager: controller.genderController,
+              isObscure: RxBool(false),
             ),
             GeneralTextField(
               paddingHorizontal: 12,

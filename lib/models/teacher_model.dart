@@ -16,7 +16,7 @@ class TeacherModel {
   String experience = '';
   String teachingStyle = '';
   double rating = 0.0;
-  List<String> subjects = [];
+  List<dynamic> subjects = [];
 
   TeacherModel({
     this.id = '',
@@ -65,15 +65,17 @@ class TeacherModel {
     email = json['email']??'',
     password = json['password']??'',
     phone = json['phone']??'',
+    gender = json['gender']??'',
     bio = json['bio']??'',
     degree = json['degree']??'',
     address = json['address']??'',
+    city = json['city']??'',
     profileUrl = json['profileUrl']??'',
     specialty = json['specialty']??'',
     experience = json['experience']??'',
     teachingStyle = json['teachingStyle']??'',
     rating = (json['rating']??0.0).toDouble(),
-    subjects = List<String>.from(json['subjects']??[]);
+    subjects = List<dynamic>.from(json['subject']??[]);
 
   @override
   String toString() {

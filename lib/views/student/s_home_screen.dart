@@ -37,8 +37,8 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
           ),
           actions: [
             IconButton(
-              onPressed: () {
-                showSearch(
+              onPressed: () async{
+                await showSearch(
                   context: context,
                   delegate: TeacherSearchDelegate(
                     controller.teacherList,
