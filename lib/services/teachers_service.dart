@@ -87,7 +87,7 @@ class TeachersService {
   Future<void> acceptOrRejectRequest({required String requestId, required String status}) async {
 
     try {
-      await FirebaseFirestore.instance.collection('requests').doc(requestId).set({'status':status});
+      await FirebaseFirestore.instance.collection('requests').doc(requestId).update({'status':status});
       
     } on Exception catch (e) {
       log("[GetTeachersFromFirebase]---->${e}");
@@ -126,11 +126,14 @@ class TeachersService {
 
    Future<String> updateProfile(TeacherModel teacherModel) async {
     try {
-      CollectionReference<Map<String, dynamic>> collections =
-          FirebaseFirestore.instance.collection('teachers');
-      await collections
-          .doc(FirebaseAuth.instance.currentUser!.uid)
-          .set(teacherModel.toJson());
+      CollectionReference<Map<String, dynamic>> collections = FirebaseFirestore.instance.collection('teachers');
+      DocumentSnapshot<Map<String, dynamic>> map = await collections.doc(FirebaseAuth.instance.currentUser!.uid).get();
+      if(map.exists) {
+        await collections.doc(FirebaseAuth.instance.currentUser!.uid).update(teacherModel.toJson());
+      } else {
+        await collections.doc(FirebaseAuth.instance.currentUser!.uid).set(teacherModel.toJson());
+      }
+    
 
       return "Profile Updated Successfully!";
     } on Exception catch (e) {

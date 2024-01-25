@@ -117,7 +117,7 @@ class StudentsService {
             return 'Request has been sent successfully!';
           }
         } else {
-           await FirebaseFirestore.instance.collection('requests').doc(request['teacherId']).set(requestModel.toJson());
+           await FirebaseFirestore.instance.collection('requests').doc(request['teacherId']).update(requestModel.toJson());
             return 'Request has been sent successfully!';
         }
       }   

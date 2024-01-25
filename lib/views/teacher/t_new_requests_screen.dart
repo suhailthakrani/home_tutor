@@ -113,38 +113,72 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
                                         Text(
                                           "${studentsList[index].student.name}",
                                           style: const TextStyle(
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 16
-                                          ),
+                                              fontWeight: FontWeight.bold,
+                                              fontSize: 16),
                                         ),
+                                        if (studentsList[index]
+                                                .request
+                                                .status ==
+                                            "accepted")
+                                          const Padding(
+                                              padding: EdgeInsets.only(
+                                                  right: 8.0),
+                                              child: Icon(
+                                                  Icons.check_circle,
+                                                  color: kPrimaryColor))
+                                        else
+                                          const Padding(
+                                            padding: EdgeInsets.only(
+                                                right: 8.0),
+                                            child: Icon(
+                                              Icons.access_time_rounded,
+                                              color: kYellowAmberColor,
+                                            ),
+                                          )
                                       ],
                                     ),
-                                    const SizedBox(height: 5,),
-                                    Wrap(
-                                      children: [
-                                        const Icon(Icons.location_on_outlined, size: 16,),
-                                        Text(
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
+                                    Wrap(children: [
+                                      const Icon(
+                                        Icons.location_on_outlined,
+                                        size: 16,
+                                      ),
+                                      Text(
                                         "${studentsList[index].student.address}, ${studentsList[index].student.city}",
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
-                                        style: const TextStyle(fontSize: 12, ),
+                                        style: const TextStyle(
+                                          fontSize: 12,
+                                        ),
                                       ),
-                                      ]
+                                    ]),
+                                    const SizedBox(
+                                      height: 5,
                                     ),
-                                    const SizedBox(height: 5,),
                                     Wrap(
                                       children: [
-                                        const Icon(Icons.chrome_reader_mode_sharp, size: 16,),
-                                          const SizedBox(width: 5,),
+                                        const Icon(
+                                          Icons.chrome_reader_mode_sharp,
+                                          size: 16,
+                                        ),
+                                        const SizedBox(
+                                          width: 5,
+                                        ),
                                         Text(
                                           "Subject: ${studentsList[index].request.requestedSubjects.join(',')}",
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
-                                          style: const TextStyle(fontSize: 12,fontWeight: FontWeight.w500),
+                                          style: const TextStyle(
+                                              fontSize: 12,
+                                              fontWeight: FontWeight.w500),
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(height: 5,),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
                                     Wrap(
                                       runAlignment: WrapAlignment.spaceEvenly,
                                       crossAxisAlignment:
@@ -165,8 +199,9 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
                                                   : "3 Hours Daily",
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
-                                              style:
-                                                  const TextStyle(fontSize: 11, fontWeight: FontWeight.w600),
+                                              style: const TextStyle(
+                                                  fontSize: 11,
+                                                  fontWeight: FontWeight.w600),
                                             ),
                                           ],
                                         ),
@@ -176,14 +211,16 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           style: TextStyle(
-                                            fontSize: 11,
-                                            backgroundColor: kYellowAmberColor,
-                                            fontWeight: FontWeight.w600
-                                          ),
+                                              fontSize: 11,
+                                              backgroundColor:
+                                                  kYellowAmberColor,
+                                              fontWeight: FontWeight.w600),
                                         ),
                                       ],
                                     ),
-                                    const SizedBox(height: 5,),
+                                    const SizedBox(
+                                      height: 5,
+                                    ),
                                     Text(
                                       "Note: ${studentsList[index].request.instructions}",
                                       maxLines: 1,
@@ -202,8 +239,9 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
                           mainAxisAlignment: MainAxisAlignment.end,
                           children: [
                             GestureDetector(
-                              onTap: () {
-                                // TODO: Reject Appointment
+                              onTap: () async {
+                                await controller.acceptOrRejectRequest(
+                                    studentsList[index].request.id, "rejected");
                               },
                               child: const Chip(
                                 padding: EdgeInsets.zero,
@@ -225,13 +263,13 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
                             ),
                             const SizedBox(width: 8),
                             GestureDetector(
-                              onTap: () {
-                                // TODO: Accept Appointment
+                              onTap: () async {
+                                await controller.acceptOrRejectRequest(
+                                    studentsList[index].request.id, "accepted");
                               },
                               child: const Chip(
                                 elevation: 3,
                                 padding: EdgeInsets.zero,
-                                
                                 side: BorderSide.none,
                                 avatar: Icon(
                                   Icons.check_circle_outline,
