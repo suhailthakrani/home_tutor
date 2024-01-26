@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_tutor/utils/app_colors.dart';
@@ -40,57 +42,45 @@ class SProfileScreen extends GetView<SProfileScreenController> {
             children: [
               const SizedBox(height: 16),
               Obx(
-                () => GestureDetector(
-                  onTap: controller.getImage,
-                  child: controller.studentModel.value.profile.isNotEmpty
-                      ? Center(
-                          child: CircleAvatar(
-                            radius: 90,
-                            child: ClipOval(
-                              // borderRadius: BorderRadius.circular(50),
-                              child: Image.network(
-                                controller.studentModel.value.profile,
-                                height: 180,
-                                width: 180,
+              () => GestureDetector(
+                  onTap: controller.pickImage,
+                  child: controller.studentModel.value.profile.isNotEmpty ||
+                          controller.image.isNotEmpty
+                      ? CircleAvatar(
+                          backgroundColor: kPrimaryColor,
+                          radius: 70,
+                          child: ClipOval(
+                            child: Image.file(
+                              File(controller.studentModel.value.profile),
+                              height: 140,
+                              width: 140,
+                              fit: BoxFit.cover,
+                              errorBuilder: (context, error, stackTrace) =>
+                                  Image.file(
+                                File(controller.image.value),
+                                height: 140,
+                                width: 140,
                                 fit: BoxFit.cover,
-                                errorBuilder: (context, error, stackTrace) {
-                                  return Image.asset(
-                                    'assets/images/reading.png',
-                                    height: 140,
-                                    width: 140,
-                                  );
-                                },
+                                errorBuilder: (context, error, stackTrace) =>
+                                    Container(),
                               ),
                             ),
                           ),
                         )
-                      : controller.image != null
-                          ? CircleAvatar(
-                            radius: 90,
-                            child: ClipOval(
-                              // borderRadius: BorderRadius.circular(50),
-                            child: Image.file(
-                                controller.image!,
-                                height: 170,
-                                width: 170,
-                                fit: BoxFit.cover,
-                              ),
-                          ))
-                          : Container(
-                              height: 140,
-                              width: 140,
-                              decoration: BoxDecoration(
-                                color: Colors.grey[200],
-                                shape: BoxShape.circle,
-                              ),
-                              child: Icon(
-                                Icons.add_a_photo,
-                                size: 50,
-                                color: Colors.grey[800],
-                              ),
-                            ),
-                ),
-              ),
+                      : Container(
+                          height: 140,
+                          width: 140,
+                          decoration: BoxDecoration(
+                            color: Colors.grey[200],
+                            shape: BoxShape.circle,
+                          ),
+                          child: Icon(
+                            Icons.add_a_photo,
+                            size: 50,
+                            color: Colors.grey[800],
+                          ),
+                        )),
+            ),
               const SizedBox(height: 20.0),
               GeneralTextField(
                 tfManager: controller.nameController,
@@ -118,7 +108,7 @@ class SProfileScreen extends GetView<SProfileScreenController> {
                 padding: const EdgeInsets.symmetric(horizontal: 20),
                 child: ElevatedButton(
                   onPressed: () async {
-                    //
+                    await controller.updateProfile();
                   },
                   style: ElevatedButton.styleFrom(
                     backgroundColor: kPrimaryColor,

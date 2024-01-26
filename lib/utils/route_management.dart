@@ -8,6 +8,7 @@ import 'package:home_tutor/views/teacher/t_account_screen.dart';
 import 'package:home_tutor/views/teacher/t_home_screen.dart';
 import 'package:home_tutor/views/teacher/t_new_requests_screen.dart';
 import 'package:home_tutor/views/teacher/t_profile_screen.dart';
+import 'package:home_tutor/views/teacher/t_student_details_screen.dart';
 import 'package:home_tutor/views/teacher/t_students_list_screen.dart';
 import 'package:home_tutor/views/teacher/teacher_main_screen.dart';
 import 'package:home_tutor/views/teacher/teacher_singup_screen.dart';
@@ -73,6 +74,11 @@ class RouteManagement {
       GetPage(
         name: kTNewRequestsScreenRoute,
         page: () => const TNewRequestsScreen(),
+        binding: ScreensBindings(),
+      ),
+       GetPage(
+        name: kTStudentDetailsScreenRoute,
+        page: () => const TStudentDetailsScreen(),
         binding: ScreensBindings(),
       ),
 

@@ -121,15 +121,14 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
                                                 .status ==
                                             "accepted")
                                           const Padding(
-                                              padding: EdgeInsets.only(
-                                                  right: 8.0),
-                                              child: Icon(
-                                                  Icons.check_circle,
+                                              padding:
+                                                  EdgeInsets.only(right: 8.0),
+                                              child: Icon(Icons.check_circle,
                                                   color: kPrimaryColor))
                                         else
                                           const Padding(
-                                            padding: EdgeInsets.only(
-                                                right: 8.0),
+                                            padding:
+                                                EdgeInsets.only(right: 8.0),
                                             child: Icon(
                                               Icons.access_time_rounded,
                                               color: kYellowAmberColor,
@@ -236,58 +235,70 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
                           ],
                         ),
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.end,
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             GestureDetector(
                               onTap: () async {
                                 await controller.acceptOrRejectRequest(
                                     studentsList[index].request.id, "rejected");
                               },
-                              child: const Chip(
+                              child: Chip(
                                 padding: EdgeInsets.zero,
                                 elevation: 3,
                                 side: BorderSide.none,
-                                avatar: Icon(
+                                labelPadding: const EdgeInsets.only(right: 8),
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16)),
+                                avatar: const Icon(
                                   CupertinoIcons.multiply_circle,
-                                  color: kWhiteColor,
+                                  color: kRequiredRedColor,
                                 ),
-                                label: Text(
+                                label: const Text(
                                   "Cancel",
                                   style: TextStyle(
-                                    color: kWhiteColor,
+                                    color: kRequiredRedColor,
                                     fontSize: 12,
                                   ),
                                 ),
-                                backgroundColor: kRequiredRedColor,
+                                backgroundColor:
+                                    kRequiredRedColor.withAlpha(80),
                               ),
                             ),
                             const SizedBox(width: 8),
                             GestureDetector(
                               onTap: () async {
                                 await controller.acceptOrRejectRequest(
-                                    studentsList[index].request.id, "accepted");
+                                  studentsList[index].request.id,
+                                  "accepted",
+                                );
                               },
-                              child: const Chip(
+                              child: Chip(
                                 elevation: 3,
                                 padding: EdgeInsets.zero,
                                 side: BorderSide.none,
-                                avatar: Icon(
+                                shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(16)),
+                                labelPadding: const EdgeInsets.only(right: 8),
+                                avatar: const Icon(
                                   Icons.check_circle_outline,
-                                  color: kWhiteColor,
+                                  color: kGreenColor,
                                 ),
-                                label: Text(
+                                label: const Text(
                                   "Accept",
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: kGreenColor,
                                     fontSize: 12,
                                   ),
                                 ),
-                                backgroundColor: kGreenNormalColor,
+                                backgroundColor:
+                                    kGreenNormalColor.withAlpha(120),
                               ),
                             ),
                             IconButton(
                               style: ElevatedButton.styleFrom(
-                                  padding: EdgeInsets.zero),
+                                backgroundColor: kFieldGreyColor,
+                                padding: EdgeInsets.zero,
+                              ),
                               onPressed: () {
                                 // CommonCode().openDialer('${controller.teacherList[index].phone}');
                               },
@@ -299,7 +310,9 @@ class TNewRequestsScreen extends GetView<TNewRequestsScreenController> {
                             ),
                             IconButton(
                               style: ElevatedButton.styleFrom(
-                                  padding: EdgeInsets.zero),
+                                backgroundColor: kFieldGreyColor,
+                                padding: EdgeInsets.zero,
+                              ),
                               onPressed: () {
                                 // CommonCode().whatsApp('${controller.teacherList[index].phone}');
                               },

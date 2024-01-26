@@ -7,7 +7,7 @@ import 'package:home_tutor/utils/common_code.dart';
 
 import '../../controllers/student/s_tutor_details_screen_controller.dart';
 import '../../utils/constants.dart';
-import 'reviews_screen.dart';
+import 'add_review_screen.dart';
 
 class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
   const STeacherDetailsScreen({super.key});

@@ -182,12 +182,13 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
               FutureBuilder(
                 future: StudentsService().getTeachersFromFirebase(),
                 builder: (context, snapshot) {
-                  List<TeacherModel> teachers = snapshot.data ?? [];
+                  
                   if (snapshot.hasError) {
                     print("--------${snapshot.error}");
                     return Container(height: 140);
                   }
                   if (snapshot.hasData && snapshot.data != null) {
+                    List<TeacherModel> teachers = snapshot.data ?? [];
                     return SizedBox(
                       height: 280,
                       child: ListView.builder(
@@ -435,11 +436,12 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                 future: StudentsService().getTeachersFromFirebase(),
                 builder: (context, snapshot) {
                   log("----------${snapshot.data}");
-                  List<TeacherModel> teachers = snapshot.data ?? [];
+                  
                   if (snapshot.hasError) {
                     return Container(height: 140);
                   }
                   if (snapshot.hasData && snapshot.data != null) {
+                    List<TeacherModel> teachers = snapshot.data ?? [];
                     return SizedBox(
                       height: 280,
                       child: ListView.builder(

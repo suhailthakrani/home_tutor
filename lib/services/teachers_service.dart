@@ -113,7 +113,7 @@ class TeachersService {
             await FirebaseFirestore.instance.collection('students').doc(request.studentId).get();
         StudentModel studentModel = StudentModel.fromJson(querySnapshot.data() ?? {});
         studentModel.id = querySnapshot.id;
-        studentRequests.add(RequestStudentModel(student: studentModel, request: request));
+        studentRequests.addIf(request.status != 'accepted',RequestStudentModel(student: studentModel, request: request));
       }
       return studentRequests;
     } on Exception catch (e, StackTrace) {

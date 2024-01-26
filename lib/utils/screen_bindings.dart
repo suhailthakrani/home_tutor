@@ -11,6 +11,7 @@ import 'package:home_tutor/controllers/teacher/t_home_screen_controller.dart';
 import 'package:home_tutor/controllers/teacher/t_main_screen_controller.dart';
 import 'package:home_tutor/controllers/teacher/t_profile_screen_controller.dart';
 import 'package:home_tutor/controllers/teacher/t_signup_screen_controller.dart';
+import 'package:home_tutor/controllers/teacher/t_student_details_screen_controller.dart';
 import 'package:home_tutor/controllers/teacher/t_students_list_screen_controller.dart';
 import 'package:home_tutor/controllers/welcome_screen_controller.dart';
 
@@ -45,6 +46,7 @@ class ScreensBindings extends Bindings {
     Get.lazyPut(() => TeacherSignUpScreenController());
     Get.lazyPut(() => TProfileScreenController());
     Get.lazyPut(() => TNewRequestsScreenController());
+    Get.lazyPut(() => TStudentDetailsScreenController());
 
   
   }

@@ -127,4 +127,22 @@ class StudentsService {
       return e.toString();
     }
   }
+
+  Future<String> updateProfile(StudentModel studentModel) async {
+    try {
+      CollectionReference<Map<String, dynamic>> collections = FirebaseFirestore.instance.collection('students');
+      DocumentSnapshot<Map<String, dynamic>> map = await collections.doc(FirebaseAuth.instance.currentUser!.uid).get();
+      if(map.exists) {
+        await collections.doc(FirebaseAuth.instance.currentUser!.uid).update(studentModel.toJson());
+      } else {
+        await collections.doc(FirebaseAuth.instance.currentUser!.uid).set(studentModel.toJson());
+      }
+    
+
+      return "Profile Updated Successfully!";
+    } on Exception catch (e) {
+      log("[GetTeachersFromBySubject]---->${e}");
+      return e.toString();
+    }
+  }
 }
