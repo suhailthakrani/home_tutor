@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:home_tutor/controllers/teacher/t_account_screen_controller.dart';
 import 'package:home_tutor/utils/constants.dart';
+import 'package:home_tutor/views/teacher/t_see_reviews_screen.dart';
 
 import '../../services/users_services.dart';
 import '../../utils/app_colors.dart';
@@ -14,18 +15,18 @@ class TAccountScreen extends GetView<TAccountScreenController> {
 
   @override
   Widget build(BuildContext context) {
-   return Scaffold(
+    return Scaffold(
       appBar: AppBar(
         toolbarHeight: 70,
         backgroundColor: kPrimaryColor,
         foregroundColor: kWhiteColor,
         leading: Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: Image.asset('assets/images/reading.png'),
+          padding: const EdgeInsets.all(8.0),
+          child: Image.asset('assets/images/reading.png'),
         ),
         title: const Text("Account & Settings"),
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
@@ -48,10 +49,12 @@ class TAccountScreen extends GetView<TAccountScreenController> {
             ),
             const SizedBox(height: 16),
             CustomListTile(
-              leading: const Icon(Icons.person),
-              onTap: () {},
-              title: 'My Subjects',
-              subtitle: 'See your subjets you are teaching',
+              leading: const Icon(Icons.star),
+              onTap: () {
+                Get.to(const SeeReviewsScreen());
+              },
+              title: 'My Reviews',
+              subtitle: 'Get support from our team',
             ),
             const SizedBox(height: 16),
             CustomListTile(
@@ -65,13 +68,20 @@ class TAccountScreen extends GetView<TAccountScreenController> {
                 },
               ),
             ),
-            Spacer(),
+            const SizedBox(height: 16),
+            CustomListTile(
+              leading: const Icon(Icons.policy),
+              onTap: () {},
+              title: 'Privacy Policy',
+              subtitle: 'Check our terms and conditions',
+            ),
+            const SizedBox(height: 20),
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: CustomListTile(
                 leading: const Icon(Icons.logout),
                 onTap: () {
-                   CustomDialogs().showAwesomeConfirmationDialog(
+                  CustomDialogs().showAwesomeConfirmationDialog(
                       "Are you sure want to logout?", onOkBtnPressed: () async {
                     bool result = await UserService().logOut();
                     if (result) {

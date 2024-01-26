@@ -6,14 +6,14 @@ import 'package:get/get.dart';
 
 import '../../utils/app_colors.dart';
 
-class SeeReviewsScreen extends StatefulWidget {
-  const SeeReviewsScreen({super.key});
+class SSeeReviewsScreen extends StatefulWidget {
+  const SSeeReviewsScreen({super.key});
 
   @override
-  State<SeeReviewsScreen> createState() => _SeeReviewsScreenState();
+  State<SSeeReviewsScreen> createState() => _SSeeReviewsScreenState();
 }
 
-class _SeeReviewsScreenState extends State<SeeReviewsScreen> {
+class _SSeeReviewsScreenState extends State<SSeeReviewsScreen> {
   List<String> names = [
     "Ali",
     "Danish",
@@ -56,7 +56,7 @@ class _SeeReviewsScreenState extends State<SeeReviewsScreen> {
         backgroundColor: kPrimaryColor,
         foregroundColor: kWhiteColor,
         title: const Text(
-          "See Your Reviews",
+          "Reviews and Ratings",
           style: TextStyle(
             fontWeight: FontWeight.bold,
             fontSize: 18,

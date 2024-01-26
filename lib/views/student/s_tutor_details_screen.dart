@@ -4,6 +4,7 @@ import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 import 'package:home_tutor/utils/app_colors.dart';
 import 'package:home_tutor/utils/common_code.dart';
+import 'package:home_tutor/views/student/s_see_reviews_screen.dart';
 
 import '../../controllers/student/s_tutor_details_screen_controller.dart';
 import '../../utils/constants.dart';
@@ -63,7 +64,7 @@ class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
                 padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
                   color: kWhiteColor,
-                  boxShadow: [
+                  boxShadow: const [
                     BoxShadow(
                       color: kFieldGreyColor,
                         blurRadius: 3,
@@ -95,16 +96,28 @@ class STeacherDetailsScreen extends GetView<STeacherDetailsScreenController> {
                             ),
                           ),
                         ),
-                        RatingBarIndicator(
-                          rating: double.parse(
-                              '${controller.teacherModel.value.rating}'),
-                          itemBuilder: (context, index) => const Icon(
-                            Icons.star,
-                            color: Colors.amber,
+                        GestureDetector(
+                          onTap: () {
+                            Get.to(SSeeReviewsScreen());
+                          },
+                          child: Container(
+                            padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+                            decoration: BoxDecoration(
+                              color: kFieldGreyColor,
+                              borderRadius: BorderRadius.circular(16)
+                            ),
+                            child: RatingBarIndicator(
+                              rating: double.parse(
+                                  '${controller.teacherModel.value.rating}'),
+                              itemBuilder: (context, index) => const Icon(
+                                Icons.star,
+                                color: Colors.amber,
+                              ),
+                              itemCount: 4,
+                              itemSize: 20.0,
+                              direction: Axis.horizontal,
+                            ),
                           ),
-                          itemCount: 4,
-                          itemSize: 20.0,
-                          direction: Axis.horizontal,
                         ),
                       ],
                     ),
