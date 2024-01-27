@@ -15,7 +15,7 @@ class TStudentDetailsScreen extends GetView<TStudentDetailsScreenController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Tutor Details Screen"),
+        title: const Text("Student Details"),
         backgroundColor: kPrimaryColor,
         foregroundColor: kWhiteColor,
       ),
