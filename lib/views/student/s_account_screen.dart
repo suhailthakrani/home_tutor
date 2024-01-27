@@ -43,7 +43,9 @@ class SAccountScreen extends GetView<SAccountScreenController> {
             const SizedBox(height: 20),
             CustomListTile(
               leading: const Icon(Icons.person),
-              onTap: () {},
+              onTap: () {
+                Get.toNamed(kSFavTeacherScreenRoute);
+              },
               title: 'My Teachers',
               subtitle: 'See your teachers you are learning from',
             ),

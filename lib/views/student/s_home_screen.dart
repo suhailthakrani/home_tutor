@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:math';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -268,9 +269,9 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                                           FontWeight.bold,
                                                     ),
                                                   ),
-                                                  const Text(
-                                                    " 5\$ Per Hour  ",
-                                                    style: TextStyle(
+                                                  Text(
+                                                   "${Random().nextInt(40)+20} Per Month",
+                                                    style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       backgroundColor:
@@ -435,7 +436,6 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
               FutureBuilder(
                 future: StudentsService().getTeachersFromFirebase(),
                 builder: (context, snapshot) {
-                  log("----------${snapshot.data}");
                   
                   if (snapshot.hasError) {
                     return Container(height: 140);
@@ -525,9 +525,9 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                                           FontWeight.bold,
                                                     ),
                                                   ),
-                                                  const Text(
-                                                    " 5\$ Per Hour  ",
-                                                    style: TextStyle(
+                                                  Text(
+                                                     "${Random().nextInt(40)+20} Per Month",
+                                                    style: const TextStyle(
                                                       fontWeight:
                                                           FontWeight.bold,
                                                       backgroundColor:
@@ -775,9 +775,9 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                                     fontWeight: FontWeight.bold,
                                                   ),
                                                 ),
-                                                const Text(
-                                                  " 5\$ Per Hour  ",
-                                                  style: TextStyle(
+                                                Text(
+                                                   " ${Random().nextInt(40)+20} Per Month",
+                                                    style: const TextStyle(
                                                     fontWeight: FontWeight.bold,
                                                     backgroundColor:
                                                         Colors.amber,
@@ -793,7 +793,7 @@ class StudentHomeScreen extends GetView<SHomeScreenController> {
                                               child: Text(
                                                 // Degree (Subject or Specialty)
                                                 "${teachers[index].degree} (${teachers[index].specialty})",
-                                                style: TextStyle(fontSize: 12),
+                                                style:const TextStyle(fontSize: 12),
                                               ),
                                             ),
                                             Align(

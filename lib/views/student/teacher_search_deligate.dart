@@ -42,23 +42,29 @@ class TeacherSearchDelegate extends SearchDelegate {
     return ListView.builder(
       itemCount: filteredTeacherModels.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          minLeadingWidth: 70,
-          leading: ClipRRect(
-            borderRadius: BorderRadius.circular(54),
-            child: Image.network(
-              filteredTeacherModels[index].profileUrl,
-              width: 54,
-              height: 54,
-              fit: BoxFit.cover,
-              errorBuilder: (context, child, loadingProgress) =>const CircleAvatar(radius: 36),
-            ),
-          ),
-          title: Text("${filteredTeacherModels[index].name}"),
-          subtitle: Text(filteredTeacherModels[index].specialty),
-          onTap: () {
-          //  Get.toNamed(kSTeacherDetailsScreenRoute, arguments: controller.teacherList[index]);
+        return InkWell(
+          onTap:(){
+            Get.toNamed(kSTeacherDetailsScreenRoute,
+                                arguments: filteredTeacherModels[index]);
           },
+          child: ListTile(
+            minLeadingWidth: 70,
+            leading: ClipRRect(
+              borderRadius: BorderRadius.circular(54),
+              child: Image.network(
+                filteredTeacherModels[index].profileUrl,
+                width: 54,
+                height: 54,
+                fit: BoxFit.cover,
+                errorBuilder: (context, child, loadingProgress) =>const CircleAvatar(radius: 36),
+              ),
+            ),
+            title: Text("${filteredTeacherModels[index].name}"),
+            subtitle: Text(filteredTeacherModels[index].specialty),
+            onTap: () {
+            //  Get.toNamed(kSTeacherDetailsScreenRoute, arguments: controller.teacherList[index]);
+            },
+          ),
         );
       },
     );
@@ -75,23 +81,29 @@ class TeacherSearchDelegate extends SearchDelegate {
     return ListView.builder(
       itemCount: filteredTeacherModels.length,
       itemBuilder: (context, index) {
-        return ListTile(
-          minLeadingWidth: 70,
-          leading: ClipRRect(
-            borderRadius: BorderRadius.circular(54),
-            child: Image.network(
-              filteredTeacherModels[index].profileUrl,
-              width: 54,
-              height: 54,
-              fit: BoxFit.cover,
-              errorBuilder: (context, child, loadingProgress) =>const CircleAvatar(radius: 36),
-            ),
-          ),
-          title: Text("${filteredTeacherModels[index].name.capitalizeFirst}"),
-          subtitle: Text("${filteredTeacherModels[index].specialty.capitalizeFirst}"),
-          onTap: () {
-          //  Get.toNamed(kSTeacherDetailsScreenRoute, arguments: controller.teacherList[index]);
+        return InkWell(
+          onTap: (){
+            Get.toNamed(kSTeacherDetailsScreenRoute,
+                                arguments: filteredTeacherModels[index]);
           },
+          child: ListTile(
+            minLeadingWidth: 70,
+            leading: ClipRRect(
+              borderRadius: BorderRadius.circular(54),
+              child: Image.network(
+                filteredTeacherModels[index].profileUrl,
+                width: 54,
+                height: 54,
+                fit: BoxFit.cover,
+                errorBuilder: (context, child, loadingProgress) =>const CircleAvatar(radius: 36),
+              ),
+            ),
+            title: Text("${filteredTeacherModels[index].name.capitalizeFirst}"),
+            subtitle: Text("${filteredTeacherModels[index].specialty.capitalizeFirst}"),
+            onTap: () {
+            //  Get.toNamed(kSTeacherDetailsScreenRoute, arguments: controller.teacherList[index]);
+            },
+          ),
         );
       },
     );
