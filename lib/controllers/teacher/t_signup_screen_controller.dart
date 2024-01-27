@@ -45,6 +45,7 @@ class TeacherSignUpScreenController extends GetxController {
     TeacherModel teacherModel = TeacherModel(
       name: usernameManager.controller.text, 
       email: userEmailManager.controller.text, 
+      password: passwordManager.text,
       phone: userPhoneManager.controller.text, 
       bio: '', 
       degree: degreeManager.controller.text, 

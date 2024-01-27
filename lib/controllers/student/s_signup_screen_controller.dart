@@ -36,7 +36,6 @@ class StudentSignUpScreenController extends GetxController {
     isLoading.value = true;
     loginModel.email = userEmailManager.controller.text;
     loginModel.password = passwordManager.controller.text;
-
     studentModel.name = usernameManager.controller.text;
     studentModel.address = userAddressManager.controller.text;
     studentModel.phone = userPhoneManager.controller.text;

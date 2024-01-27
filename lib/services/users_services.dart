@@ -13,44 +13,62 @@ class UserService {
 
   Future<String> registerTeacher(TeacherModel teacherModel) async {
     try {
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
         email: teacherModel.email,
         password: teacherModel.password,
       );
       log("-------------------------------${userCredential}");
 
-
       User? user = userCredential.user;
+      if(user != null) {
+        await _firestore
+          .collection('teachers')
+          .doc(user.uid)
+          .set(teacherModel.toJson()).catchError((error) {
+     print('Error writing to Firestore: $error');
+     // handle error or log it
+   });;
 
-      await _firestore.collection('teachers').doc(user!.uid).set(teacherModel.toJson());
-
-      if(userCredential.user != null){
+      if (userCredential.user != null) {
         return "Sucess";
       } else {
-        return 'OTHER';
+        return 'Unable to Register due to some issues in Database!';
+      }
+      } else {
+        return "Unable to Register due to some issues in Database!";
       }
 
+      
     } catch (e, Stacktrace) {
       print('Error during registration: $e ${Stacktrace}');
       return '${e.toString()}';
     }
-  }  
+  }
 
   Future<String> registerStudent(StudentModel studentModel) async {
     try {
-      UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+      UserCredential userCredential =
+          await _auth.createUserWithEmailAndPassword(
         email: studentModel.email,
         password: studentModel.password,
       );
-      log("================${studentModel.toJson()}");
       User? user = userCredential.user;
-      await _firestore.collection('students').doc(user!.uid).set(studentModel.toJson());
-      if(userCredential.user != null){
-        return "Sucess";
-      }  else {
-        return 'OTHER';
+      if (user != null) {
+        await _firestore
+            .collection('students')
+            .doc(user.uid)
+            .set(studentModel.toJson());
+        if (userCredential.user != null) {
+          return "Sucess";
+        }else {
+        log("================${studentModel.toJson()}");
+        return 'Unable to Register';
       }
-
+      } else {
+        log("================${studentModel.toJson()}");
+        return 'Unable to Register';
+      }
     } catch (e) {
       print('Error during registration: $e');
       return '${e.toString()}';
@@ -64,12 +82,11 @@ class UserService {
         password: loginModel.password,
       );
 
-      if(userCredential.user != null){
+      if (userCredential.user != null) {
         return "Sucess";
       } else {
         return 'OTHER';
       }
-
     } catch (e) {
       print('Error during registration: $e');
       return '${e.toString()}';
